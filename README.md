@@ -5,10 +5,6 @@ A modern full-stack web application built with Node.js, Express, React, and Mate
 ## 🚀 Features
 
 - **Modern UI**: Beautiful, responsive interface built with Material UI
-- **Task Management**: Create, read, update, and delete tasks with status tracking
-- **User Management**: Manage users with different roles (admin/user)
-- **Dashboard**: Overview of tasks and users with statistics
-- **Real-time Updates**: Interactive interface with immediate feedback
 - **RESTful API**: Well-structured backend API with Express.js
 - **Responsive Design**: Works seamlessly on desktop and mobile devices
 
@@ -66,7 +62,16 @@ QueenB/
 
 ### Installation
 
-1. **Clone or navigate to the project directory**
+1. **Fork the template repository to your own user**
+If you are orking as a team, you can choose one member to fork the template repository to their own user, 
+and then share the repository with the rest of the team.
+
+
+2. **Clone or navigate to the project directory**
+
+   ```bash
+   git clone **copied git url**
+   ```
 
    ```bash
    cd QueenB
@@ -137,7 +142,7 @@ npm run dev
 This will start:
 
 - Backend server on http://localhost:5000
-- Frontend client on http://localhost:3000
+- Frontend client on http://localhost:3000 - you can access the application in your browser at this URL.
 
 ### Building for Production
 
@@ -174,15 +179,15 @@ This will start:
 
 - `GET /api/health` - Server health check
 
-## 🎨 Application Features
+### 🎨 Template Application Features
 
-### Dashboard
+#### Dashboard
 
 - Overview statistics of users and tasks
 - Quick view of recent tasks and team members
 - Color-coded status and priority indicators
 
-### User Management
+#### User Management
 
 - View all users in a data table
 - Add new users with name, email, and role
@@ -190,7 +195,7 @@ This will start:
 - Delete users with confirmation
 - Role-based user types (admin/user)
 
-### Task Management
+#### Task Management
 
 - View tasks in an organized card layout
 - Filter tasks by status (All, Pending, In Progress, Completed)

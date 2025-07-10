@@ -1,35 +1,9 @@
 import React, { useState, useEffect } from "react";
-import {
-  Box,
-  Typography,
-  Button,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  TextField,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  Chip,
-  IconButton,
-  Alert,
-  LinearProgress,
-} from "@mui/material";
-import {
-  Add as AddIcon,
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-} from "@mui/icons-material";
+import { Box, Typography, Button, Alert, LinearProgress } from "@mui/material";
+import { Add as AddIcon } from "@mui/icons-material";
 import api from "../services/api";
+import UserDialog from "./UserDialog";
+import UserTable from "./UserTable";
 
 function UserManagement() {
   const [users, setUsers] = useState([]);
@@ -178,110 +152,21 @@ function UserManagement() {
         </Alert>
       )}
 
-      <TableContainer component={Paper} elevation={2}>
-        <Table>
-          <TableHead>
-            <TableRow sx={{ backgroundColor: "grey.50" }}>
-              <TableCell>
-                <strong>Name</strong>
-              </TableCell>
-              <TableCell>
-                <strong>Email</strong>
-              </TableCell>
-              <TableCell>
-                <strong>Role</strong>
-              </TableCell>
-              <TableCell align="center">
-                <strong>Actions</strong>
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {users.map((user) => (
-              <TableRow key={user.id} hover>
-                <TableCell>{user.name}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>
-                  <Chip
-                    label={user.role}
-                    color={user.role === "admin" ? "secondary" : "default"}
-                    size="small"
-                  />
-                </TableCell>
-                <TableCell align="center">
-                  <IconButton
-                    onClick={() => handleOpenDialog(user)}
-                    color="primary"
-                    size="small"
-                  >
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton
-                    onClick={() => handleDelete(user.id)}
-                    color="error"
-                    size="small"
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <UserTable
+        users={users}
+        onEdit={handleOpenDialog}
+        onDelete={handleDelete}
+      />
 
-      <Dialog
+      <UserDialog
         open={dialogOpen}
         onClose={handleCloseDialog}
-        maxWidth="sm"
-        fullWidth
-      >
-        <DialogTitle>{editingUser ? "Edit User" : "Add New User"}</DialogTitle>
-        <DialogContent>
-          {error && (
-            <Alert severity="error" sx={{ mb: 2 }}>
-              {error}
-            </Alert>
-          )}
-          <TextField
-            autoFocus
-            margin="dense"
-            label="Full Name"
-            fullWidth
-            variant="outlined"
-            value={formData.name}
-            onChange={handleInputChange("name")}
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            margin="dense"
-            label="Email Address"
-            type="email"
-            fullWidth
-            variant="outlined"
-            value={formData.email}
-            onChange={handleInputChange("email")}
-            sx={{ mb: 2 }}
-          />
-          <FormControl fullWidth variant="outlined">
-            <InputLabel>Role</InputLabel>
-            <Select
-              value={formData.role}
-              onChange={handleInputChange("role")}
-              label="Role"
-            >
-              <MenuItem value="user">User</MenuItem>
-              <MenuItem value="admin">Admin</MenuItem>
-            </Select>
-          </FormControl>
-        </DialogContent>
-        <DialogActions sx={{ p: 2 }}>
-          <Button onClick={handleCloseDialog}>Cancel</Button>
-          <Button onClick={handleSubmit} variant="contained">
-            {editingUser ? "Update" : "Create"}
-          </Button>
-        </DialogActions>
-      </Dialog>
+        onSubmit={handleSubmit}
+        editingUser={editingUser}
+        formData={formData}
+        onInputChange={handleInputChange}
+        error={error}
+      />
     </Box>
   );
 }
