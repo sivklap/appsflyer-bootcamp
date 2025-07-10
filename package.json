@@ -1,0 +1,30 @@
+{
+  "name": "queenb-app",
+  "version": "1.0.0",
+  "description": "A full-stack Node.js and React application",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm start",
+    "client:watch": "cd client && npm run watch",
+    "client:build:watch": "cd client && npm run build:watch",
+    "client:test:watch": "cd client && npm run test:watch",
+    "install-server": "cd server && npm install",
+    "install-client": "cd client && npm install",
+    "install-all": "npm run install-server && npm run install-client",
+    "build": "cd client && npm run build",
+    "start": "cd server && npm start"
+  },
+  "keywords": [
+    "nodejs",
+    "react",
+    "material-ui",
+    "fullstack"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
