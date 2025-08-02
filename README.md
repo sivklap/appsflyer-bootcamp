@@ -33,7 +33,6 @@ QueenB/
 ├── server/                 # Backend application
 │   ├── routes/            # API route handlers
 │   │   ├── users.js       # User CRUD operations
-│   │   └── tasks.js       # Task CRUD operations
 │   ├── index.js           # Server entry point
 │   ├── package.json       # Server dependencies
 │   └── .env.example       # Environment variables template
@@ -41,9 +40,6 @@ QueenB/
 │   ├── public/            # Static files
 │   ├── src/
 │   │   ├── components/    # React components
-│   │   │   ├── Dashboard.js
-│   │   │   ├── UserManagement.js
-│   │   │   └── TaskManagement.js
 │   │   ├── services/      # API services
 │   │   │   └── api.js     # Axios configuration
 │   │   ├── App.js         # Main application component
@@ -63,7 +59,7 @@ QueenB/
 ### Installation
 
 1. **Fork the template repository to your own user**
-If you are orking as a team, you can choose one member to fork the template repository to their own user, 
+If you are working as a team, you can choose one member to fork the template repository to their own user, 
 and then share the repository with the rest of the team.
 
 
@@ -157,52 +153,12 @@ This will start:
    npm start
    ```
 
-## 📚 API Endpoints
 
-### Users
-
-- `GET /api/users` - Get all users
-- `GET /api/users/:id` - Get user by ID
-- `POST /api/users` - Create new user
-- `PUT /api/users/:id` - Update user
-- `DELETE /api/users/:id` - Delete user
-
-### Tasks
-
-- `GET /api/tasks` - Get all tasks (supports status and priority query filters)
-- `GET /api/tasks/:id` - Get task by ID
-- `POST /api/tasks` - Create new task
-- `PUT /api/tasks/:id` - Update task
-- `DELETE /api/tasks/:id` - Delete task
 
 ### Health Check
 
 - `GET /api/health` - Server health check
 
-### 🎨 Template Application Features
-
-#### Dashboard
-
-- Overview statistics of users and tasks
-- Quick view of recent tasks and team members
-- Color-coded status and priority indicators
-
-#### User Management
-
-- View all users in a data table
-- Add new users with name, email, and role
-- Edit existing user information
-- Delete users with confirmation
-- Role-based user types (admin/user)
-
-#### Task Management
-
-- View tasks in an organized card layout
-- Filter tasks by status (All, Pending, In Progress, Completed)
-- Create new tasks with title, description, status, and priority
-- Edit existing tasks
-- Delete tasks with confirmation
-- Visual priority and status indicators
 
 ## 🔧 Development
 
@@ -224,13 +180,6 @@ This will start:
 - **Form Validation**: Client and server-side validation
 - **Success Feedback**: Clear success and error messages
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 ## 📝 License
 
