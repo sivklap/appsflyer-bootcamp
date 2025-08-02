@@ -30,7 +30,7 @@ function UserManagement() {
         alignItems="center"
         mb={3}
       >
-        <Typography variant="h5">User Management</Typography>
+        <Typography variant="h5">Hello World Example</Typography>
         <Typography variant="body5">Response from API: {users.length} users</Typography>
         <Button
           variant="contained"

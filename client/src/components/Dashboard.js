@@ -13,7 +13,7 @@ function App() {
         <AppBar position="static" elevation={2}>
           <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              👑 QueenB - Example
+              👑 QueenB - Example Bar
             </Typography>
           </Toolbar>
         </AppBar>
