@@ -1,6 +1,7 @@
 # QueenB - Full Stack Task Management Application
+A template for building a full-stack web application using modern technologies - fork this repository to get started quickly.
 
-A modern full-stack web application built with Node.js, Express, React, and Material UI for task and user management.
+Built with Node.js, Express, React, and Material UI.
 
 ## 🚀 Features
 
@@ -15,8 +16,6 @@ A modern full-stack web application built with Node.js, Express, React, and Mate
 - **Node.js** - Runtime environment
 - **Express.js** - Web framework
 - **CORS** - Cross-origin resource sharing
-- **Helmet** - Security middleware
-- **Morgan** - HTTP request logger
 - **Nodemon** - Development auto-restart
 
 ### Frontend
@@ -32,7 +31,6 @@ A modern full-stack web application built with Node.js, Express, React, and Mate
 QueenB/
 ├── server/                 # Backend application
 │   ├── routes/            # API route handlers
-│   │   ├── users.js       # User CRUD operations
 │   ├── index.js           # Server entry point
 │   ├── package.json       # Server dependencies
 │   └── .env.example       # Environment variables template
@@ -40,8 +38,6 @@ QueenB/
 │   ├── public/            # Static files
 │   ├── src/
 │   │   ├── components/    # React components
-│   │   ├── services/      # API services
-│   │   │   └── api.js     # Axios configuration
 │   │   ├── App.js         # Main application component
 │   │   └── index.js       # React entry point
 │   └── package.json       # Client dependencies
