@@ -35,7 +35,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Router>
+      <Router >
         <Routes>
           <Route path="/" element={<Dashboard />} />
         </Routes>
