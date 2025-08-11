@@ -1,46 +1,27 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { 
-  ThemeProvider, 
-  createTheme, 
-  CssBaseline
-} from "@mui/material";
-import HomePage from "./components/HomePage";
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#6366f1",
-    },
-    secondary: {
-      main: "#ec4899",
-    },
-    background: {
-      default: "#f8fafc",
-    },
-  },
-  typography: {
-    fontFamily: "Roboto, Arial, sans-serif",
-    h4: {
-      fontWeight: 600,
-    },
-    h6: {
-      fontWeight: 500,
-    },
-  },
-});
-
+import RegistrationForm from "./components/RegistrationForm.jsx";
+import { fieldsConfig } from "./config/fieldsConfig";
 
 function App() {
+  const handleFormSubmit = (data) => {
+    console.log("נתוני הטופס:", data);
+    alert("הטופס נשלח בהצלחה!");
+  };
+
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Router >
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-        </Routes>
-      </Router>
-    </ThemeProvider>
+    <Router>
+      <Routes>
+        <Route
+          path="/register/mentor"
+          element={<RegistrationForm type="mentor" />}
+        />
+        <Route
+          path="/register/mentee"
+          element={<RegistrationForm type="mentee" />}
+        />
+      </Routes>
+    </Router>
   );
 }
 
