@@ -1,9 +1,12 @@
+require("dotenv").config();
+const PORT = process.env.PORT;
+
 const swaggerUi = require("swagger-ui-express");
 
 const openapi = {
   openapi: "3.0.3",
   info: { title: "QueenB API", version: "1.0.0" },
-  servers: [{ url: "http://localhost:5002" }],
+  servers: [{ url:`http://localhost:${PORT}`}],
   components: {
     securitySchemes: {
       bearerAuth: { type: "http", scheme: "bearer", bearerFormat: "JWT" }
@@ -56,9 +59,6 @@ const openapi = {
   paths: {
     "/api/health": {
       get: { summary: "Health check", responses: { "200": { description: "OK" } } }
-    },
-    "/api/health/db": {
-      get: { summary: "DB connectivity check", responses: { "200": { description: "OK" }, "500": { description: "DB error" } } }
     },
     "/api/auth/signup": {
       post: {

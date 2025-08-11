@@ -9,7 +9,7 @@ const authRouter = require("./routes/auth");
 const { mountSwagger } = require("./swagger");
 
 const app = express();
-const PORT = process.env.PORT || 5002;
+const PORT = process.env.PORT;
 
 app.use(helmet());
 app.use(cors());
@@ -39,5 +39,5 @@ app.use("*", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`📜 Swagger:  http://localhost:${PORT}/api/docs`);
+  console.log(`📜 Swagger: http://localhost:${PORT}/api/docs`);
 });
