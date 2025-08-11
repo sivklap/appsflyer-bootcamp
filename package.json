@@ -5,7 +5,7 @@
   "main": "server/index.js",
   "scripts": {
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "cd server && npm run dev",
+    "server": "cd server && PORT=5001 npm run dev",
     "client": "cd client && npm start",
     "client:watch": "cd client && npm run watch",
     "client:build:watch": "cd client && npm run build:watch",
