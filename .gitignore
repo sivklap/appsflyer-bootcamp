@@ -87,7 +87,7 @@ typings/
 
 # Gatsby files
 .cache/
-public
+client/public
 
 # Vuepress build output
 .vuepress/dist

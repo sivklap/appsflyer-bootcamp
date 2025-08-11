@@ -5,7 +5,7 @@ import {
   createTheme, 
   CssBaseline
 } from "@mui/material";
-import Dashboard from "./components/Dashboard";
+import HomePage from "./components/HomePage";
 
 const theme = createTheme({
   palette: {
@@ -37,7 +37,7 @@ function App() {
       <CssBaseline />
       <Router >
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<HomePage />} />
         </Routes>
       </Router>
     </ThemeProvider>
