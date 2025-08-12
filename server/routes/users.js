@@ -109,14 +109,4 @@ router.delete("/:id", authenticateToken, async (req, res) => {
   }
 });
 
-// POST /api/users - Add a new user (mentor/mentee)
-router.post("/", (req, res) => {
-  const user = req.body;
-  if (!user || !user.firstName || !user.lastName || !user.email) {
-    return res.status(400).json({ error: "Missing required fields" });
-  }
-  const newUser = addUser(user);
-  res.status(201).json(newUser);
-});
-
 module.exports = router;
