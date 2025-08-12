@@ -5,7 +5,6 @@ import "./MentorCards.css"
 const MentorCards = ({mentors}) => {
     const [showMentorModal, setShowMentorModal] = useState(false);
     const [chosenMentor, setChosenMentor] = useState(null);
-    // console.log(mentors)
     return (
         <>
             <div className="all-mentor-cards">
@@ -25,7 +24,6 @@ const MentorCards = ({mentors}) => {
                 ))}
             </div>
 
-            {/* Single modal instance outside the map */}
             <MentorModal
                 show={showMentorModal}
                 mentor={chosenMentor}
