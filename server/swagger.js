@@ -402,7 +402,7 @@ const openapi = {
           name: "limit", 
           in: "query", 
           description: "Maximum number of users to return",
-          schema: { type: "integer", default: 100, minimum: 1, maximum: 1000 } 
+          schema: { type: "integer", default: 20, minimum: 1, maximum: 1000 } 
         }],
         responses: { 
           "200": { 
