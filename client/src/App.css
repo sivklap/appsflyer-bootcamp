@@ -1,0 +1,10 @@
+  .app{
+      flex-direction: column;
+
+  }
+
+  .app-container{
+      padding-left: 3rem;
+      padding-right: 3rem;
+      margin-top: 6rem;
+  }

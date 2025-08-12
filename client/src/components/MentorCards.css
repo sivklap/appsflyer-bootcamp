@@ -1,0 +1,41 @@
+.all-mentor-cards {
+    width: 80%;
+    margin: 25px auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    max-width: 1100px;
+}
+
+.mentor-card {
+    background: #fff;
+    border: 2px solid #eee;
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mentor-card:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.mentor-card img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.mentor-card h2 {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.mentor-card p {
+    font-size: 14px;
+    color: #666;
+}
