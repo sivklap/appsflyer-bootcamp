@@ -38,23 +38,92 @@ export default function RegistrationForm({ type }) {
         textarea.oninput = (e) => { formData[field.name] = e.target.value; };
         form.appendChild(textarea);
       } else if (field.type === 'multiselect') {
+        // Custom button-based multi-select
+        const wrapper = document.createElement('div');
+        wrapper.style.display = 'flex';
+        wrapper.style.flexWrap = 'wrap';
+        wrapper.style.gap = '10px';
+        const selected = [];
         (field.options || []).forEach(option => {
-          const checkbox = document.createElement('input');
-          checkbox.type = 'checkbox';
-          checkbox.value = option;
-          checkbox.name = field.name;
-          checkbox.onchange = (e) => {
-            if (e.target.checked) {
-              formData[field.name] = [...formData[field.name], option];
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.textContent = option;
+          btn.style.padding = '8px 16px';
+          btn.style.border = '1.5px solid #4f46e5';
+          btn.style.borderRadius = '20px';
+          btn.style.background = '#fff';
+          btn.style.color = '#4f46e5';
+          btn.style.cursor = 'pointer';
+          btn.style.transition = 'all 0.2s';
+          btn.onclick = () => {
+            const idx = selected.indexOf(option);
+            if (idx === -1) {
+              selected.push(option);
+              btn.style.background = '#4f46e5';
+              btn.style.color = '#fff';
             } else {
-              formData[field.name] = formData[field.name].filter(v => v !== option);
+              selected.splice(idx, 1);
+              btn.style.background = '#fff';
+              btn.style.color = '#4f46e5';
             }
+            formData[field.name] = [...selected];
+            selectedDisplay.textContent = selected.length ? 'Selected: ' + selected.join(', ') : '';
           };
-          form.appendChild(checkbox);
-          const optLabel = document.createElement('span');
-          optLabel.textContent = option;
-          form.appendChild(optLabel);
+          wrapper.appendChild(btn);
         });
+        form.appendChild(wrapper);
+        // Show selected options below
+        const selectedDisplay = document.createElement('div');
+        selectedDisplay.style.fontSize = '0.95em';
+        selectedDisplay.style.color = '#4f46e5';
+        selectedDisplay.style.margin = '10px 0 10px 0';
+        form.appendChild(selectedDisplay);
+      } else if (field.type === 'select' && field.name === 'img') {
+        // Visual avatar selection
+        const avatarWrapper = document.createElement('div');
+        avatarWrapper.style.display = 'flex';
+        avatarWrapper.style.gap = '20px';
+        (field.options || []).forEach(opt => {
+          const avatarLabel = document.createElement('label');
+          avatarLabel.style.cursor = 'pointer';
+          avatarLabel.style.display = 'flex';
+          avatarLabel.style.flexDirection = 'column';
+          avatarLabel.style.alignItems = 'center';
+          avatarLabel.style.border = '2px solid transparent';
+          avatarLabel.style.borderRadius = '50%';
+          avatarLabel.style.padding = '5px';
+
+          const radio = document.createElement('input');
+          radio.type = 'radio';
+          radio.name = field.name;
+          radio.value = opt.value;
+          radio.style.display = 'none';
+          radio.onchange = (e) => {
+            formData[field.name] = e.target.value;
+            // Highlight selected avatar
+            Array.from(avatarWrapper.children).forEach(child => {
+              child.style.border = '2px solid transparent';
+            });
+            avatarLabel.style.border = '2px solid #4f46e5';
+          };
+          avatarLabel.appendChild(radio);
+
+          const img = document.createElement('img');
+          img.src = opt.value;
+          img.alt = opt.label;
+          img.style.width = '64px';
+          img.style.height = '64px';
+          img.style.borderRadius = '50%';
+          img.style.objectFit = 'cover';
+          avatarLabel.appendChild(img);
+
+          const caption = document.createElement('span');
+          caption.textContent = opt.label;
+          avatarLabel.appendChild(caption);
+
+          avatarWrapper.appendChild(avatarLabel);
+        });
+        form.appendChild(avatarWrapper);
       } else {
         const input = document.createElement('input');
         input.type = field.type;
