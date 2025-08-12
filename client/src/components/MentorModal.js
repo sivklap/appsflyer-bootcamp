@@ -33,7 +33,7 @@ const MentorModal = ({show, mentor, onClose}) => {
                     <h3>Contact {mentor.first_name}</h3>
                     <div className="contact-icons">
                         <a href={`mailto:${mentor.email}`}><MailIcon /></a>
-                        <a href={`tel:${mentor.phone}`}><PhoneIcon /></a>
+                        <a href={`tel:${mentor.phone_number}`}><PhoneIcon /></a>
                     </div>
                 </div>
 

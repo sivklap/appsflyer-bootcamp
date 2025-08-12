@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MenteeRegistrationPage from "./pages/MenteeRegistrationPage";
 import MentorRegistrationPage from "./pages/MentorRegistrationPage";
-import HomePage from "./components/HomePage";
+import MentorsPage from "./components/MentorsPage";
 import NavBar from "./components/NavBar";
 import "./App.css";
 
@@ -13,7 +13,7 @@ function App() {
         <NavBar />
         <div className="app-container">
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/mentors-page" element={<MentorsPage />} />
             <Route path="/register/mentor" element={<MentorRegistrationPage />} />
             <Route path="/register/mentee" element={<MenteeRegistrationPage />} />
           </Routes>
