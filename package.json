@@ -5,7 +5,7 @@
   "main": "server/index.js",
   "scripts": {
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "cd server && PORT=5001 npm run dev",
+  "server": "cd server && cross-env PORT=5001 npm run dev",
     "client": "cd client && npm start",
     "client:watch": "cd client && npm run watch",
     "client:build:watch": "cd client && npm run build:watch",
@@ -25,6 +25,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "cross-env": "^10.0.0"
   }
 }

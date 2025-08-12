@@ -1,0 +1,90 @@
+.registration-page {
+  min-height: 100vh;
+  width: 100vw;
+  background: linear-gradient(135deg, #a259ff 0%, #6a11cb 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.registration-form {
+  max-width: 420px;
+  width: 100%;
+  margin: 0;
+  padding: 40px 30px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.registration-page h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #4f46e5;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.registration-page label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.registration-page input,
+.registration-page textarea {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 18px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 1rem;
+  background: #f9fafb;
+  transition: all 0.3s ease;
+}
+
+.registration-page input:focus,
+.registration-page textarea:focus {
+  border-color: #6366f1;
+  background: #ffffff;
+  box-shadow: 0 0 8px rgba(99, 102, 241, 0.3);
+  outline: none;
+}
+
+.registration-page button[type="submit"] {
+  width: 100%;
+  padding: 14px 0;
+  background: linear-gradient(90deg, #6366f1, #4f46e5);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.registration-page button[type="submit"]:hover {
+  background: linear-gradient(90deg, #4f46e5, #4338ca);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
+
+.registration-page p {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 0.95rem;
+  color: #6b7280;
+}
+
+.registration-page p a {
+  color: #6366f1;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.registration-page p a:hover {
+  text-decoration: underline;
+}

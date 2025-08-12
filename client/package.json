@@ -15,8 +15,10 @@
     "axios": "^1.6.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.62.0",
     "react-router-dom": "^7.7.1",
     "react-scripts": "5.0.1",
+    "react-select": "^5.10.2",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
@@ -49,5 +51,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:5000"
+  "proxy": "http://localhost:5001"
 }
