@@ -13,7 +13,7 @@ const { authenticateToken } = require("../middleware/auth");
 
 router.get("/", async (req, res) => {
   try {
-    const limit = Number(req.query.limit) || 100;
+    const limit = Number(req.query.limit) || 20;
     const users = await getAllUsers(limit);
     res.json(users);
   } catch (error) {
@@ -72,11 +72,10 @@ router.get("/:id", authenticateToken, async (req, res) => {
 router.post("/", authenticateToken, async (req, res) => {
   try {
     const result = await createUser(req.body);
-    res.status(201).json({ id: result.id });
+    res.status(201).json({ id: result._id });
   } catch (error) {
     console.error('Create user error:', error);
-    if (error.code === "23505") return res.status(409).json({ error: "Email already exists" });
-    if (error.code === "23514") return res.status(400).json({ error: "Invalid role" });
+    if (error.message === 'Email already exists') return res.status(409).json({ error: "Email already exists" });
     res.status(400).json({ error: error.message });
   }
 });
@@ -90,8 +89,7 @@ router.patch("/:id", authenticateToken, async (req, res) => {
     res.json(user);
   } catch (error) {
     console.error('Update user error:', error);
-    if (error.code === "23505") return res.status(409).json({ error: "Email already exists" });
-    if (error.code === "23514") return res.status(400).json({ error: "Invalid role" });
+    if (error.message === 'Email already exists') return res.status(409).json({ error: "Email already exists" });
     res.status(400).json({ error: error.message });
   }
 });

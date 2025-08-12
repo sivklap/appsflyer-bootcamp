@@ -1,74 +1,127 @@
-const db = require("../config/db");
+const User = require('../models/User');
 
 async function getAllUsers(limit = 100) {
-  const { rows } = await db.query(
-    "SELECT * FROM public.users ORDER BY created_at DESC LIMIT $1",
-    [limit]
-  );
-  return rows;
+  try {
+    const users = await User.find()
+      .select('-passwordHash')
+      .sort({ createdAt: -1 })
+      .limit(limit);
+    return users;
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    throw new Error(`Failed to fetch users: ${error.message}`);
+  }
 }
 
 async function getUserById(id) {
-  const { rows } = await db.query(
-    "SELECT * FROM public.users WHERE id = $1",
-    [id]
-  );
-  return rows[0];
+  try {
+    const user = await User.findById(id).select('-passwordHash');
+    if (!user) {
+      throw new Error('User not found');
+    }
+    return user;
+  } catch (error) {
+    throw error;
+  }
 }
 
 async function getMentors() {
-  const { rows } = await db.query(
-    "SELECT * FROM public.users WHERE role = 'mentor' ORDER BY created_at DESC"
-  );
-  return rows;
+  try {
+    const mentors = await User.find({ role: 'mentor' })
+      .select('-passwordHash')
+      .sort({ createdAt: -1 });
+    return mentors;
+  } catch (error) {
+    throw new Error('Failed to fetch mentors');
+  }
+}
+
+async function getMentorsById(id) {
+  try {
+    const mentor = await User.findOne({ _id: id, role: 'mentor' }).select('-passwordHash');
+    if (!mentor) {
+      throw new Error('Mentor not found');
+    }
+    return mentor;
+  } catch (error) {
+    throw error;
+  }
 }
 
 async function getMentees() {
-  const { rows } = await db.query(
-    "SELECT * FROM public.users WHERE role = 'mentee' ORDER BY created_at DESC"
-  );
-  return rows;
+  try {
+    const mentees = await User.find({ role: 'mentee' })
+      .select('-passwordHash')
+      .sort({ createdAt: -1 });
+    return mentees;
+  } catch (error) {
+    throw new Error('Failed to fetch mentees');
+  }
 }
 
 async function createUser(userData) {
-  const cols = [
-    "first_name", "last_name", "email", "password_hash", "phone",
-    "role", "bio", "linkedin_url", "image_url", "coding_languages", "specialty_fields"
-  ];
-  const ph = cols.map((_, i) => `$${i + 1}`).join(",");
-  const sql = `INSERT INTO public.users (${cols.join(",")}) VALUES (${ph}) RETURNING id`;
-  
-  const { rows } = await db.query(sql, cols.map(col => userData[col]));
-  return rows[0];
+  try {
+    const user = new User(userData);
+    await user.save();
+    return user;
+  } catch (error) {
+    if (error.code === 11000) {
+      throw new Error('Email already exists');
+    }
+    throw error;
+  }
 }
 
 async function updateUser(id, userData) {
-  const keys = Object.keys(userData).filter(key => userData[key] !== undefined);
-  if (keys.length === 0) throw new Error("No fields to update");
-  
-  const sets = keys.map((key, i) => `${key} = $${i + 1}`).join(", ");
-  const sql = `UPDATE public.users SET ${sets} WHERE id = $${keys.length + 1} RETURNING *`;
-  const params = [...keys.map(key => userData[key]), id];
-  
-  const { rows } = await db.query(sql, params);
-  return rows[0];
+  try {
+    const user = await User.findByIdAndUpdate(
+      id,
+      userData,
+      { new: true, runValidators: true }
+    ).select('-passwordHash');
+    
+    if (!user) {
+      throw new Error('User not found');
+    }
+    return user;
+  } catch (error) {
+    if (error.code === 11000) {
+      throw new Error('Email already exists');
+    }
+    throw error;
+  }
 }
 
 async function deleteUser(id) {
-  const { rowCount } = await db.query(
-    "DELETE FROM public.users WHERE id = $1",
-    [id]
-  );
-  return rowCount > 0;
+  try {
+    const user = await User.findByIdAndDelete(id);
+    if (!user) {
+      throw new Error('User not found');
+    }
+    return true;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function findUserByEmail(email) {
+  try {
+    const user = await User.findOne({ email: email.toLowerCase() });
+    return user;
+  } catch (error) {
+    throw error;
+  }
 }
 
 module.exports = {
   getAllUsers,
   getUserById,
   getMentors,
+  getMentorsById,
   getMentees,
   createUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  findUserByEmail
 };
 
