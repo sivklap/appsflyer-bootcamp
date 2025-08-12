@@ -13,8 +13,8 @@ const SearchBar = ({mentors, onResults, setIsSearching}) => {
             setIsSearching(false);
         } else {
             const filtered = mentors.filter((mentor) => {
-                const fullName = (mentor.first_name + " " + mentor.last_name).toLowerCase();
-                const languages = mentor.languages.map((l) => l.toLowerCase());
+                const fullName = (mentor.firstName + " " + mentor.lastName).toLowerCase();
+                const languages = mentor.codingLanguages.map((l) => l.toLowerCase());
                 return fullName.includes(value) || languages.some((l) => l.includes(value));
             })
             onResults(filtered);
