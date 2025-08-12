@@ -1,46 +1,25 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { 
-  ThemeProvider, 
-  createTheme, 
-  CssBaseline
-} from "@mui/material";
-import Dashboard from "./components/Dashboard";
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#6366f1",
-    },
-    secondary: {
-      main: "#ec4899",
-    },
-    background: {
-      default: "#f8fafc",
-    },
-  },
-  typography: {
-    fontFamily: "Roboto, Arial, sans-serif",
-    h4: {
-      fontWeight: 600,
-    },
-    h6: {
-      fontWeight: 500,
-    },
-  },
-});
-
+import MenteeRegistrationPage from "./pages/MenteeRegistrationPage";
+import MentorRegistrationPage from "./pages/MentorRegistrationPage";
+import MentorsPage from "./components/MentorsPage";
+import NavBar from "./components/NavBar";
+import "./App.css";
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Router>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-        </Routes>
-      </Router>
-    </ThemeProvider>
+    <Router>
+      <div className="app">
+        <NavBar />
+        <div className="app-container">
+          <Routes>
+            <Route path="/mentors-page" element={<MentorsPage />} />
+            <Route path="/register/mentor" element={<MentorRegistrationPage />} />
+            <Route path="/register/mentee" element={<MenteeRegistrationPage />} />
+          </Routes>
+        </div>
+      </div>
+    </Router>
   );
 }
 
