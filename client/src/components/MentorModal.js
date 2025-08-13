@@ -18,22 +18,22 @@ const MentorModal = ({show, mentor, onClose}) => {
                     <CloseIcon/>
                 </button>
                 <div className="mentor-modal-content">
-                    <img src={mentor.imageUrl} alt="Mentor" className="mentor-avatar" />
+                    <img src={`images/avatars/avatar-${mentor.img}.png`} alt="Mentor" className="mentor-avatar" />
                     <div className="mentor-modal-body">
-                        <a href={mentor.linkedinUrl} target="_blank" rel="noreferrer" className="linkedin-icon">
+                        <a href={mentor.linkedin_url} target="_blank" rel="noreferrer" className="linkedin-icon">
                             <LinkedInIcon fontSize="large" />
                         </a>
-                        <h1 className="mentor-name">{mentor.firstName} {mentor.lastName}</h1>
-                        <h2 className="mentor-language">{mentor.codingLanguages.join(", ")}</h2>
+                        <h1 className="mentor-name">{mentor.first_name} {mentor.last_name}</h1>
+                        <h2 className="mentor-language">{mentor.languages.join(", ")}</h2>
                         <p>{mentor.bio}</p>
                     </div>
                 </div>
 
                 <div className="mentor-contact">
-                    <h3>Contact {mentor.firstName}</h3>
+                    <h3>Contact {mentor.first_name}</h3>
                     <div className="contact-icons">
                         <a href={`mailto:${mentor.email}`}><MailIcon /></a>
-                        <a href={`tel:${mentor.phone}`}><PhoneIcon /></a>
+                        <a href={`tel:${mentor.phone_number}`}><PhoneIcon /></a>
                     </div>
                 </div>
 

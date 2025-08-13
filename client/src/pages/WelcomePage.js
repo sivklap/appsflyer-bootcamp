@@ -3,7 +3,7 @@ import React from "react"
 const WelcomePage = () => {
     return (
         <div>
-            Welcome
+            Connecting mentors and mentees to empower learning and growth in the community.
         </div>
     )
 }
