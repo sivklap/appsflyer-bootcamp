@@ -6,6 +6,7 @@ import MenteeRegistrationPage from "./pages/MenteeRegistrationPage";
 import MentorRegistrationPage from "./pages/MentorRegistrationPage";
 import MentorsPage from "./components/MentorsPage";
 import NavBar from "./components/NavBar";
+import WelcomePage from "./pages/WelcomePage";
 import "./App.css";
 
 function App() {
