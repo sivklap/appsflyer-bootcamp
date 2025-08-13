@@ -48,5 +48,5 @@ app.use("*", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Swagger: ${process.env.SERVER_URL}`);
+  console.log(`Swagger: ${process.env.SERVER_URL}/docs`);
 });
