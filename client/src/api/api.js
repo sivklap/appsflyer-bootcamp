@@ -1,5 +1,3 @@
-//#######################
-
 export async function registerUser(type, data) {
   const res = await fetch(`/signup`, {
     method: 'POST',

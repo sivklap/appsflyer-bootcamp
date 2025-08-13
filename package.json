@@ -25,6 +25,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "concurrently": "^8.2.2",
     "cross-env": "^10.0.0"
   },
