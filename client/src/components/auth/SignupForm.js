@@ -1,68 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Paper,
-  TextField,
-  Button,
   Typography,
-  Alert,
-  CircularProgress,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
+  Button,
+  Grid,
+  Card,
+  CardContent,
+  CardActions,
 } from '@mui/material';
-import { Person, Email, Lock } from '@mui/icons-material';
-import { authService } from '../../api/authService';
+import { School, Work } from '@mui/icons-material';
 
 const SignupForm = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    role: 'mentee'
-  });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-    setError('');
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
-
-    try {
-      // Create basic user data
-      const userData = {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        email: formData.email,
-        password: formData.password,
-        role: formData.role
-      };
-
-      const response = await authService.signup(userData);
-      
-      // Redirect based on role
-      if (formData.role === 'mentor') {
-        navigate('/register/mentor');
-      } else {
-        navigate('/register/mentee');
-      }
-    } catch (err) {
-      setError(err.response?.data?.error || 'Signup failed. Please try again.');
-    } finally {
-      setLoading(false);
+  const handleRoleSelection = (role) => {
+    // Redirect directly to the appropriate registration form
+    if (role === 'mentor') {
+      navigate('/register/mentor');
+    } else {
+      navigate('/register/mentee');
     }
   };
 
@@ -82,112 +40,107 @@ const SignupForm = () => {
         sx={{
           padding: 4,
           width: '100%',
-          maxWidth: 400,
+          maxWidth: 800,
           borderRadius: 2,
         }}
       >
-        <Box sx={{ textAlign: 'center', mb: 3 }}>
+        <Box sx={{ textAlign: 'center', mb: 4 }}>
           <Typography variant="h4" component="h1" gutterBottom>
-            Create Account
+            Join QueenB Mentorship Program!
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Join our mentoring community
+          <Typography variant="h6" color="text.secondary" sx={{ mb: 2 }}>
+            Choose your role to get started
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            Are you looking to learn or to teach?
           </Typography>
         </Box>
 
-        {error && (
-          <Alert severity="error" sx={{ mb: 2 }}>
-            {error}
-          </Alert>
-        )}
-
-        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
-          <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
-            <TextField
-              required
-              fullWidth
-              name="firstName"
-              label="First Name"
-              value={formData.firstName}
-              onChange={handleChange}
-              InputProps={{
-                startAdornment: (
-                  <Person color="action" />
-                ),
+        <Grid container spacing={3}>
+          {/* Mentee Card */}
+          <Grid item xs={12} md={6}>
+            <Card 
+              sx={{ 
+                height: '100%',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  transform: 'translateY(-4px)',
+                  boxShadow: 4,
+                }
               }}
-            />
-            <TextField
-              required
-              fullWidth
-              name="lastName"
-              label="Last Name"
-              value={formData.lastName}
-              onChange={handleChange}
-            />
-          </Box>
-
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="email"
-            label="Email Address"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
-            InputProps={{
-              startAdornment: (
-                <Email color="action" />
-              ),
-            }}
-          />
-
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            value={formData.password}
-            onChange={handleChange}
-            InputProps={{
-              startAdornment: (
-                <Lock color="action" />
-              ),
-            }}
-          />
-
-          <FormControl fullWidth margin="normal">
-            <InputLabel>I want to be a...</InputLabel>
-            <Select
-              name="role"
-              value={formData.role}
-              label="I want to be a..."
-              onChange={handleChange}
+              onClick={() => handleRoleSelection('mentee')}
             >
-              <MenuItem value="mentee">Mentee (I want to learn)</MenuItem>
-              <MenuItem value="mentor">Mentor (I want to teach)</MenuItem>
-            </Select>
-          </FormControl>
+              <CardContent sx={{ textAlign: 'center', py: 4 }}>
+                <School sx={{ fontSize: 80, color: '#667eea', mb: 3 }} />
+                <Typography variant="h5" component="h2" gutterBottom>
+                  I'm a Mentee
+                </Typography>
+                <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+                  I want to learn and grow with guidance from experienced professionals
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Perfect for students, junior developers, and anyone looking to advance their skills
+                </Typography>
+              </CardContent>
+              <CardActions sx={{ justifyContent: 'center', pb: 3 }}>
+                <Button
+                  variant="contained"
+                  size="large"
+                  sx={{ px: 4, py: 1.5 }}
+                >
+                  Join as Mentee
+                </Button>
+              </CardActions>
+            </Card>
+          </Grid>
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2, py: 1.5 }}
-            disabled={loading}
-          >
-            {loading ? <CircularProgress size={24} /> : 'Create Account'}
-          </Button>
-          <Box sx={{ textAlign: 'center' }}>
-            <Typography variant="body2" color="text.secondary">
-              Already have an account?{' '}
-              <a href="/login" style={{ textDecoration: 'none', color: '#667eea' }}>
-                Sign in
-              </a>
-            </Typography>
-          </Box>
+          {/* Mentor Card */}
+          <Grid item xs={12} md={6}>
+            <Card 
+              sx={{ 
+                height: '100%',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  transform: 'translateY(-4px)',
+                  boxShadow: 4,
+                }
+              }}
+              onClick={() => handleRoleSelection('mentor')}
+            >
+              <CardContent sx={{ textAlign: 'center', py: 4 }}>
+                <Work sx={{ fontSize: 80, color: '#667eea', mb: 3 }} />
+                <Typography variant="h5" component="h2" gutterBottom>
+                  I'm a Mentor
+                </Typography>
+                <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+                  I want to share my knowledge and help others grow in their careers
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Perfect for senior developers, team leads, and experienced professionals
+                </Typography>
+              </CardContent>
+              <CardActions sx={{ justifyContent: 'center', pb: 3 }}>
+                <Button
+                  variant="contained"
+                  size="large"
+                  sx={{ px: 4, py: 1.5 }}
+                >
+                  Join as Mentor
+                </Button>
+              </CardActions>
+            </Card>
+          </Grid>
+        </Grid>
+
+        <Box sx={{ textAlign: 'center', mt: 4 }}>
+          <Typography variant="body2" color="text.secondary">
+            Already have an account?{' '}
+            <a href="/login" style={{ textDecoration: 'none', color: '#667eea' }}>
+              Sign in
+            </a>
+          </Typography>
         </Box>
       </Paper>
     </Box>
