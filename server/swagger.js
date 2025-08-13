@@ -1,711 +1,571 @@
-require("dotenv").config();
-const PORT = process.env.PORT;
+
 
 const swaggerUi = require("swagger-ui-express");
 
-const openapi = {
-  openapi: "3.0.3",
-  info: { 
-    title: "AppsFlyer Bootcamp API", 
-    version: "1.0.0",
-    description: "API for the AppsFlyer Bootcamp application with MongoDB backend",
-    contact: {
-      name: "AppsFlyer Bootcamp Team",
-      email: "support@appsflyer-bootcamp.com"
-    }
+const swaggerDocument = {
+  openapi: '3.0.0',
+  info: {
+    title: 'QueenB API',
+    version: '1.0.0',
+    description: 'API for QueenB mentoring platform',
   },
   servers: [
-    { url: `http://localhost:${PORT}`, description: "Development server" },
-    { url: "https://api.appsflyer-bootcamp.com", description: "Production server" }
+    {
+      url: 'http://localhost:5005/',
+      description: 'Development server',
+    },
   ],
   components: {
     securitySchemes: {
-      bearerAuth: { 
-        type: "http", 
-        scheme: "bearer", 
-        bearerFormat: "JWT",
-        description: "JWT token obtained from login endpoint"
-      }
+      bearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
     },
     schemas: {
       User: {
-        type: "object",
+        type: 'object',
         properties: {
-          _id: { 
-            type: "string", 
-            description: "MongoDB ObjectId",
-            example: "689b38c419c77b070af4c019"
+          _id: {
+            type: 'string',
+            description: 'User ID',
+            example: '507f1f77bcf86cd799439011'
           },
-          firstName: { 
-            type: "string", 
-            description: "User's first name",
-            example: "Dana"
+          firstName: {
+            type: 'string',
+            description: 'User first name',
+            example: 'John'
           },
-          lastName: { 
-            type: "string", 
-            description: "User's last name",
-            example: "Levi"
+          lastName: {
+            type: 'string',
+            description: 'User last name',
+            example: 'Doe'
           },
-          email: { 
-            type: "string", 
-            format: "email", 
-            description: "User's email address",
-            example: "dana.levi.1@example.com"
+          email: {
+            type: 'string',
+            format: 'email',
+            description: 'User email address',
+            example: 'john.doe@example.com'
           },
-          phone: { 
-            type: "string", 
-            description: "User's phone number",
-            example: "+972-54-1111111"
+          role: {
+            type: 'string',
+            enum: ['mentor', 'mentee'],
+            description: 'User role',
+            example: 'mentee'
           },
-          role: { 
-            type: "string", 
-            enum: ["mentor","mentee","admin"], 
-            description: "User's role in the system",
-            example: "mentor"
+          phone: {
+            type: 'string',
+            nullable: true,
+            description: 'User phone number',
+            example: '+1234567890'
           },
-          bio: { 
-            type: "string", 
-            description: "User's biography",
-            example: "Frontend mentor specializing in React and TypeScript."
+          bio: {
+            type: 'string',
+            nullable: true,
+            description: 'User bio',
+            example: 'I am a passionate developer...'
           },
-          linkedinUrl: { 
-            type: "string", 
-            format: "uri", 
-            description: "User's LinkedIn profile URL",
-            example: "https://linkedin.com/in/dana-levi"
+          linkedinUrl: {
+            type: 'string',
+            nullable: true,
+            description: 'LinkedIn profile URL',
+            example: 'https://linkedin.com/in/johndoe'
           },
-          imageUrl: { 
-            type: "string", 
-            format: "uri", 
-            description: "User's profile image URL",
-            example: "https://example.com/avatar1.png"
+          imageUrl: {
+            type: 'string',
+            nullable: true,
+            description: 'Profile image URL',
+            example: 'https://example.com/avatar.jpg'
           },
-          codingLanguages: { 
-            type: "array",
-            items: { type: "string" },
-            description: "Array of programming languages",
-            example: ["JavaScript", "TypeScript", "HTML", "CSS"]
+          codingLanguages: {
+            type: 'array',
+            items: {
+              type: 'string'
+            },
+            description: 'Programming languages user knows',
+            example: ['JavaScript', 'Python', 'React']
           },
-          specialtyFields: { 
-            type: "array",
-            items: { type: "string" },
-            description: "Array of specialty areas",
-            example: ["Frontend", "React", "UI/UX"]
+          specialtyFields: {
+            type: 'array',
+            items: {
+              type: 'string'
+            },
+            description: 'Areas of expertise',
+            example: ['Frontend Development', 'Backend Development']
           },
-          image: {
-            type: "number",
-            description: "Image index number",
-            example: 0
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            description: 'Account creation date',
+            example: '2024-01-15T10:30:00.000Z'
           },
-          createdAt: { 
-            type: "string", 
-            format: "date-time", 
-            description: "User creation timestamp",
-            example: "2025-08-12T12:45:00.000Z"
-          },
-          updatedAt: { 
-            type: "string", 
-            format: "date-time", 
-            description: "User last update timestamp",
-            example: "2025-08-12T12:45:00.000Z"
-          },
-          fullName: {
-            type: "string",
-            description: "Virtual field - user's full name",
-            example: "Dana Levi"
-          }
-        },
-        required: ["firstName", "lastName", "email", "role"]
-      },
-      SignupRequest: {
-        type: "object",
-        required: ["firstName","lastName","email","password"],
-        properties: {
-          firstName: { 
-            type: "string", 
-            description: "User's first name",
-            example: "Dana"
-          },
-          lastName: { 
-            type: "string", 
-            description: "User's last name",
-            example: "Levi"
-          },
-          email: { 
-            type: "string", 
-            format: "email", 
-            description: "User's email address",
-            example: "dana.levi.1@example.com"
-          },
-          password: { 
-            type: "string", 
-            format: "password", 
-            minLength: 6,
-            description: "User's password (minimum 6 characters)",
-            example: "securepassword123"
-          },
-          phone: { 
-            type: "string", 
-            description: "User's phone number",
-            example: "+972-54-1111111"
-          },
-          role: { 
-            type: "string", 
-            enum: ["mentor","mentee","admin"], 
-            default: "mentee",
-            description: "User's role in the system",
-            example: "mentor"
-          },
-          bio: { 
-            type: "string", 
-            description: "User's biography",
-            example: "Frontend mentor specializing in React and TypeScript."
-          },
-          linkedinUrl: { 
-            type: "string", 
-            format: "uri", 
-            description: "User's LinkedIn profile URL",
-            example: "https://linkedin.com/in/dana-levi"
-          },
-          imageUrl: { 
-            type: "string", 
-            format: "uri", 
-            description: "User's profile image URL",
-            example: "https://example.com/avatar1.png"
-          },
-          codingLanguages: { 
-            type: "array",
-            items: { type: "string" },
-            description: "Array of programming languages",
-            example: ["JavaScript", "TypeScript", "HTML", "CSS"]
-          },
-          specialtyFields: { 
-            type: "array",
-            items: { type: "string" },
-            description: "Array of specialty areas",
-            example: ["Frontend", "React", "UI/UX"]
-          },
-          image: {
-            type: "number",
-            description: "Image index number",
-            example: 0
+          updatedAt: {
+            type: 'string',
+            format: 'date-time',
+            description: 'Last update date',
+            example: '2024-01-15T10:30:00.000Z'
           }
         }
       },
       LoginRequest: {
-        type: "object",
-        required: ["email","password"],
+        type: 'object',
+        required: ['email', 'password'],
         properties: {
-          email: { 
-            type: "string", 
-            format: "email", 
-            description: "User's email address",
-            example: "dana.levi.1@example.com"
+          email: {
+            type: 'string',
+            format: 'email',
+            description: 'User email address',
+            example: 'john.doe@example.com'
           },
-          password: { 
-            type: "string", 
-            format: "password", 
-            description: "User's password",
-            example: "securepassword123"
+          password: {
+            type: 'string',
+            description: 'User password',
+            example: 'password123'
+          }
+        }
+      },
+      SignupRequest: {
+        type: 'object',
+        required: ['firstName', 'lastName', 'email', 'password', 'role'],
+        properties: {
+          firstName: {
+            type: 'string',
+            description: 'User first name',
+            example: 'John'
+          },
+          lastName: {
+            type: 'string',
+            description: 'User last name',
+            example: 'Doe'
+          },
+          email: {
+            type: 'string',
+            format: 'email',
+            description: 'User email address',
+            example: 'john.doe@example.com'
+          },
+          password: {
+            type: 'string',
+            description: 'User password',
+            example: 'password123'
+          },
+          role: {
+            type: 'string',
+            enum: ['mentor', 'mentee'],
+            description: 'User role',
+            example: 'mentee'
+          }
+        }
+      },
+      UpdateProfileRequest: {
+        type: 'object',
+        properties: {
+          firstName: {
+            type: 'string',
+            description: 'User first name',
+            example: 'John'
+          },
+          lastName: {
+            type: 'string',
+            description: 'User last name',
+            example: 'Doe'
+          },
+          email: {
+            type: 'string',
+            format: 'email',
+            description: 'User email address',
+            example: 'john.doe@example.com'
+          },
+          phone: {
+            type: 'string',
+            description: 'User phone number',
+            example: '+1234567890'
+          },
+          bio: {
+            type: 'string',
+            description: 'User bio',
+            example: 'I am a passionate developer with 5 years of experience...'
+          },
+          linkedinUrl: {
+            type: 'string',
+            description: 'LinkedIn profile URL',
+            example: 'https://linkedin.com/in/johndoe'
+          },
+          imageUrl: {
+            type: 'string',
+            description: 'Profile image URL',
+            example: 'https://example.com/avatar.jpg'
+          },
+          codingLanguages: {
+            type: 'array',
+            items: {
+              type: 'string'
+            },
+            description: 'Programming languages user knows',
+            example: ['JavaScript', 'React', 'Node.js']
+          },
+          specialtyFields: {
+            type: 'array',
+            items: {
+              type: 'string'
+            },
+            description: 'Areas of expertise',
+            example: ['Frontend Development', 'Full Stack Development']
           }
         }
       },
       AuthResponse: {
-        type: "object",
+        type: 'object',
         properties: {
-          user: { $ref: "#/components/schemas/User" },
-          token: { 
-            type: "string", 
-            description: "JWT authentication token",
-            example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          user: {
+            $ref: '#/components/schemas/User'
+          },
+          token: {
+            type: 'string',
+            description: 'JWT token for authentication',
+            example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
           }
         }
       },
       Error: {
-        type: "object",
+        type: 'object',
         properties: {
-          error: { 
-            type: "string", 
-            description: "Error message",
-            example: "User not found"
+          error: {
+            type: 'string',
+            description: 'Error message',
+            example: 'Invalid credentials'
           }
         }
       }
     }
   },
   paths: {
-    "/api/health": {
-      get: { 
-        summary: "Health check", 
-        description: "Check if the API is running",
-        tags: ["Health"],
-        responses: { 
-          "200": { 
-            description: "API is healthy",
+    '/auth/signup': {
+      post: {
+        tags: ['Authentication'],
+        summary: 'Create a new user account',
+        description: 'Register a new user with basic information (firstName, lastName, email, password, role)',
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/SignupRequest'
+              },
+              example: {
+                firstName: 'John',
+                lastName: 'Doe',
+                email: 'john.doe@example.com',
+                password: 'password123',
+                role: 'mentee'
+              }
+            }
+          }
+        },
+        responses: {
+          201: {
+            description: 'User created successfully',
             content: {
-              "application/json": {
+              'application/json': {
                 schema: {
-                  type: "object",
-                  properties: {
-                    message: { type: "string", example: "QueenB Server is running!" },
-                    timestamp: { type: "string", format: "date-time" },
-                    status: { type: "string", example: "healthy" },
-                    database: { type: "string", example: "MongoDB" }
+                  $ref: '#/components/schemas/AuthResponse'
+                }
+              }
+            }
+          },
+          400: {
+            description: 'Invalid input data',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/Error'
+                }
+              }
+            }
+          },
+          409: {
+            description: 'Email already exists',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/Error'
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    '/auth/login': {
+      post: {
+        tags: ['Authentication'],
+        summary: 'User login',
+        description: 'Authenticate user and return JWT token',
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/LoginRequest'
+              },
+              example: {
+                email: 'john.doe@example.com',
+                password: 'password123'
+              }
+            }
+          }
+        },
+        responses: {
+          200: {
+            description: 'Login successful',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/AuthResponse'
+                }
+              }
+            }
+          },
+          401: {
+            description: 'Invalid credentials',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/Error'
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    '/auth/profile': {
+      get: {
+        tags: ['Authentication'],
+        summary: 'Get user profile',
+        description: 'Get current user profile information',
+        security: [
+          {
+            bearerAuth: []
+          }
+        ],
+        responses: {
+          200: {
+            description: 'User profile retrieved successfully',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/User'
+                }
+              }
+            }
+          },
+          401: {
+            description: 'Unauthorized - Invalid or missing token',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/Error'
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    '/auth/update-profile': {
+      patch: {
+        tags: ['Authentication'],
+        summary: 'Update user profile',
+        description: 'Update current user profile information (for registration pages)',
+        security: [
+          {
+            bearerAuth: []
+          }
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/UpdateProfileRequest'
+              },
+              example: {
+                phone: '+1234567890',
+                bio: 'I am a passionate developer with 5 years of experience...',
+                linkedinUrl: 'https://linkedin.com/in/johndoe',
+                codingLanguages: ['JavaScript', 'React', 'Node.js'],
+                specialtyFields: ['Frontend Development', 'Full Stack Development']
+              }
+            }
+          }
+        },
+        responses: {
+          200: {
+            description: 'Profile updated successfully',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/User'
+                }
+              }
+            }
+          },
+          400: {
+            description: 'Invalid input data',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/Error'
+                }
+              }
+            }
+          },
+          401: {
+            description: 'Unauthorized - Invalid or missing token',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/Error'
+                }
+              }
+            }
+          },
+          404: {
+            description: 'User not found',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/Error'
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    '/users': {
+      get: {
+        tags: ['Users'],
+        summary: 'Get all users',
+        description: 'Retrieve a list of all users',
+        parameters: [
+          {
+            name: 'limit',
+            in: 'query',
+            description: 'Maximum number of users to return',
+            required: false,
+            schema: {
+              type: 'integer',
+              default: 100
+            }
+          }
+        ],
+        responses: {
+          200: {
+            description: 'List of users retrieved successfully',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/components/schemas/User'
                   }
                 }
               }
             }
-          } 
-        } 
+          }
+        }
       }
     },
-    "/api/auth/signup": {
-      post: {
-        summary: "Create account",
-        description: "Register a new user account",
-        tags: ["Authentication"],
-        requestBody: {
-          required: true,
-          content: { 
-            "application/json": { 
-              schema: { $ref: "#/components/schemas/SignupRequest" },
-              example: {
-                firstName: "Dana",
-                lastName: "Levi",
-                email: "dana.levi.1@example.com",
-                password: "securepassword123",
-                role: "mentor",
-                phone: "+972-54-1111111",
-                bio: "Frontend mentor specializing in React and TypeScript.",
-                linkedinUrl: "https://linkedin.com/in/dana-levi",
-                imageUrl: "https://example.com/avatar1.png",
-                codingLanguages: ["JavaScript", "TypeScript", "HTML", "CSS"],
-                specialtyFields: ["Frontend", "React", "UI/UX"],
-                image: 0
-              }
-            } 
-          } 
-        },
-        responses: { 
-          "201": { 
-            description: "Account created successfully",
-            content: {
-              "application/json": {
-                schema: { $ref: "#/components/schemas/AuthResponse" }
-              }
-            }
-          }, 
-          "400": { 
-            description: "Invalid input data",
-            content: {
-              "application/json": {
-                schema: { $ref: "#/components/schemas/Error" }
-              }
-            }
-          },
-          "409": { 
-            description: "Email already exists",
-            content: {
-              "application/json": {
-                schema: { $ref: "#/components/schemas/Error" }
-              }
-            }
-          } 
-        } 
-      }
-    },
-    "/api/auth/login": {
-      post: {
-        summary: "Login",
-        description: "Authenticate user and get JWT token",
-        tags: ["Authentication"],
-        requestBody: {
-          required: true,
-          content: { 
-            "application/json": { 
-              schema: { $ref: "#/components/schemas/LoginRequest" },
-              example: {
-                email: "dana.levi.1@example.com",
-                password: "securepassword123"
-              }
-            } 
-          } 
-        },
-        responses: { 
-          "200": { 
-            description: "Login successful",
-            content: {
-              "application/json": {
-                schema: { $ref: "#/components/schemas/AuthResponse" }
-              }
-            }
-          }, 
-          "401": { 
-            description: "Invalid credentials",
-            content: {
-              "application/json": {
-                schema: { $ref: "#/components/schemas/Error" }
-              }
-            }
-          },
-          "400": { 
-            description: "Invalid input data",
-            content: {
-              "application/json": {
-                schema: { $ref: "#/components/schemas/Error" }
-              }
-            }
-          } 
-        } 
-      }
-    },
-    "/api/auth/profile": {
+    '/users/mentors': {
       get: {
-        summary: "Get current user profile",
-        description: "Retrieve the profile of the currently authenticated user",
-        tags: ["Authentication"],
-        security: [{ bearerAuth: [] }],
-        responses: { 
-          "200": { 
-            description: "Profile retrieved successfully",
+        tags: ['Users'],
+        summary: 'Get all mentors',
+        description: 'Retrieve a list of all mentors',
+        responses: {
+          200: {
+            description: 'List of mentors retrieved successfully',
             content: {
-              "application/json": {
-                schema: { $ref: "#/components/schemas/User" }
-              }
-            }
-          }, 
-          "401": { 
-            description: "Unauthorized - Missing token",
-            content: {
-              "application/json": {
-                schema: { $ref: "#/components/schemas/Error" }
-              }
-            }
-          },
-          "403": { 
-            description: "Forbidden - Invalid token",
-            content: {
-              "application/json": {
-                schema: { $ref: "#/components/schemas/Error" }
-              }
-            }
-          } 
-        } 
-      }
-    },
-    "/api/users": {
-      get: {
-        summary: "List users",
-        description: "Retrieve a list of all users with optional pagination",
-        tags: ["Users"],
-        parameters: [{ 
-          name: "limit", 
-          in: "query", 
-          description: "Maximum number of users to return",
-          schema: { type: "integer", default: 20, minimum: 1, maximum: 1000 } 
-        }],
-        responses: { 
-          "200": { 
-            description: "List of users retrieved successfully",
-            content: { 
-              "application/json": { 
-                schema: { 
-                  type: "array", 
-                  items: { $ref: "#/components/schemas/User" } 
-                } 
-              } 
-            } 
-          },
-          "500": {
-            description: "Internal server error",
-            content: {
-              "application/json": {
-                schema: { $ref: "#/components/schemas/Error" }
+              'application/json': {
+                schema: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/components/schemas/User'
+                  }
+                }
               }
             }
           }
-        } 
-      },
-      post: {
-        summary: "Create user",
-        description: "Create a new user (admin only)",
-        tags: ["Users"],
-        security: [{ bearerAuth: [] }],
-        requestBody: { 
-          required: true, 
-          content: { 
-            "application/json": { 
-              schema: { $ref: "#/components/schemas/SignupRequest" } 
-            } 
-          } 
-        },
-        responses: { 
-          "201": { 
-            description: "User created successfully",
+        }
+      }
+    },
+    '/users/mentees': {
+      get: {
+        tags: ['Users'],
+        summary: 'Get all mentees',
+        description: 'Retrieve a list of all mentees',
+        responses: {
+          200: {
+            description: 'List of mentees retrieved successfully',
             content: {
-              "application/json": {
-                schema: { $ref: "#/components/schemas/User" }
-              }
-            }
-          }, 
-          "400": {
-            description: "Invalid input data",
-            content: {
-              "application/json": {
-                schema: { $ref: "#/components/schemas/Error" }
-              }
-            }
-          },
-          "409": { 
-            description: "Email already exists",
-            content: {
-              "application/json": {
-                schema: { $ref: "#/components/schemas/Error" }
-              }
-            }
-          },
-          "401": {
-            description: "Unauthorized",
-            content: {
-              "application/json": {
-                schema: { $ref: "#/components/schemas/Error" }
+              'application/json': {
+                schema: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/components/schemas/User'
+                  }
+                }
               }
             }
           }
-        } 
+        }
       }
     },
-    "/api/users/{id}": {
+    '/health': {
       get: {
-        summary: "Get user by id",
-        description: "Retrieve a specific user by their MongoDB ObjectId",
-        tags: ["Users"],
-        parameters: [{ 
-          name: "id", 
-          in: "path", 
-          required: true, 
-          description: "MongoDB ObjectId",
-          schema: { type: "string", example: "689b38c419c77b070af4c019" } 
-        }],
-        responses: { 
-          "200": { 
-            description: "User retrieved successfully",
-            content: { 
-              "application/json": { 
-                schema: { $ref: "#/components/schemas/User" } 
-              } 
-            } 
-          }, 
-          "404": { 
-            description: "User not found",
+        tags: ['System'],
+        summary: 'Health check',
+        description: 'Check if the API is running',
+        responses: {
+          200: {
+            description: 'API is healthy',
             content: {
-              "application/json": {
-                schema: { $ref: "#/components/schemas/Error" }
-              }
-            }
-          } 
-        } 
-      },
-      patch: {
-        summary: "Update user",
-        description: "Update an existing user's information",
-        tags: ["Users"],
-        security: [{ bearerAuth: [] }],
-        parameters: [{ 
-          name: "id", 
-          in: "path", 
-          required: true, 
-          description: "MongoDB ObjectId",
-          schema: { type: "string", example: "689b38c419c77b070af4c019" } 
-        }],
-        requestBody: { 
-          required: true, 
-          content: { 
-            "application/json": { 
-              schema: { $ref: "#/components/schemas/SignupRequest" } 
-            } 
-          } 
-        },
-        responses: { 
-          "200": { 
-            description: "User updated successfully",
-            content: {
-              "application/json": {
-                schema: { $ref: "#/components/schemas/User" }
-              }
-            }
-          }, 
-          "400": {
-            description: "Invalid input data",
-            content: {
-              "application/json": {
-                schema: { $ref: "#/components/schemas/Error" }
-              }
-            }
-          },
-          "404": { 
-            description: "User not found",
-            content: {
-              "application/json": {
-                schema: { $ref: "#/components/schemas/Error" }
-              }
-            }
-          },
-          "409": {
-            description: "Email already exists",
-            content: {
-              "application/json": {
-                schema: { $ref: "#/components/schemas/Error" }
-              }
-            }
-          },
-          "401": {
-            description: "Unauthorized",
-            content: {
-              "application/json": {
-                schema: { $ref: "#/components/schemas/Error" }
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    message: {
+                      type: 'string',
+                      example: 'QueenB Server is running!'
+                    },
+                    timestamp: {
+                      type: 'string',
+                      format: 'date-time',
+                      example: '2024-01-15T10:30:00.000Z'
+                    },
+                    status: {
+                      type: 'string',
+                      example: 'healthy'
+                    },
+                    database: {
+                      type: 'string',
+                      example: 'MongoDB'
+                    }
+                  }
+                }
               }
             }
           }
-        } 
-      },
-      delete: {
-        summary: "Delete user",
-        description: "Delete a user from the system",
-        tags: ["Users"],
-        security: [{ bearerAuth: [] }],
-        parameters: [{ 
-          name: "id", 
-          in: "path", 
-          required: true, 
-          description: "MongoDB ObjectId",
-          schema: { type: "string", example: "689b38c419c77b070af4c019" } 
-        }],
-        responses: { 
-          "204": { 
-            description: "User deleted successfully" 
-          }, 
-          "404": { 
-            description: "User not found",
-            content: {
-              "application/json": {
-                schema: { $ref: "#/components/schemas/Error" }
-              }
-            }
-          },
-          "401": {
-            description: "Unauthorized",
-            content: {
-              "application/json": {
-                schema: { $ref: "#/components/schemas/Error" }
-              }
-            }
-          }
-        } 
-      }
-    },
-    "/api/users/mentors": {
-      get: {
-        summary: "List mentors",
-        description: "Retrieve a list of all users with mentor role",
-        tags: ["Mentors"],
-        responses: { 
-          "200": { 
-            description: "List of mentors retrieved successfully",
-            content: { 
-              "application/json": { 
-                schema: { 
-                  type: "array", 
-                  items: { $ref: "#/components/schemas/User" } 
-                } 
-              } 
-            } 
-          } 
-        } 
-      }
-    },
-    "/api/users/mentors/{id}": {
-      get: {
-        summary: "Get mentor by id",
-        description: "Retrieve a specific mentor by their MongoDB ObjectId",
-        tags: ["Mentors"],
-        parameters: [{ 
-          name: "id", 
-          in: "path", 
-          required: true, 
-          description: "MongoDB ObjectId",
-          schema: { type: "string", example: "689b38c419c77b070af4c019" } 
-        }],
-        responses: { 
-          "200": { 
-            description: "Mentor retrieved successfully",
-            content: {
-              "application/json": {
-                schema: { $ref: "#/components/schemas/User" }
-              }
-            }
-          }, 
-          "404": { 
-            description: "Mentor not found",
-            content: {
-              "application/json": {
-                schema: { $ref: "#/components/schemas/Error" }
-              }
-            }
-          } 
-        } 
-      }
-    },
-    "/api/users/mentees": {
-      get: {
-        summary: "List mentees",
-        description: "Retrieve a list of all users with mentee role",
-        tags: ["Mentees"],
-        responses: { 
-          "200": { 
-            description: "List of mentees retrieved successfully",
-            content: { 
-              "application/json": { 
-                schema: { 
-                  type: "array", 
-                  items: { $ref: "#/components/schemas/User" } 
-                } 
-              } 
-            } 
-          } 
-        } 
+        }
       }
     }
-  },
-  tags: [
-    {
-      name: "Health",
-      description: "Health check endpoints"
-    },
-    {
-      name: "Authentication",
-      description: "Authentication and authorization operations"
-    },
-    {
-      name: "Users",
-      description: "User management operations"
-    },
-    {
-      name: "Mentors",
-      description: "Mentor-specific operations"
-    },
-    {
-      name: "Mentees",
-      description: "Mentee-specific operations"
-    }
-  ]
+  }
 };
 
 function mountSwagger(app) {
-  app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(openapi, {
-    customCss: '.swagger-ui .topbar { display: none }',
-    customSiteTitle: "AppsFlyer Bootcamp API Documentation (MongoDB)"
-  }));
+  app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 }
 
 module.exports = { mountSwagger };

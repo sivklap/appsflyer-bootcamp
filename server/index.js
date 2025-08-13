@@ -48,5 +48,5 @@ app.use("*", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Swagger: http://localhost:${PORT}/api/docs`);
+  console.log(`Swagger: ${process.env.SERVER_URL}`);
 });
