@@ -11,8 +11,10 @@ export const fieldsConfig = {
     { name: 'phone_number', label: 'Phone', type: 'tel', required: true },
     { name: 'linkedin_url', label: 'LinkedIn', type: 'url' },
     { name: 'img', label: 'Avatar', type: 'select', options: [
-      { label: 'Avatar 1', value: '/avatar-1.png' },
-      { label: 'Avatar 2', value: '/avatar-2.png' }
+  { label: 'Avatar 1', value: '/avatar-1.png' },
+  { label: 'Avatar 2', value: '/avatar-2.png' },
+  { label: 'Avatar 3', value: '/avatar-3.png' },
+  { label: 'Avatar 4', value: '/avatar-4.png' }
     ], required: true }
   ],
   mentee: [

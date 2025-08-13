@@ -33,7 +33,7 @@ const SearchBar = ({mentors, onResults, setIsSearching}) => {
                 placeholder="Search by name or language"
             />
         </div>
-
+ 
 
 )
 }

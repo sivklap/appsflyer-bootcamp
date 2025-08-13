@@ -149,6 +149,9 @@ export default function RegistrationForm({ type }) {
         await registerUser(type, formData);
         statusP.textContent = '✅ Registered successfully!';
         statusP.style.color = 'green';
+        setTimeout(() => {
+          window.location.href = '/signup';
+        }, 1000);
       } catch {
         statusP.textContent = '❌ Registration error';
         statusP.style.color = 'red';
