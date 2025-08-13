@@ -20,6 +20,11 @@
     color: inherit;
 }
 
+.logo {
+    height: 70px;
+    width: auto;
+}
+
 .navbar-user{
     margin-left: 6px;
     display: inline-block;

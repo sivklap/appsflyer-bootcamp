@@ -7,7 +7,7 @@ const NavBar = ({user}) => {
     return (
         <nav className="navbar">
             <a className="title" href={'/'}>
-                <h3>Home</h3>
+                <img src="/images/logo.png" alt="Home Logo" className="logo" />
             </a>
             <div className="navbar-user">
                 { user ? (
