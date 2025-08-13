@@ -4,7 +4,7 @@ import MentorCards from "./MentorCards";
 import SearchBar from "./SearchBar";
 import axios from "axios";
 
-const MentorsPage = () => {
+const MentorsPage = ({user}) => {
 
     const [mentors, setMentors] = useState([]);
     const [isSearching, setIsSearching] = useState(false);
@@ -21,7 +21,7 @@ const MentorsPage = () => {
         }
         getMentors();
     }, [])
-
+    // TODO: check if the user is mentor
   return (
       <div>
           <SearchBar mentors={mentors} onResults={setFilteredMentors} setIsSearching={setIsSearching} />
