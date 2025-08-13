@@ -1,12 +1,49 @@
 import React from "react"
 import "./NavBar.css"
+import Button from '@mui/material/Button';
 
-const NavBar = () => {
+
+const NavBar = ({user}) => {
     return (
         <nav className="navbar">
             <a className="title" href={'/'}>
-                <h1>Home</h1>
+                <img src="/images/logo.png" alt="Home Logo" className="logo" />
             </a>
+            <div className="navbar-user">
+                { user ? (
+
+                    <div className="user-bye">
+                        <Button
+                            className="log-out"
+                            variant="contained"
+                            href="/"
+                        >
+                            Log out
+                        </Button>
+                    </div>
+
+                ) : (
+                    <div className="user-hi">
+                        <Button
+                            className="log-in"
+                            variant="contained"
+                            href="/login"
+                        >
+                            Log in
+                        </Button>
+                        <Button
+                            className="sign-up"
+                            variant="contained"
+                            href="/signup"
+                        >
+                            Sign up
+                        </Button>
+                    </div>
+                )}
+            </div>
+
+
+
         </nav>
     )
 }
