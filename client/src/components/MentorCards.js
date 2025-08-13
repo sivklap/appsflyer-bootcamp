@@ -17,9 +17,9 @@ const MentorCards = ({mentors}) => {
                             setChosenMentor(mentor);
                         }}
                     >
-                        <img src={`avatars/avatar-${mentor.image}.png`} alt="mentor-image" />
-                        <h2>{mentor.firstName} {mentor.lastName}</h2>
-                        <p>{mentor.codingLanguages.join(", ")}</p>
+                        <img src={`avatars/avatar-${mentor.img}.png`} alt="mentor-image" />
+                        <h2>{mentor.first_name} {mentor.last_name}</h2>
+                        <p>{mentor.languages.join(", ")}</p>
                     </div>
                 ))}
             </div>
