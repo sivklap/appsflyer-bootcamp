@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 // import UserManagement from "./UserManagement";
 import MentorCards from "./MentorCards";
 import SearchBar from "./SearchBar";
-import axios from "axios";
+import api from "../api/authService";
 
 const MentorsPage = ({user}) => {
 
@@ -13,7 +13,7 @@ const MentorsPage = ({user}) => {
     useEffect(() => {
         async function getMentors() {
             try{
-                const res = await axios.get("/api/users/mentors");
+                const res = await api.get("/users/mentors");
                 setMentors(res.data);
             } catch (err) {
                 console.log("Error fetching mentors:", err);

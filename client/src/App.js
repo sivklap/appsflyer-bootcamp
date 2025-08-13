@@ -28,9 +28,6 @@ function App() {
             <Route path="/mentors-page" element={<MentorsPage user={user}/>} />
             <Route path="/register/mentor" element={<MentorRegistrationPage />} />
             <Route path="/register/mentee" element={<MenteeRegistrationPage />} />
-            
-            {/* Catch all */}
-            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
       </div>
