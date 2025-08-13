@@ -2,12 +2,12 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
-  firstName: {
+  first_name: {
     type: String,
     required: [true, 'First name is required'],
     trim: true
   },
-  lastName: {
+  last_name: {
     type: String,
     required: [true, 'Last name is required'],
     trim: true
@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema({
     enum: ['mentor', 'mentee', 'admin'],
     default: 'mentee'
   },
-  phone: {
+  phone_number: {
     type: String,
     trim: true
   },
@@ -37,23 +37,19 @@ const userSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
-  linkedinUrl: {
+  linkedin_url: {
     type: String,
     trim: true
   },
-  imageUrl: {
+  img: {
     type: String,
     trim: true
   },
-  codingLanguages: [{
+  languages: [{
     type: String,
     trim: true
   }],
-  specialtyFields: [{
-    type: String,
-    trim: true
-  }],
-  image: {
+  years_of_experience: {
     type: Number,
     default: 0
   }
@@ -64,7 +60,7 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.virtual('fullName').get(function() {
-  return `${this.firstName} ${this.lastName}`;
+  return `${this.first_name} ${this.last_name}`;
 });
 
 userSchema.pre('save', async function(next) {

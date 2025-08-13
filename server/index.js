@@ -22,10 +22,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 mountSwagger(app);
 
-app.use("/api/users", usersRouter);
-app.use("/api/auth", authRouter);
+app.use("", usersRouter);
+app.use("", authRouter);
 
-app.get("/api/health", (req, res) => {
+app.get("/health", (req, res) => {
   res.json({ 
     message: "QueenB Server is running!", 
     timestamp: new Date().toISOString(), 

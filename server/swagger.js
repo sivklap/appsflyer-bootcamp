@@ -30,55 +30,55 @@ const swaggerDocument = {
           _id: {
             type: 'string',
             description: 'User ID',
-            example: '507f1f77bcf86cd799439011'
+            example: '689c6fcff1f8db35514e9727'
           },
-          firstName: {
+          first_name: {
             type: 'string',
             description: 'User first name',
-            example: 'John'
+            example: 'Avi'
           },
-          lastName: {
+          last_name: {
             type: 'string',
             description: 'User last name',
-            example: 'Doe'
+            example: 'Mizrahi'
           },
           email: {
             type: 'string',
             format: 'email',
             description: 'User email address',
-            example: 'john.doe@example.com'
+            example: 'avi.mizrahi@example.com'
           },
           role: {
             type: 'string',
             enum: ['mentor', 'mentee'],
             description: 'User role',
-            example: 'mentee'
+            example: 'mentor'
           },
-          phone: {
+          phone_number: {
             type: 'string',
             nullable: true,
             description: 'User phone number',
-            example: '+1234567890'
+            example: '+972-50-3333333'
           },
           bio: {
             type: 'string',
             nullable: true,
             description: 'User bio',
-            example: 'I am a passionate developer...'
+            example: 'Senior software engineer with a passion for enterprise solutions and cloud architecture'
           },
-          linkedinUrl: {
+          linkedin_url: {
             type: 'string',
             nullable: true,
             description: 'LinkedIn profile URL',
-            example: 'https://linkedin.com/in/johndoe'
+            example: 'https://www.linkedin.com/in/avimizrahi'
           },
-          imageUrl: {
+          img: {
             type: 'string',
             nullable: true,
-            description: 'Profile image URL',
-            example: 'https://example.com/avatar.jpg'
+            description: 'Profile image number',
+            example: '4'
           },
-          codingLanguages: {
+          languages: {
             type: 'array',
             items: {
               type: 'string'
@@ -86,13 +86,10 @@ const swaggerDocument = {
             description: 'Programming languages user knows',
             example: ['JavaScript', 'Python', 'React']
           },
-          specialtyFields: {
-            type: 'array',
-            items: {
-              type: 'string'
-            },
-            description: 'Areas of expertise',
-            example: ['Frontend Development', 'Backend Development']
+          years_of_experience: {
+            type: 'number',
+            description: 'Years of experience',
+            example: 7
           },
           createdAt: {
             type: 'string',
@@ -116,7 +113,7 @@ const swaggerDocument = {
             type: 'string',
             format: 'email',
             description: 'User email address',
-            example: 'john.doe@example.com'
+            example: 'avi.mizrahi@example.com'
           },
           password: {
             type: 'string',
@@ -127,23 +124,23 @@ const swaggerDocument = {
       },
       SignupRequest: {
         type: 'object',
-        required: ['firstName', 'lastName', 'email', 'password', 'role'],
+        required: ['first_name', 'last_name', 'email', 'password', 'role'],
         properties: {
-          firstName: {
+          first_name: {
             type: 'string',
             description: 'User first name',
-            example: 'John'
+            example: 'Avi'
           },
-          lastName: {
+          last_name: {
             type: 'string',
             description: 'User last name',
-            example: 'Doe'
+            example: 'Mizrahi'
           },
           email: {
             type: 'string',
             format: 'email',
             description: 'User email address',
-            example: 'john.doe@example.com'
+            example: 'avi.mizrahi@example.com'
           },
           password: {
             type: 'string',
@@ -154,50 +151,83 @@ const swaggerDocument = {
             type: 'string',
             enum: ['mentor', 'mentee'],
             description: 'User role',
-            example: 'mentee'
+            example: 'mentor'
+          },
+          phone_number: {
+            type: 'string',
+            description: 'User phone number (optional)',
+            example: '+972-50-3333333'
+          },
+          bio: {
+            type: 'string',
+            description: 'User bio (optional)',
+            example: 'Senior software engineer with a passion for enterprise solutions'
+          },
+          linkedin_url: {
+            type: 'string',
+            description: 'LinkedIn profile URL (optional)',
+            example: 'https://www.linkedin.com/in/avimizrahi'
+          },
+          img: {
+            type: 'string',
+            description: 'Profile image number (optional)',
+            example: '4'
+          },
+          languages: {
+            type: 'array',
+            items: {
+              type: 'string'
+            },
+            description: 'Programming languages user knows (optional)',
+            example: ['JavaScript', 'React', 'Node.js']
+          },
+          years_of_experience: {
+            type: 'number',
+            description: 'Years of experience (optional)',
+            example: 7
           }
         }
       },
       UpdateProfileRequest: {
         type: 'object',
         properties: {
-          firstName: {
+          first_name: {
             type: 'string',
             description: 'User first name',
-            example: 'John'
+            example: 'Avi'
           },
-          lastName: {
+          last_name: {
             type: 'string',
             description: 'User last name',
-            example: 'Doe'
+            example: 'Mizrahi'
           },
           email: {
             type: 'string',
             format: 'email',
             description: 'User email address',
-            example: 'john.doe@example.com'
+            example: 'avi.mizrahi@example.com'
           },
-          phone: {
+          phone_number: {
             type: 'string',
             description: 'User phone number',
-            example: '+1234567890'
+            example: '+972-50-3333333'
           },
           bio: {
             type: 'string',
             description: 'User bio',
-            example: 'I am a passionate developer with 5 years of experience...'
+            example: 'Senior software engineer with a passion for enterprise solutions'
           },
-          linkedinUrl: {
+          linkedin_url: {
             type: 'string',
             description: 'LinkedIn profile URL',
-            example: 'https://linkedin.com/in/johndoe'
+            example: 'https://www.linkedin.com/in/avimizrahi'
           },
-          imageUrl: {
+          img: {
             type: 'string',
-            description: 'Profile image URL',
-            example: 'https://example.com/avatar.jpg'
+            description: 'Profile image number',
+            example: '4'
           },
-          codingLanguages: {
+          languages: {
             type: 'array',
             items: {
               type: 'string'
@@ -205,13 +235,10 @@ const swaggerDocument = {
             description: 'Programming languages user knows',
             example: ['JavaScript', 'React', 'Node.js']
           },
-          specialtyFields: {
-            type: 'array',
-            items: {
-              type: 'string'
-            },
-            description: 'Areas of expertise',
-            example: ['Frontend Development', 'Full Stack Development']
+          years_of_experience: {
+            type: 'number',
+            description: 'Years of experience',
+            example: 7
           }
         }
       },
@@ -245,7 +272,7 @@ const swaggerDocument = {
       post: {
         tags: ['Authentication'],
         summary: 'Create a new user account',
-        description: 'Register a new user with basic information (firstName, lastName, email, password, role)',
+        description: 'Register a new user with complete profile information',
         requestBody: {
           required: true,
           content: {
@@ -253,12 +280,39 @@ const swaggerDocument = {
               schema: {
                 $ref: '#/components/schemas/SignupRequest'
               },
-              example: {
-                firstName: 'John',
-                lastName: 'Doe',
-                email: 'john.doe@example.com',
-                password: 'password123',
-                role: 'mentee'
+              examples: {
+                mentee: {
+                  summary: 'Mentee Signup',
+                  value: {
+                    first_name: 'John',
+                    last_name: 'Doe',
+                    email: 'john.doe@example.com',
+                    password: 'password123',
+                    role: 'mentee',
+                    phone_number: '+1234567890',
+                    bio: 'I am a student learning web development and looking for guidance...',
+                    linkedin_url: 'https://linkedin.com/in/johndoe',
+                    img: '1',
+                    languages: ['JavaScript', 'React', 'Node.js'],
+                    years_of_experience: 1
+                  }
+                },
+                mentor: {
+                  summary: 'Mentor Signup',
+                  value: {
+                    first_name: 'Avi',
+                    last_name: 'Mizrahi',
+                    email: 'avi.mizrahi@example.com',
+                    password: 'password123',
+                    role: 'mentor',
+                    phone_number: '+972-50-3333333',
+                    bio: 'Senior software engineer with a passion for enterprise solutions and cloud architecture',
+                    linkedin_url: 'https://www.linkedin.com/in/avimizrahi',
+                    img: '4',
+                    languages: ['JavaScript', 'React', 'Node.js', 'Python', 'Java'],
+                    years_of_experience: 7
+                  }
+                }
               }
             }
           }
@@ -310,7 +364,7 @@ const swaggerDocument = {
                 $ref: '#/components/schemas/LoginRequest'
               },
               example: {
-                email: 'john.doe@example.com',
+                email: 'avi.mizrahi@example.com',
                 password: 'password123'
               }
             }
@@ -392,11 +446,12 @@ const swaggerDocument = {
                 $ref: '#/components/schemas/UpdateProfileRequest'
               },
               example: {
-                phone: '+1234567890',
-                bio: 'I am a passionate developer with 5 years of experience...',
-                linkedinUrl: 'https://linkedin.com/in/johndoe',
-                codingLanguages: ['JavaScript', 'React', 'Node.js'],
-                specialtyFields: ['Frontend Development', 'Full Stack Development']
+                phone_number: '+972-50-3333333',
+                bio: 'Senior software engineer with a passion for enterprise solutions and cloud architecture',
+                linkedin_url: 'https://www.linkedin.com/in/avimizrahi',
+                img: '4',
+                languages: ['JavaScript', 'React', 'Node.js'],
+                years_of_experience: 7
               }
             }
           }
