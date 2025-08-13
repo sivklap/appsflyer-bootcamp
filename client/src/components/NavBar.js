@@ -27,14 +27,14 @@ const NavBar = ({user}) => {
                         <Button
                             className="log-in"
                             variant="contained"
-                            href="/"
+                            href="/login"
                         >
                             Log in
                         </Button>
                         <Button
                             className="sign-up"
                             variant="contained"
-                            href="/"
+                            href="/signup"
                         >
                             Sign up
                         </Button>
