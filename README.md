@@ -133,7 +133,7 @@ npm run dev
 
 This will start:
 
-- Backend server on http://localhost:5000
+- Backend server on http://localhost:5005
 - Frontend client on http://localhost:3000 - you can access the application in your browser at this URL.
 
 ### Building for Production
