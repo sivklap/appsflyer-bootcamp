@@ -7,7 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 
 
 
-const NavBar = ({user}) => {
+const NavBar = ({user, setUser}) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (e) => {
@@ -15,6 +15,9 @@ const NavBar = ({user}) => {
     }
     const handleClose = () => {
         setAnchorEl(null);
+    }
+    const handleLogOut = () => {
+        setUser(null);
     }
 
     return (
@@ -39,7 +42,11 @@ const NavBar = ({user}) => {
                                 <MenuItem onClick={handleClose}>
                                     <a href={`/profile/${user.role}`} className="menu-link">Profile</a>
                                 </MenuItem>
-                                <MenuItem onClick={handleClose}>
+                                <MenuItem onClick={(e) => {
+                                    e.preventDefault();
+                                    handleLogOut();
+                                    handleClose();
+                                }}>
                                     <a href="/" className="menu-link">Sign Out</a>
                                 </MenuItem>
                             </Menu>
