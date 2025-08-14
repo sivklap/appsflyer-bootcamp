@@ -1,0 +1,54 @@
+.welcome-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 20px;
+    padding: 20px;
+    min-height: 70vh;
+    max-height: 90vh;
+}
+
+.welcome-page .crown-logo{
+    height: 200px;
+    width: auto;
+}
+
+.welcome-page h3,
+.welcome-page p {
+    margin: 0;
+}
+
+
+.welcome-page h3 {
+    font-size: 50px;
+    font-weight: 200;
+    color: #333;
+    line-height: 1.4;
+    max-width: 700px;
+    font-family: "Alfa Slab One", verdana, ariel, serif;
+
+}
+
+.welcome-page p {
+    font-family: "Funnel Display", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 532;
+    font-style: normal;
+    font-size: 19px;
+}
+
+.welcome-page .welcome-log-in{
+    background-color: #D8A48F;
+    color: white;
+    font-size: 14px;   /* larger text */
+    border-radius: 8px;  /* optional, keeps rounded corners */
+    transition: background-color 0.3s ease;
+    min-height: 38px;
+    min-width: 120px;
+}
+
+.welcome-page .welcome-log-in:hover{
+    background-color: rgba(216, 164, 143, 0.79);
+}
