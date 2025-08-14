@@ -27,7 +27,7 @@ const NavBar = ({user}) => {
                         <div className="navbar-logged-in">
                             <Avatar
                                 alt={user.first_name}
-                                src={`images/avatars/avatar-${user.img}.png`}
+                                src={`/images/avatars/avatar-${user.img}.png`}
                                 onClick={handleClick}
                                 className="user-avatar"
                             />
