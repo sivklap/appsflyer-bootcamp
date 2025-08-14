@@ -15,6 +15,7 @@ const MentorsPage = ({user}) => {
             try{
                 const res = await axios.get("/users/mentors");
                 setMentors(res.data);
+                console.log(mentors);
             } catch (err) {
                 console.log("Error fetching mentors:", err);
             }
