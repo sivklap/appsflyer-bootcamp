@@ -22,7 +22,12 @@ const MentorsPage = ({user}) => {
         }
         getMentors();
     }, [])
-    // TODO: check if the user is mentor
+    if (!user){
+        return <p>Please log in to view this profile.</p>;
+    }
+    else if(user.role !== "mentee"){
+        return <p>You have to be a mentee to see this</p>
+    }
   return (
       <div>
           <SearchBar mentors={mentors} onResults={setFilteredMentors} setIsSearching={setIsSearching} />
