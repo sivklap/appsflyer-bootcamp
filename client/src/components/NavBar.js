@@ -47,7 +47,7 @@ const NavBar = ({user, setUser}) => {
                                     handleLogOut();
                                     handleClose();
                                 }}>
-                                    <a href="/" className="menu-link">Sign Out</a>
+                                    <a href="/" className="menu-link">Log Out</a>
                                 </MenuItem>
                             </Menu>
                         </div>
