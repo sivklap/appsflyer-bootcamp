@@ -5,11 +5,6 @@ const { createUser, findUserByEmail, getUserById, updateUser } = require("./user
 const JWT_SECRET = process.env.JWT_SECRET;
 
 class AuthService {
-  /**
-   * Register a new user
-   * @param {Object} userData - User registration data
-   * @returns {Object} - User object and JWT token
-   */
   async signup(userData) {
     const {
       first_name, last_name, email, password, role = "mentee",
@@ -33,27 +28,19 @@ class AuthService {
 
     const user = await createUser(userRegistrationData);
     console.log('User created successfully:', user.first_name, user.last_name);
-
-    // Generate JWT token
+    
     const token = this.generateToken(user);
 
-    // Return user without password
     const userResponse = user.toObject();
     delete userResponse.passwordHash;
 
     return { user: userResponse, token };
   }
 
-  /**
-   * Authenticate user login
-   * @param {string} email - User email
-   * @param {string} password - User password
-   * @returns {Object} - User object and JWT token
-   */
   async login(email, password) {
     const user = await findUserByEmail(email);
     if (!user) {
-      console.log('Login failed: User not found for email:', email);
+      console.log('Login failed: User not found with email:', email);
       throw new Error('Invalid credentials');
     }
 
@@ -73,26 +60,16 @@ class AuthService {
     return { user: userResponse, token };
   }
 
-  /**
-   * Get user profile by ID
-   * @param {string} userId - User ID
-   * @returns {Object} - User profile
-   */
   async getProfile(userId) {
-    console.log('GET /api/auth/profile - Request received for user ID:', userId);
+    console.log('GET /auth/profile - Request received for user ID:', userId);
     const user = await getUserById(userId);
     console.log('Profile fetched successfully for user:', user.first_name, user.last_name);
     return user;
   }
 
-  /**
-   * Update user profile
-   * @param {string} userId - User ID
-   * @param {Object} updateData - Data to update
-   * @returns {Object} - Updated user profile
-   */
+
   async updateProfile(userId, updateData) {
-    console.log('PATCH /api/auth/update-profile - Request received for user ID:', userId);
+    console.log('PATCH /auth/update-profile - Request received for user ID:', userId);
     console.log('Update data:', updateData);
     
     const user = await updateUser(userId, updateData);
@@ -104,11 +81,6 @@ class AuthService {
     return user;
   }
 
-  /**
-   * Generate JWT token for user
-   * @param {Object} user - User object
-   * @returns {string} - JWT token
-   */
   generateToken(user) {
     return jwt.sign(
       { sub: user._id, email: user.email, role: user.role },
@@ -117,17 +89,31 @@ class AuthService {
     );
   }
 
-  /**
-   * Verify JWT token
-   * @param {string} token - JWT token
-   * @returns {Object} - Decoded token payload
-   */
   verifyToken(token) {
     try {
       return jwt.verify(token, JWT_SECRET);
     } catch (error) {
       throw new Error('Invalid token');
     }
+  }
+
+  authenticateToken() {
+    return (req, res, next) => {
+      const authHeader = req.headers['authorization'];
+      const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
+
+      if (!token) {
+        return res.status(401).json({ error: 'Access token required' });
+      }
+
+      try {
+        const decoded = this.verifyToken(token);
+        req.user = decoded;
+        next();
+      } catch (error) {
+        return res.status(403).json({ error: 'Invalid token' });
+      }
+    };
   }
 }
 

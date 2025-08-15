@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import MentorCards from "./MentorCards";
 import SearchBar from "./SearchBar";
 import api from "../api/authService";
+import axios from "axios";
 
 const MentorsPage = ({user}) => {
 
