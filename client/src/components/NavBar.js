@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-
+import Tooltip from '@mui/material/Tooltip';
 
 
 const NavBar = ({user, setUser}) => {
@@ -22,18 +22,24 @@ const NavBar = ({user, setUser}) => {
 
     return (
         <nav className="navbar">
-            <a className="title" href={'/'}>
-                <img src="/images/logo.png" alt="Home Logo" className="logo" />
-            </a>
+            <Tooltip title="Home" placement="right">
+                <a className="title" href={'/'} >
+                    <img src="/images/logo.png" alt="Home Logo" className="logo" />
+                </a>
+            </Tooltip>
+
             <div className="navbar-user">
                 { user ? (
                         <div className="navbar-logged-in">
-                            <Avatar
-                                alt={user.first_name}
-                                src={`/images/avatars/avatar-${user.img}.png`}
-                                onClick={handleClick}
-                                className="user-avatar"
-                            />
+                            <Tooltip title="Profile" placement="left">
+                                <Avatar
+                                    alt={user.first_name}
+                                    src={`/images/avatars/avatar-${user.img}.png`}
+                                    onClick={handleClick}
+                                    className="user-avatar"
+                                />
+                            </Tooltip>
+
                             <Menu
                                 anchorEl={anchorEl}
                                 open={open}
