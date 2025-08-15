@@ -144,7 +144,7 @@ const swaggerDocument = {
           },
           password: {
             type: 'string',
-            description: 'User password',
+            description: 'User password (will be hashed)',
             example: 'password123'
           },
           role: {
