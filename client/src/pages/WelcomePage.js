@@ -23,7 +23,7 @@ const WelcomePage = ({user}) => {
                     variant="contained"
                     href={
                         user.role === 'mentee'
-                            ? '/mentors-page'
+                            ? '/mentors'
                             : `/profile/${user.role}`
                     }
                 >

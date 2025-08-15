@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MenteeRegistrationPage from "./pages/MenteeRegistrationPage";
 import MentorRegistrationPage from "./pages/MentorRegistrationPage";
-import MentorsPage from "./components/MentorsPage";
+import MentorsPage from "./pages/MentorsPage";
 import NavBar from "./components/NavBar";
 import LoginForm from "./components/auth/LoginForm";
 import SignupForm from "./components/auth/SignupForm";
@@ -27,7 +27,7 @@ function App() {
             <Route path="/signup" element={<SignupForm />} />
 
             {/* Your existing routes */}
-            <Route path="/mentors-page" element={<MentorsPage user={user}/>} />
+            <Route path="/mentors" element={<MentorsPage user={user}/>} />
             <Route path="/register/mentor" element={<MentorRegistrationPage />} />
             <Route path="/register/mentee" element={<MenteeRegistrationPage />} />
             <Route path="/profile/mentor" element={<ProfileMentor user={user}/>} />
