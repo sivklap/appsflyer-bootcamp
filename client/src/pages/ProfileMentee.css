@@ -2,10 +2,11 @@
     max-width: 800px;
     margin: 100px auto 50px;
     padding: 20px;
-    font-family: "Lato", sans-serif;
-    /*background-color: #f9f9f9;*/
+    font-family: "Nunito", sans-serif;
+    font-size: 18px;
     border-radius: 10px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+
 }
 
 .profile-mentee-header{
@@ -22,9 +23,12 @@
     object-fit: cover;
 }
 
-.profile-mentor-header h1{
+.profile-mentee-header h1{
     margin: 0;
-    font-size: 28px;
+    font-size: 45px;
+    font-family: "DM Serif Text", serif;
+    font-weight: 600;
+    font-style: italic;
 }
 
 .profile-mentee-role{
@@ -35,6 +39,7 @@
 .profile-mentee-info h2{
     margin-top: 20px;
     font-size: 20px;
+
 }
 
 .profile-mentee-info p{
