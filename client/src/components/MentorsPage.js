@@ -13,15 +13,21 @@ const MentorsPage = ({user}) => {
     useEffect(() => {
         async function getMentors() {
             try{
-                const res = await api.get("/users/mentors");
+                const res = await axios.get("/users/mentors");
                 setMentors(res.data);
+                console.log(mentors);
             } catch (err) {
                 console.log("Error fetching mentors:", err);
             }
         }
         getMentors();
     }, [])
-    // TODO: check if the user is mentor
+    if (!user){
+        return <p>Please log in to view this profile.</p>;
+    }
+    else if(user.role !== "mentee"){
+        return <p>You have to be a mentee to see this</p>
+    }
   return (
       <div>
           <SearchBar mentors={mentors} onResults={setFilteredMentors} setIsSearching={setIsSearching} />

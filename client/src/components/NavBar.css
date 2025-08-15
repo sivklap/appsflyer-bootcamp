@@ -27,7 +27,7 @@
 
 .navbar-user{
     margin-left: 6px;
-    display: inline-block;
+    display: flex;
     padding: 2px 10px;
     border-radius: 8px;
     font-size: 12px;
@@ -36,35 +36,45 @@
     text-align: center;
 }
 
-.user-hi  {
 
-}
-
-.user-hi .log-in {
+.navbar-guest .log-in {
     background-color: #BB8588;
     color: white;
     margin-right: 6px;
 }
 
-.user-hi .sign-up {
+.navbar-guest .sign-up {
     background-color: #EFEBCE;
     color: black;
 }
 
-.user-hi .log-in:hover {
+.navbar-guest .log-in:hover {
     background-color: rgba(187, 133, 136, 0.72);
 }
 
-.user-hi .sign-up:hover {
+.navbar-guest .sign-up:hover {
     background-color: rgba(239, 235, 206, 0.76);
 
 }
 
-.user-bye .log-out{
-    background-color: inherit;
-    color: black;
+
+.navbar-logged-in .user-avatar{
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    transition: transform 0.2s;
 }
 
-.user-bye .log-out:hover{
-    background-color: rgba(239, 235, 206, 0.76);
+.navbar-logged-in .user-avatar:hover {
+    transform: scale(1.1);
 }
+
+.menu-link {
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+    display: block;
+    font-size: 18px;
+}
+

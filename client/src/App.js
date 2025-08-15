@@ -9,6 +9,8 @@ import SignupForm from "./components/auth/SignupForm";
 
 import WelcomePage from "./pages/WelcomePage";
 import "./App.css";
+import ProfileMentor from "./pages/ProfileMentor";
+import ProfileMentee from "./pages/ProfileMentee";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -16,11 +18,11 @@ function App() {
   return (
     <Router>
       <div className="app">
-        <NavBar user={user}/>
+        <NavBar user={user} setUser={setUser} />
         <div className="app-container">
           <Routes>
             {/* Default route goes to login */}
-            <Route path="/" element={<WelcomePage />} />
+            <Route path="/" element={<WelcomePage user={user} />} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/signup" element={<SignupForm />} />
 
@@ -28,6 +30,9 @@ function App() {
             <Route path="/mentors-page" element={<MentorsPage user={user}/>} />
             <Route path="/register/mentor" element={<MentorRegistrationPage />} />
             <Route path="/register/mentee" element={<MenteeRegistrationPage />} />
+            <Route path="/profile/mentor" element={<ProfileMentor user={user}/>} />
+            <Route path="/profile/mentee" element={<ProfileMentee user={user}/>} />
+
           </Routes>
         </div>
       </div>
