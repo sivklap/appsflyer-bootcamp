@@ -5,6 +5,9 @@ const ProfileMentor = ({user}) => {
     if (!user){
         return <p>Please log in to view this profile.</p>;
     }
+    if(user.role === 'mentee'){
+        return <p>You have to be a mentor to see this</p>
+    }
     return (
         <div className="profile-mentor-page">
             <div className="profile-mentor-header">
