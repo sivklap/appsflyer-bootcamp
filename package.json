@@ -5,7 +5,7 @@
   "main": "server/index.js",
   "scripts": {
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "cd server && cross-env PORT=5005 npm run dev",
+    "server": "cd server && cross-env npm run dev",
     "client": "cd client && npm start",
     "client:watch": "cd client && npm run watch",
     "client:build:watch": "cd client && npm run build:watch",
@@ -28,5 +28,8 @@
     "@types/bcryptjs": "^2.4.6",
     "concurrently": "^8.2.2",
     "cross-env": "^10.0.0"
+  },
+  "dependencies": {
+    "axios": "^1.11.0"
   }
 }
