@@ -19,7 +19,7 @@ router.use((req, res, next) => {
 });
 
 router.get(routes.users.all, async (req, res) => {
-  console.log('GET /api/users - Request received');
+  console.log('GET /users - Request received');
   try {
     const limit = Number(req.query.limit) || 100;
     console.log('Fetching users with limit:', limit);
@@ -35,7 +35,7 @@ router.get(routes.users.all, async (req, res) => {
 });
 
 router.get(routes.users.mentors, async (req, res) => {
-  console.log('GET /api/users/mentors - Request received');
+  console.log('GET /users/mentors - Request received');
   try {
     const mentors = await getMentors();
     console.log('Mentors fetched successfully:', mentors.length);
@@ -47,7 +47,7 @@ router.get(routes.users.mentors, async (req, res) => {
 });
 
 router.get(routes.users.mentees, async (req, res) => {
-  console.log('GET /api/users/mentees - Request received');
+  console.log('GET /users/mentees - Request received');
   try {
     const mentees = await getMentees();
     console.log('Mentees fetched successfully:', mentees.length);
@@ -60,7 +60,7 @@ router.get(routes.users.mentees, async (req, res) => {
 
 // Protected routes (require authentication)
 router.get(routes.users.byId(':id'), authenticateToken, async (req, res) => {
-  console.log(' GET /api/users/:id - Request received, ID:', req.params.id);
+  console.log(' GET /users/:id - Request received, ID:', req.params.id);
   try {
     const user = await getUserById(req.params.id);
     if (!user) {
@@ -76,7 +76,7 @@ router.get(routes.users.byId(':id'), authenticateToken, async (req, res) => {
 });
 
 router.post(routes.users.all, authenticateToken, async (req, res) => {
-  console.log('POST /api/users - Request received');
+  console.log('POST /users - Request received');
   console.log(' User data:', { ...req.body, password: '[HIDDEN]' });
   try {
     const result = await createUser(req.body);
@@ -90,7 +90,7 @@ router.post(routes.users.all, authenticateToken, async (req, res) => {
 });
 
 router.patch(routes.users.byId(':id'), authenticateToken, async (req, res) => {
-  console.log(' PATCH /api/users/:id - Request received, ID:', req.params.id);
+  console.log(' PATCH /users/:id - Request received, ID:', req.params.id);
   console.log(' Update data:', req.body);
   try {
     const user = await updateUser(req.params.id, req.body);
@@ -108,7 +108,7 @@ router.patch(routes.users.byId(':id'), authenticateToken, async (req, res) => {
 });
 
 router.delete(routes.users.byId(':id'), authenticateToken, async (req, res) => {
-  console.log('DELETE /api/users/:id - Request received, ID:', req.params.id);
+  console.log('DELETE /users/:id - Request received, ID:', req.params.id);
   try {
     const deleted = await deleteUser(req.params.id);
     if (!deleted) {
