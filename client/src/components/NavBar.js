@@ -1,10 +1,14 @@
 import React, {useState} from "react"
 import "./NavBar.css"
+import { useNavigate } from 'react-router-dom';
+
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { authService } from '../api/authService';
 
+import Tooltip from '@mui/material/Tooltip';
 
 
 const NavBar = ({user, setUser}) => {
