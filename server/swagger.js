@@ -11,7 +11,7 @@ const swaggerDocument = {
   },
   servers: [
     {
-      url: 'http://localhost:5005/',
+      url: 'http://localhost:5001/',
       description: 'Development server',
     },
   ],
@@ -144,7 +144,7 @@ const swaggerDocument = {
           },
           password: {
             type: 'string',
-            description: 'User password',
+            description: 'User password (will be hashed)',
             example: 'password123'
           },
           role: {

@@ -5,7 +5,7 @@
   "main": "server/index.js",
   "scripts": {
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "cd server && cross-env PORT=5001 npm run dev",
+    "server": "cd server && cross-env npm run dev",
     "client": "cd client && npm start",
     "client:watch": "cd client && npm run watch",
     "client:build:watch": "cd client && npm run build:watch",
@@ -30,9 +30,6 @@
     "cross-env": "^10.0.0"
   },
   "dependencies": {
-    "bcryptjs": "^3.0.2",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.17.1",
-    "swagger-ui-express": "^5.0.1"
+    "axios": "^1.11.0"
   }
 }

@@ -1,0 +1,79 @@
+.welcome-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 20px;
+  padding: 20px;
+  min-height: 70vh;
+  max-height: 90vh;
+  background: #fff;
+  border: 2px solid #eee;
+  border-radius: 15px;
+  margin: 20px auto;
+  width: 80%;
+  max-width: 800px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+.welcome-page .crown-logo {
+  height: 200px;
+  width: auto;
+  object-fit: contain;
+}
+
+.welcome-page h3,
+.welcome-page p {
+  margin: 5px 0;
+}
+
+.welcome-page h3 {
+  font-size: 50px;
+  font-weight: 200;
+  color: #333;
+  line-height: 1.4;
+  max-width: 700px;
+  font-family: "Alfa Slab One", verdana, arial, serif;
+}
+
+.welcome-page p {
+  font-family: "Funnel Display", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 532;
+  font-style: normal;
+  font-size: 19px;
+  color: #666;
+}
+
+.welcome-page .welcome-log-in {
+  background-color: #D8A48F;
+  color: white;
+  font-size: 14px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+  min-height: 38px;
+  min-width: 120px;
+  border: none;
+  cursor: pointer;
+  padding: 8px 16px;
+}
+
+.welcome-page .welcome-log-in:hover {
+  background-color: rgba(216, 164, 143, 0.79);
+}
+
+@media (max-width: 768px) {
+  .welcome-page {
+    width: 95%;
+    padding: 15px;
+  }
+  
+  .welcome-page h3 {
+    font-size: 36px;
+  }
+  
+  .welcome-page p {
+    font-size: 16px;
+  }
+}

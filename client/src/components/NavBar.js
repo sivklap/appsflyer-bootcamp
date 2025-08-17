@@ -1,9 +1,46 @@
-import React from "react"
+import React, {useState} from "react"
+import { useNavigate } from 'react-router-dom';
 import "./NavBar.css"
 import Button from '@mui/material/Button';
+import Avatar from '@mui/material/Avatar';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import { authService } from '../api/authService';
 
+const NavBar = ({user, setUser}) => {
+    const [anchorEl, setAnchorEl] = useState(null);
+    const navigate = useNavigate();
+    const open = Boolean(anchorEl);
+    
+    const handleClick = (e) => {
+        setAnchorEl(e.currentTarget);
+    }
+    
+    const handleClose = () => {
+        setAnchorEl(null);
+    }
+    
+    const handleLogOut = () => {
+        authService.logout(); // This will clear localStorage and update user state via callback
+        setAnchorEl(null); // Close the menu
+        navigate('/'); // Redirect to welcome page
+    }
 
-const NavBar = ({user}) => {
+    const handleProfileClick = () => {
+        handleClose();
+        navigate(`/profile/${user.role}`);
+    }
+
+    const handleMentorsClick = () => {
+        handleClose();
+        navigate('/mentors-page');
+    }
+
+    const handleMentorHomeClick = () => {
+        handleClose();
+        navigate('/mentor-home');
+    }
+
     return (
         <nav className="navbar">
             <a className="title" href={'/'}>
@@ -11,19 +48,41 @@ const NavBar = ({user}) => {
             </a>
             <div className="navbar-user">
                 { user ? (
-
-                    <div className="user-bye">
-                        <Button
-                            className="log-out"
-                            variant="contained"
-                            href="/"
-                        >
-                            Log out
-                        </Button>
-                    </div>
+                        <div className="navbar-logged-in">
+                            <Avatar
+                                alt={user.first_name}
+                                src={`/images/avatars/avatar-${user.img}.png`}
+                                onClick={handleClick}
+                                className="user-avatar"
+                            />
+                            <Menu
+                                anchorEl={anchorEl}
+                                open={open}
+                                onClose={handleClose}
+                            >
+                                <MenuItem onClick={handleProfileClick}>
+                                    <span className="menu-link">Profile</span>
+                                </MenuItem>
+                                
+                                {/* Role-specific menu items */}
+                                {user.role === 'mentee' ? (
+                                    <MenuItem onClick={handleMentorsClick}>
+                                        <span className="menu-link">See Mentors</span>
+                                    </MenuItem>
+                                ) : (
+                                    <MenuItem onClick={handleMentorHomeClick}>
+                                        <span className="menu-link">Mentor Home</span>
+                                    </MenuItem>
+                                )}
+                                
+                                <MenuItem onClick={handleLogOut}>
+                                    <span className="menu-link">Sign Out</span>
+                                </MenuItem>
+                            </Menu>
+                        </div>
 
                 ) : (
-                    <div className="user-hi">
+                    <div className="navbar-guest">
                         <Button
                             className="log-in"
                             variant="contained"
@@ -41,9 +100,6 @@ const NavBar = ({user}) => {
                     </div>
                 )}
             </div>
-
-
-
         </nav>
     )
 }

@@ -1,10 +1,135 @@
-  .app{
-      flex-direction: column;
-
+.app {
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #F6FAF7;
   }
-
-  .app-container{
-      padding-left: 3rem;
-      padding-right: 3rem;
-      margin-top: 6rem;
+  
+  .app-container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+    margin-top: 6rem;
+    width: 80%;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  /* Page layouts */
+  .page {
+    background: #fff;
+    border: 2px solid #eee;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  }
+  
+  .page-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .page-title {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .page-subtitle {
+    font-size: 16px;
+    color: #666;
+  }
+  
+  /* Section styles */
+  .section {
+    margin-bottom: 30px;
+  }
+  
+  .section-title {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  /* Form styles */
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .form-label {
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+  }
+  
+  .form-input,
+  .form-textarea,
+  .form-select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .form-input:focus,
+  .form-textarea:focus,
+  .form-select:focus {
+    outline: none;
+    border-color: #D8A48F;
+    box-shadow: 0 0 5px rgba(216, 164, 143, 0.3);
+  }
+  
+  .form-textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  /* Status messages */
+  .status-message {
+    padding: 10px;
+    border-radius: 6px;
+    margin: 10px 0;
+    text-align: center;
+  }
+  
+  .status-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+  }
+  
+  .status-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .app-container {
+      width: 95%;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      margin-top: 4rem;
+    }
+    
+    .page {
+      padding: 15px;
+    }
+    
+    .form {
+      max-width: 100%;
+    }
   }

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 // import UserManagement from "./UserManagement";
 import MentorCards from "./MentorCards";
 import SearchBar from "./SearchBar";
+import api from "../api/authService";
 import axios from "axios";
 
 const MentorsPage = ({user}) => {
@@ -15,13 +16,19 @@ const MentorsPage = ({user}) => {
             try{
                 const res = await axios.get("/users/mentors");
                 setMentors(res.data);
+                console.log(mentors);
             } catch (err) {
                 console.log("Error fetching mentors:", err);
             }
         }
         getMentors();
     }, [])
-    // TODO: check if the user is mentor
+    if (!user){
+        return <p>Please log in to view this profile.</p>;
+    }
+    else if(user.role !== "mentee"){
+        return <p>You have to be a mentee to see this</p>
+    }
   return (
       <div>
           <SearchBar mentors={mentors} onResults={setFilteredMentors} setIsSearching={setIsSearching} />
