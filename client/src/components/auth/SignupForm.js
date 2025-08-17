@@ -55,7 +55,7 @@ const SignupForm = () => {
       const response = await authService.signup(formData);
       
       if (response.user.role === 'mentee') {
-        navigate('/mentors-page');
+        navigate('/mentors');
       } else if (response.user.role === 'mentor') {
         navigate('/mentor-home');
       } else {

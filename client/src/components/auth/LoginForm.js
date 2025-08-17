@@ -30,7 +30,7 @@ const LoginForm = () => {
       const response = await authService.login(formData.email, formData.password);
       
       if (response.user.role === 'mentee') {
-        navigate('/mentors-page');
+        navigate('/mentors');
       } else if (response.user.role === 'mentor') {
         navigate('/mentor-home');
       } else {

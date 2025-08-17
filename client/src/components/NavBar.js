@@ -37,7 +37,7 @@ const NavBar = ({user, setUser}) => {
 
     const handleMentorsClick = () => {
         handleClose();
-        navigate('/mentors-page');
+        navigate('/mentors');
     }
 
     const handleMentorHomeClick = () => {

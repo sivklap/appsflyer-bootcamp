@@ -150,7 +150,7 @@ export default function RegistrationForm({ type }) {
         // Redirect based on user role
         setTimeout(() => {
           if (response.user.role === 'mentee') {
-            window.location.href = '/mentors-page';
+            window.location.href = '/mentors';
           } else if (response.user.role === 'mentor') {
             window.location.href = '/mentor-home';
           }
