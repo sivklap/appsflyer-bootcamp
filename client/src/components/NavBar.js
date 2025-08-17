@@ -11,7 +11,7 @@ import { authService } from '../api/authService';
 import Tooltip from '@mui/material/Tooltip';
 
 
-const NavBar = ({user, setUser}) => {
+const NavBar = ({user}) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const navigate = useNavigate();
     const open = Boolean(anchorEl);
