@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { authService } from '../../api/authService';
 import './AuthForms.css';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const SignupForm = () => {
   const navigate = useNavigate();
@@ -156,7 +158,7 @@ const SignupForm = () => {
                   className="password-toggle"
                   onClick={togglePasswordVisibility}
                 >
-                  {showPassword ? '🙈' : '👁️'}
+                  {showPassword ? <VisibilityOffIcon/> : <VisibilityIcon/>}
                 </button>
               </div>
             </div>
