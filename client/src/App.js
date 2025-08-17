@@ -31,7 +31,7 @@ function App() {
   return (
     <Router>
       <div className="app">
-        <NavBar user={user} setUser={setUser} />
+        <NavBar user={user} />
         <div className="app-container">
           <Routes>
             {/* Default route goes to login */}
