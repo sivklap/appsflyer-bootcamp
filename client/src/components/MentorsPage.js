@@ -13,7 +13,7 @@ const MentorsPage = ({user}) => {
     useEffect(() => {
         async function getMentors() {
             try{
-                const res = await axios.get("/api/users/mentors");
+                const res = await axios.get("/users/mentors");
                 setMentors(res.data);
             } catch (err) {
                 console.log("Error fetching mentors:", err);

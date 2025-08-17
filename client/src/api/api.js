@@ -1,8 +1,8 @@
 export async function registerUser(type, data) {
-  const res = await fetch(`/signup`, {
+  const res = await fetch('/auth/signup', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ ...data, type })
+    body: JSON.stringify({ ...data, role: type })
   });
 
   if (!res.ok) {

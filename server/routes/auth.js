@@ -16,17 +16,19 @@ router.use((req, res, next) => {
 
 router.post(routes.auth.signup, async (req, res) => {
   try {
+    console.log('Signup request body:', req.body);
     const {
       first_name, last_name, email, password, role = "mentee",
       phone_number = "", bio = "", linkedin_url = "", img = "",
       languages = [], years_of_experience = 0
     } = req.body;
 
+    // Ensure password is mapped to passwordHash for mongoose pre-save hook
     const userData = {
       first_name,
       last_name,
       email,
-      passwordHash: password,
+      passwordHash: password, // This will be hashed by the pre-save hook
       role,
       phone_number,
       bio,

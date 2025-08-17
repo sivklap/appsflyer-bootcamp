@@ -30,6 +30,9 @@
     "cross-env": "^10.0.0"
   },
   "dependencies": {
-    "mongoose": "^8.17.1"
+    "bcryptjs": "^3.0.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.17.1",
+    "swagger-ui-express": "^5.0.1"
   }
 }
