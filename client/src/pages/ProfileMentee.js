@@ -24,7 +24,10 @@ const ProfileMentee = ({user}) => {
             <div className="profile-mentee-info">
                 <h2>Contact Information</h2>
                 <p><b>Email:</b> {user.email}</p>
-                <p><b>Phone: </b>{user.phone_number}</p>
+                {user.phone_number && (
+                    <p><b>Phone: </b>{user.phone_number}</p>
+
+                )}
 
                 {user.bio && (
                     <>
