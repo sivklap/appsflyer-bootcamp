@@ -1,7 +1,7 @@
 // RegistrationForm - Pure JS (no JSX)
 import React, { useEffect, useRef } from 'react';
 import { fieldsConfig } from '../config/fieldsConfig';
-import { registerUser } from '../api/api';
+import { registerUser } from '../api/usersService';
 
 export default function RegistrationForm({ type }) {
   const containerRef = useRef(null);
@@ -147,10 +147,10 @@ export default function RegistrationForm({ type }) {
       e.preventDefault();
       try {
         await registerUser(type, formData);
-        statusP.textContent = '✅ Registered successfully!';
+        statusP.textContent = 'Registered successfully!';
         statusP.style.color = 'green';
       } catch {
-        statusP.textContent = '❌ Registration error';
+        statusP.textContent = 'Registration error';
         statusP.style.color = 'red';
       }
     };
