@@ -39,10 +39,9 @@ function App() {
             <Route path="/login" element={<LoginForm />} />
             <Route path="/signup" element={<SignupForm />} />
 
-            {/* Your existing routes */}
             <Route path="/mentors" element={<MentorsPage user={user}/>} />
-            <Route path="/register/mentor" element={<MentorRegistrationPage />} />
-            <Route path="/register/mentee" element={<MenteeRegistrationPage />} />
+            {/*<Route path="/register/mentor" element={<MentorRegistrationPage />} />*/}
+            {/*<Route path="/register/mentee" element={<MenteeRegistrationPage />} />*/}
             <Route path="/profile/mentor" element={<ProfileMentor user={user} setUser={setUser} />} />
             <Route path="/profile/mentee" element={<ProfileMentee user={user}/>} />
             <Route path="/mentor-home" element={<MentorHomePage user={user}/>} />
