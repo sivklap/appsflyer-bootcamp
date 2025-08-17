@@ -15,20 +15,7 @@ import MentorHomePage from "./pages/MentorHomePage";
 import { authService, setUserStateCallback } from "./api/authService";
 
 function App() {
-  const [user, setUser] = useState({
-    _id: "689c7318f1f8db35514e9737",
-    first_name: "Dana",
-    last_name: "Levy",
-    fullName: "Dana Levy",
-    email: "dana.levy@example.com",
-    phone_number: "+972-54-1234567",
-    role: "mentor",
-    bio: "Full-stack developer specializing in scalable web apps and mentoring junior developers.",
-    img: "1",
-    linkedin_url: "https://www.linkedin.com/in/danalevy",
-    years_of_experience: 4,
-    languages: ["JavaScript", "React", "Node.js"]
-  });
+  const [user, setUser] = useState(null);
 
   // Initialize user state from localStorage on app load
   useEffect(() => {
