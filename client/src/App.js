@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import MenteeRegistrationPage from "./pages/MenteeRegistrationPage";
-import MentorRegistrationPage from "./pages/MentorRegistrationPage";
+// import MenteeRegistrationPage from "./pages/MenteeRegistrationPage";
+// import MentorRegistrationPage from "./pages/MentorRegistrationPage";
 import MentorsPage from "./pages/MentorsPage";
 import NavBar from "./components/NavBar";
 import LoginForm from "./components/auth/LoginForm";
