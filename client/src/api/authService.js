@@ -8,44 +8,64 @@ const api = axios.create({
   },
 });
 
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
+// Create a variable to store the setUser callback
+let setUserCallback = null;
 
-// Handle token expiration
+// Function to set the callback
+export const setUserStateCallback = (callback) => {
+  setUserCallback = callback;
+};
+
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 403) {
+    if (error.response?.status === 401) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      window.location.href = '/login';
+      if (setUserCallback) {
+        setUserCallback(null);
+      }
     }
     return Promise.reject(error);
   }
 );
 
 export const authService = {
-  // Login
   login: async (email, password) => {
     const response = await api.post('/auth/login', { email, password });
     if (response.data.token) {
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('user', JSON.stringify(response.data.user));
+      // Update user state
+      if (setUserCallback) {
+        setUserCallback(response.data.user);
+      }
     }
     return response.data;
   },
 
-  // Signup
   signup: async (userData) => {
     const response = await api.post('/auth/signup', userData);
     if (response.data.token) {
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('user', JSON.stringify(response.data.user));
+      // Update user state
+      if (setUserCallback) {
+        setUserCallback(response.data.user);
+      }
     }
     return response.data;
   },
@@ -60,24 +80,24 @@ export const authService = {
     return response.data;
   },
 
-  // Logout
   logout: () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    // Update user state
+    if (setUserCallback) {
+      setUserCallback(null);
+    }
   },
 
-  // Get current user
   getCurrentUser: () => {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
   },
 
-  // Check if user is authenticated
   isAuthenticated: () => {
     return !!localStorage.getItem('token');
   },
 
-  // Get profile
   getProfile: async () => {
     const response = await api.get('/auth/profile');
     return response.data;

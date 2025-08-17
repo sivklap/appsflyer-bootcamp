@@ -1,18 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import {
-  Box,
-  Paper,
-  TextField,
-  Button,
-  Typography,
-  Alert,
-  CircularProgress,
-  InputAdornment,
-  IconButton,
-} from '@mui/material';
-import { Visibility, VisibilityOff, Email, Lock } from '@mui/icons-material';
 import { authService } from '../../api/authService';
+import './AuthForms.css';
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -38,8 +27,15 @@ const LoginForm = () => {
     setError('');
 
     try {
-      await authService.login(formData.email, formData.password);
-      navigate('/dashboard'); // Redirect to dashboard after login
+      const response = await authService.login(formData.email, formData.password);
+      
+      if (response.user.role === 'mentee') {
+        navigate('/mentors-page');
+      } else if (response.user.role === 'mentor') {
+        navigate('/mentor-home');
+      } else {
+        navigate('/'); 
+      }
     } catch (err) {
       setError(err.response?.data?.error || 'Login failed. Please try again.');
     } finally {
@@ -52,110 +48,75 @@ const LoginForm = () => {
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        padding: 2,
-      }}
-    >
-      <Paper
-        elevation={8}
-        sx={{
-          padding: 4,
-          width: '100%',
-          maxWidth: 400,
-          borderRadius: 2,
-        }}
-      >
-        <Box sx={{ textAlign: 'center', mb: 3 }}>
-          <Typography variant="h4" component="h1" gutterBottom>
-            Welcome Back
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Sign in to your account
-          </Typography>
-        </Box>
+    <div className="auth-container">
+      <div className="auth-card">
+        <div className="auth-header">
+          <h2>Welcome Back</h2>
+          <p>Sign in to your account</p>
+        </div>
 
         {error && (
-          <Alert severity="error" sx={{ mb: 2 }}>
+          <div className="status-message status-error">
             {error}
-          </Alert>
+          </div>
         )}
 
-        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            value={formData.email}
-            onChange={handleChange}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Email color="action" />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type={showPassword ? 'text' : 'password'}
-            id="password"
-            autoComplete="current-password"
-            value={formData.password}
-            onChange={handleChange}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Lock color="action" />
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={togglePasswordVisibility}
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-          <Button
+        <form className="auth-form" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="email" className="form-label">Email Address</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              className="form-input"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              autoFocus
+            />
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="password" className="form-label">Password</label>
+            <div className="password-input-container">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                id="password"
+                name="password"
+                className="form-input"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+              <button
+                type="button"
+                className="password-toggle"
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? '🙈' : '👁️'}
+              </button>
+            </div>
+          </div>
+          
+          <button
             type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2, py: 1.5 }}
+            className="btn btn-primary auth-submit"
             disabled={loading}
           >
-            {loading ? <CircularProgress size={24} /> : 'Sign In'}
-          </Button>
-          <Box sx={{ textAlign: 'center' }}>
-            <Typography variant="body2" color="text.secondary">
+            {loading ? 'Signing In...' : 'Sign In'}
+          </button>
+          
+          <div className="auth-footer">
+            <p>
               Don't have an account?{' '}
-              <Link to="/signup" style={{ textDecoration: 'none', color: '#667eea' }}>
+              <Link to="/signup" className="auth-link">
                 Sign up
               </Link>
-            </Typography>
-          </Box>
-        </Box>
-      </Paper>
-    </Box>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };
 
