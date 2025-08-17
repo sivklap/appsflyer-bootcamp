@@ -1,23 +1,44 @@
 import React, {useState} from "react"
+import { useNavigate } from 'react-router-dom';
 import "./NavBar.css"
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-
-
+import { authService } from '../api/authService';
 
 const NavBar = ({user, setUser}) => {
     const [anchorEl, setAnchorEl] = useState(null);
+    const navigate = useNavigate();
     const open = Boolean(anchorEl);
+    
     const handleClick = (e) => {
         setAnchorEl(e.currentTarget);
     }
+    
     const handleClose = () => {
         setAnchorEl(null);
     }
+    
     const handleLogOut = () => {
-        setUser(null);
+        authService.logout(); // This will clear localStorage and update user state via callback
+        setAnchorEl(null); // Close the menu
+        navigate('/'); // Redirect to welcome page
+    }
+
+    const handleProfileClick = () => {
+        handleClose();
+        navigate(`/profile/${user.role}`);
+    }
+
+    const handleMentorsClick = () => {
+        handleClose();
+        navigate('/mentors-page');
+    }
+
+    const handleMentorHomeClick = () => {
+        handleClose();
+        navigate('/mentor-home');
     }
 
     return (
@@ -39,15 +60,23 @@ const NavBar = ({user, setUser}) => {
                                 open={open}
                                 onClose={handleClose}
                             >
-                                <MenuItem onClick={handleClose}>
-                                    <a href={`/profile/${user.role}`} className="menu-link">Profile</a>
+                                <MenuItem onClick={handleProfileClick}>
+                                    <span className="menu-link">Profile</span>
                                 </MenuItem>
-                                <MenuItem onClick={(e) => {
-                                    e.preventDefault();
-                                    handleLogOut();
-                                    handleClose();
-                                }}>
-                                    <a href="/" className="menu-link">Sign Out</a>
+                                
+                                {/* Role-specific menu items */}
+                                {user.role === 'mentee' ? (
+                                    <MenuItem onClick={handleMentorsClick}>
+                                        <span className="menu-link">See Mentors</span>
+                                    </MenuItem>
+                                ) : (
+                                    <MenuItem onClick={handleMentorHomeClick}>
+                                        <span className="menu-link">Mentor Home</span>
+                                    </MenuItem>
+                                )}
+                                
+                                <MenuItem onClick={handleLogOut}>
+                                    <span className="menu-link">Sign Out</span>
                                 </MenuItem>
                             </Menu>
                         </div>
@@ -71,9 +100,6 @@ const NavBar = ({user, setUser}) => {
                     </div>
                 )}
             </div>
-
-
-
         </nav>
     )
 }

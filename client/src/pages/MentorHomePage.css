@@ -1,0 +1,67 @@
+.mentor-home-page {
+    max-width: 800px;
+    margin: 100px auto 50px;
+    padding: 20px;
+    font-family: "Lato", sans-serif;
+    text-align: center;
+}
+
+.mentor-home-content {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.mentor-home-content h1 {
+    color: #333;
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    font-weight: 300;
+}
+
+.thank-you-message {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    margin: 30px 0;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.thank-you-message h2 {
+    color: #4f46e5;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    font-weight: 400;
+}
+
+.thank-you-message p {
+    color: #666;
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin: 10px 0;
+}
+
+.mentor-stats {
+    margin-top: 40px;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    margin: 20px 0;
+}
+
+.stat-card h3 {
+    color: #4f46e5;
+    font-size: 1.3em;
+    margin-bottom: 15px;
+}
+
+.stat-card p {
+    color: #666;
+    font-size: 1em;
+    line-height: 1.5;
+}
