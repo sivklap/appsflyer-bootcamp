@@ -3,10 +3,10 @@ import "./ProfileMentee.css"
 
 const ProfileMentee = ({user}) => {
     if (!user){
-        return <p>Please log in to view this profile.</p>;
+        return <p>Please log in to view this page.</p>;
     }
     if(user.role === 'mentor'){
-        return <p>You have to be a mentee to see this</p>
+        return <p>You have to be a mentee to view this page.</p>
     }
     return (
         <div className="profile-mentee-page">

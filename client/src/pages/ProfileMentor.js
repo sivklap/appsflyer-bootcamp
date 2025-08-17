@@ -7,10 +7,10 @@ const ProfileMentor = ({user, setUser}) => {
     const [formData, setFormData] = useState({});
 
     if (!user){
-        return <p>Please log in to view this profile.</p>;
+        return <p>Please log in to view this page.</p>;
     }
     if(user.role === 'mentee'){
-        return <p>You have to be a mentor to see this</p>
+        return <p>You have to be a mentor to view this page.</p>
     }
 
     const handleChange = (e) => {

@@ -23,10 +23,10 @@ const MentorsPage = ({user}) => {
         getMentors();
     }, [])
     if (!user){
-        return <p>Please log in to view this profile.</p>;
+        return <p>Please log in to view this page.</p>;
     }
     else if(user.role !== "mentee"){
-        return <p>You have to be a mentee to see this</p>
+        return <p>You have to be a mentee to see this page.</p>
     }
   return (
       <div className="mentors-page">
