@@ -8,6 +8,8 @@
 }
 
 .mentor-card {
+    width: 180px; /* fixed width */
+    height: 220px;
     background: #fff;
     border: 2px solid #eee;
     border-radius: 15px;

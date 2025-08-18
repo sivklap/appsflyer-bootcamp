@@ -33,8 +33,11 @@ const MentorsPage = ({user, availableLanguages}) => {
       <div className="mentors-page">
           <h1>Find your mentor</h1>
           <SearchBar mentors={mentors} onResults={setFilteredMentors} setIsSearching={setIsSearching} />
-          {/*<FilterSortBar mentors={mentors} availableLanguages={availableLanguages} setIsSearching={setIsSearching} onResults={setFilteredMentors} />*/}
-          <MentorCards mentors={isSearching ? filteredMentors : mentors} />
+          <div className="mentors-page-content">
+              <FilterSortBar mentors={mentors} availableLanguages={availableLanguages} setIsSearching={setIsSearching} onResults={setFilteredMentors} />
+              <MentorCards mentors={isSearching ? filteredMentors : mentors} />
+          </div>
+
       </div>
   );
 }
