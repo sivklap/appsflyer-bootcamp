@@ -1,7 +1,10 @@
+
 const router = require("express").Router();
 const routes = require("../config/routes");
 const { authenticateToken } = require("../middleware/auth");
 const authService = require("../services/authService");
+const multer = require('multer');
+const upload = multer();
 
 // Add request logging middleware
 router.use((req, res, next) => {
@@ -9,9 +12,15 @@ router.use((req, res, next) => {
   next();
 });
 
-router.post(routes.auth.signup, async (req, res) => {
+router.post(routes.auth.signup, upload.single('img'), async (req, res) => {
   try {
-    const result = await authService.signup(req.body);
+    const userData = { ...req.body };
+    if (req.file) {
+      userData.img = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
+    } else if (userData.img && Array.isArray(userData.img)) {
+      userData.img = userData.img[0];
+    }
+    const result = await authService.signup(userData);
     res.status(201).json(result);
   } catch (error) {
     console.error('Signup error:', error);
@@ -46,9 +55,15 @@ router.get(routes.auth.profile, authenticateToken, async (req, res) => {
   }
 });
 
-router.patch(routes.auth.updateProfile, authenticateToken, async (req, res) => {
+router.patch(routes.auth.updateProfile, authenticateToken, upload.single('img'), async (req, res) => {
   try {
-    const user = await authService.updateProfile(req.user.sub, req.body);
+    const userData = { ...req.body };
+    if (req.file) {
+      userData.img = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
+    } else if (userData.img && Array.isArray(userData.img)) {
+      userData.img = userData.img[0];
+    }
+    const user = await authService.updateProfile(req.user.sub, userData);
     res.json(user);
   } catch (error) {
     console.error('Update profile error:', error);

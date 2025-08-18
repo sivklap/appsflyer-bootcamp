@@ -34,6 +34,7 @@
     "bcryptjs": "^3.0.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.17.1",
+    "multer": "^2.0.2",
     "react-confetti": "^6.4.0",
     "swagger-ui-express": "^5.0.1"
   }

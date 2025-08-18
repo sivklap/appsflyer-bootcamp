@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 const API_BASE_URL = process.env.REACT_APP_API_URL;
 
@@ -57,6 +58,20 @@ export const authService = {
     return response.data;
   },
 
+  signupFormData: async (formData) => {
+    const response = await api.post('/auth/signup', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+    if (response.data.token) {
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+      if (setUserCallback) {
+        setUserCallback(response.data.user);
+      }
+    }
+    return response.data;
+  },
+
   signup: async (userData) => {
     const response = await api.post('/auth/signup', userData);
     if (response.data.token) {
@@ -72,7 +87,25 @@ export const authService = {
 
   // Update profile (for registration pages)
   updateProfile: async (userData) => {
-    const response = await api.patch('/auth/update-profile', userData);
+    let response;
+    if (userData.img && typeof userData.img !== 'string') {
+      // If img is a File, use FormData
+      const data = new FormData();
+      Object.entries(userData).forEach(([key, value]) => {
+        if (key === 'img' && value && typeof value !== 'string') {
+          data.append('img', value);
+        } else if (key === 'languages' && Array.isArray(value)) {
+          value.forEach(lang => data.append('languages', lang));
+        } else {
+          data.append(key, value);
+        }
+      });
+      response = await api.patch('/auth/update-profile', data, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+    } else {
+      response = await api.patch('/auth/update-profile', userData);
+    }
     // Update stored user data
     const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
     const updatedUser = { ...currentUser, ...response.data };

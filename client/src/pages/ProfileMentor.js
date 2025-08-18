@@ -1,4 +1,5 @@
 import React, {useState} from "react"
+import AvatarUpload from "../components/auth/AvatarUpload"
 import "./ProfileMentor.css"
 import { authService } from '../api/authService';
 
@@ -30,6 +31,21 @@ const ProfileMentor = ({user, setUser}) => {
         setFormData({...formData, [name]: value});
     }
 
+    const handleAvatarSelect = (avatarValue) => {
+        setFormData(prev => ({
+            ...prev,
+            img: avatarValue
+        }));
+    };
+
+    const handleAvatarFile = (file) => {
+        if (!file) return;
+        setFormData(prev => ({
+            ...prev,
+            img: file // File object
+        }));
+    };
+
     const handleSave = async () => {
         try {
             const updatedData = {
@@ -43,8 +59,8 @@ const ProfileMentor = ({user, setUser}) => {
                     ? Math.max(Number(formData.years_of_experience), 0)
                     : user.years_of_experience,
                 languages: formData.languages.length > 0 ? formData.languages : user.languages,
+                img: formData.img !== undefined ? formData.img : user.img
             };
-
             const updatedUser = await authService.updateProfile(updatedData);
             setUser(updatedUser);
             setIsEditing(false);
@@ -74,11 +90,18 @@ const ProfileMentor = ({user, setUser}) => {
         <div className="profile-mentor-page">
             <div className="profile-mentor-header">
                 <img
-                    src={`/images/avatars/avatar-${user.img}.png`}
+                    src={
+                        (isEditing ? formData.img : user.img) && typeof (isEditing ? formData.img : user.img) === 'string' && ((isEditing ? formData.img : user.img).startsWith('data:') || (isEditing ? formData.img : user.img).startsWith('iVBOR'))
+                            ? ((isEditing ? formData.img : user.img).startsWith('data:') ? (isEditing ? formData.img : user.img) : `data:image/png;base64,${isEditing ? formData.img : user.img}`)
+                            : (isEditing ? formData.img : user.img) && (typeof (isEditing ? formData.img : user.img) === 'string' || typeof (isEditing ? formData.img : user.img) === 'number')
+                                ? `/images/avatars/avatar-${isEditing ? formData.img : user.img}.png`
+                                : '/images/avatars/avatar-1.png'
+                    }
                     alt={user.first_name}
                     className="profile-mentor-avatar"
                 />
                 { isEditing ? (
+                    <>
                     <div className="edit-names">
                         <input
                             type="text"
@@ -93,6 +116,31 @@ const ProfileMentor = ({user, setUser}) => {
                             onChange={handleChange}
                         />
                     </div>
+                    <div style={{marginTop: 12}}>
+                        <span style={{fontWeight: 500}}>בחרי אווטאר או העלי תמונה:</span>
+                        <div style={{display: 'flex', gap: 12, margin: '8px 0'}}>
+                            {[1,2,3,4].map(num => (
+                                <label key={num} style={{display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer'}}>
+                                    <input
+                                        type="radio"
+                                        name="img"
+                                        value={num}
+                                        checked={typeof formData.img === 'string' && formData.img === String(num)}
+                                        onChange={() => handleAvatarSelect(String(num))}
+                                    />
+                                    <img src={`/images/avatars/avatar-${num}.png`} alt={`avatar-${num}`} style={{width: 48, height: 48, borderRadius: '50%'}} />
+                                </label>
+                            ))}
+                        </div>
+                        <AvatarUpload onFileSelect={handleAvatarFile} />
+                        {formData.img && typeof formData.img !== 'string' && (
+                            <div style={{marginTop: 8}}>
+                                <span style={{fontSize: '0.9em'}}>תצוגה מקדימה של התמונה שהעלית:</span>
+                                <img src={URL.createObjectURL(formData.img)} alt="Avatar Preview" style={{ width: 80, height: 80, borderRadius: '50%' }} />
+                            </div>
+                        )}
+                    </div>
+                    </>
                 ) : (
                     <h1>{user.first_name}  {user.last_name}</h1>
                 )}

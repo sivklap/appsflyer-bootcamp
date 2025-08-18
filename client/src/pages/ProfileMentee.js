@@ -13,7 +13,7 @@ const ProfileMentee = ({user}) => {
             <div className="profile-mentee-header">
                 {user.img && (
                     <img
-                        src={`/images/avatars/avatar-${user.img}.png`}
+                        src={user.img.startsWith && user.img.startsWith('data') ? user.img : `/images/avatars/avatar-${user.img}.png`}
                         alt={user.first_name}
                         className="profile-mentee-avatar"
                     />
