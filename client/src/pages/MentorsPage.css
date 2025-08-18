@@ -1,6 +1,6 @@
 .mentors-page {
     flex-direction: column;
-    align-items: center;       /* horizontal centering */
+    align-items: center;
 }
 
 .mentors-page h1 {
@@ -10,4 +10,19 @@
     font-family: "DM Serif Text", serif;
     font-weight: 600;
     font-style: italic;
-    color: #bb8588;}
+    color: #bb8588;
+}
+
+.mentors-page-content {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+}
+
+
+.mentors-cards-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 0 20px;
+}
