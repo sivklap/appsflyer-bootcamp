@@ -13,7 +13,7 @@ import ProfileMentor from "./pages/ProfileMentor";
 import ProfileMentee from "./pages/ProfileMentee";
 import MentorHomePage from "./pages/MentorHomePage";
 import { authService, setUserStateCallback } from "./api/authService";
-
+import Footer from "./components/Footer";
 function App() {
   const [user, setUser] = useState(null);
 
@@ -31,9 +31,9 @@ function App() {
 
   return (
     <Router>
-      <div className="app">
+      <div className="app" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
         <NavBar user={user} />
-        <div className="app-container">
+        <div className="app-container" style={{ flex: 1 }}>
           <Routes>
             {/* Default route goes to login */}
             <Route path="/" element={<WelcomePage user={user} />} />
@@ -46,9 +46,9 @@ function App() {
             <Route path="/profile/mentor" element={<ProfileMentor user={user} setUser={setUser} />} />
             <Route path="/profile/mentee" element={<ProfileMentee user={user}/>} />
             <Route path="/mentor-home" element={<MentorHomePage user={user}/>} />
-
           </Routes>
         </div>
+        <Footer />
       </div>
     </Router>
   );

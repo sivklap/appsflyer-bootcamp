@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import AvatarUpload from './AvatarUpload';
 import { useNavigate, Link } from 'react-router-dom';
 import { authService } from '../../api/authService';
 import './AuthForms.css';
@@ -41,10 +42,19 @@ const SignupForm = ({availableLanguages}) => {
     }));
   };
 
+
   const handleAvatarSelect = (avatarValue) => {
     setFormData(prev => ({
       ...prev,
       img: avatarValue
+    }));
+  };
+
+  const handleAvatarFile = (file) => {
+    if (!file) return;
+    setFormData(prev => ({
+      ...prev,
+      img: file // File object
     }));
   };
 
@@ -54,8 +64,26 @@ const SignupForm = ({availableLanguages}) => {
     setError('');
 
     try {
-      const response = await authService.signup(formData);
-      
+      // Prepare FormData for multipart/form-data
+      const data = new FormData();
+      Object.entries(formData).forEach(([key, value]) => {
+        if (key === 'img') {
+          if (value && typeof value !== 'string') {
+            data.append('img', value); // File object
+          } else if (typeof value === 'string') {
+            data.append('img', value);
+          }
+        } else if (key === 'languages') {
+          value.forEach(lang => data.append('languages', lang));
+        } else {
+          data.append(key, value);
+        }
+      });
+      // Debug: print all FormData values
+      for (let pair of data.entries()) {
+        console.log(pair[0]+ ':', pair[1]);
+      }
+      const response = await authService.signupFormData(data);
       if (response.user.role === 'mentee') {
         navigate('/mentors');
       } else if (response.user.role === 'mentor') {
@@ -271,7 +299,7 @@ const SignupForm = ({availableLanguages}) => {
                           type="radio"
                           name="img"
                           value={avatar.value}
-                          checked={formData.img === avatar.value}
+                          checked={typeof formData.img === 'string' && formData.img === avatar.value}
                           onChange={() => handleAvatarSelect(avatar.value)}
                         />
                         <img
@@ -283,6 +311,16 @@ const SignupForm = ({availableLanguages}) => {
                       </label>
                     ))}
                   </div>
+                  <div style={{marginTop: 12}}>
+                    <span style={{fontWeight: 500}}>או העלה תמונה מהמחשב:</span>
+                    <AvatarUpload onFileSelect={handleAvatarFile} />
+                  </div>
+                  {formData.img && typeof formData.img !== 'string' && (
+                    <div style={{marginTop: 8}}>
+                      <span style={{fontSize: '0.9em'}}>תצוגה מקדימה של התמונה שהעלית:</span>
+                      <img src={URL.createObjectURL(formData.img)} alt="Avatar Preview" style={{ width: 80, height: 80, borderRadius: '50%' }} />
+                    </div>
+                  )}
                 </div>
               </div>
             </>

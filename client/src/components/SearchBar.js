@@ -34,7 +34,7 @@ const SearchBar = ({mentors, onResults, setIsSearching}) => {
                 placeholder="Search by name"
             />
         </div>
-
+ 
 
 )
 }
