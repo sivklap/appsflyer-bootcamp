@@ -11,7 +11,7 @@ const MentorHomePage = ({user}) => {
             <div className="mentor-home-content">
                 <h1>Welcome, {user.first_name}!</h1>
                 <div className="thank-you-message">
-                    <h2>Thank you for being a mentor! 👑</h2>
+                    <h2>Thank you for being a mentor!</h2>
                     <p>Your expertise and guidance will help shape the future of our community.</p>
                     <p>We appreciate your commitment to sharing knowledge and empowering others.</p>
                 </div>

@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { authService } from '../../api/authService';
 import './AuthForms.css';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
-const SignupForm = () => {
+const SignupForm = ({availableLanguages}) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     first_name: '',
@@ -55,7 +57,7 @@ const SignupForm = () => {
       const response = await authService.signup(formData);
       
       if (response.user.role === 'mentee') {
-        navigate('/mentors-page');
+        navigate('/mentors');
       } else if (response.user.role === 'mentor') {
         navigate('/mentor-home');
       } else {
@@ -72,7 +74,6 @@ const SignupForm = () => {
     setShowPassword(!showPassword);
   };
 
-  const availableLanguages = ['JavaScript', 'React', 'Python', 'Node.js', 'Java', 'C#'];
   const avatarOptions = [
     { label: 'Avatar 1', value: '1' },
     { label: 'Avatar 2', value: '2' },
@@ -156,7 +157,7 @@ const SignupForm = () => {
                   className="password-toggle"
                   onClick={togglePasswordVisibility}
                 >
-                  {showPassword ? '🙈' : '👁️'}
+                  {showPassword ? <VisibilityOffIcon/> : <VisibilityIcon/>}
                 </button>
               </div>
             </div>

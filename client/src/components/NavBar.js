@@ -1,25 +1,29 @@
 import React, {useState} from "react"
-import { useNavigate } from 'react-router-dom';
 import "./NavBar.css"
+import { useNavigate } from 'react-router-dom';
+
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { authService } from '../api/authService';
 
-const NavBar = ({user, setUser}) => {
+import Tooltip from '@mui/material/Tooltip';
+
+
+const NavBar = ({user}) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const navigate = useNavigate();
     const open = Boolean(anchorEl);
-    
+
     const handleClick = (e) => {
         setAnchorEl(e.currentTarget);
     }
-    
+
     const handleClose = () => {
         setAnchorEl(null);
     }
-    
+
     const handleLogOut = () => {
         authService.logout(); // This will clear localStorage and update user state via callback
         setAnchorEl(null); // Close the menu
@@ -33,7 +37,7 @@ const NavBar = ({user, setUser}) => {
 
     const handleMentorsClick = () => {
         handleClose();
-        navigate('/mentors-page');
+        navigate('/mentors');
     }
 
     const handleMentorHomeClick = () => {
@@ -43,18 +47,24 @@ const NavBar = ({user, setUser}) => {
 
     return (
         <nav className="navbar">
-            <a className="title" href={'/'}>
-                <img src="/images/logo.png" alt="Home Logo" className="logo" />
-            </a>
+            <Tooltip title="Home" placement="right">
+                <a className="title" href={'/'} >
+                    <img src="/images/logo.png" alt="Home Logo" className="logo" />
+                </a>
+            </Tooltip>
+
             <div className="navbar-user">
                 { user ? (
                         <div className="navbar-logged-in">
-                            <Avatar
-                                alt={user.first_name}
-                                src={`/images/avatars/avatar-${user.img}.png`}
-                                onClick={handleClick}
-                                className="user-avatar"
-                            />
+                            <Tooltip title="Profile" placement="left">
+                                <Avatar
+                                    alt={user.first_name}
+                                    src={`/images/avatars/avatar-${user.img}.png`}
+                                    onClick={handleClick}
+                                    className="user-avatar"
+                                />
+                            </Tooltip>
+
                             <Menu
                                 anchorEl={anchorEl}
                                 open={open}
@@ -63,7 +73,7 @@ const NavBar = ({user, setUser}) => {
                                 <MenuItem onClick={handleProfileClick}>
                                     <span className="menu-link">Profile</span>
                                 </MenuItem>
-                                
+
                                 {/* Role-specific menu items */}
                                 {user.role === 'mentee' ? (
                                     <MenuItem onClick={handleMentorsClick}>
@@ -74,7 +84,7 @@ const NavBar = ({user, setUser}) => {
                                         <span className="menu-link">Mentor Home</span>
                                     </MenuItem>
                                 )}
-                                
+
                                 <MenuItem onClick={handleLogOut}>
                                     <span className="menu-link">Sign Out</span>
                                 </MenuItem>
@@ -100,6 +110,9 @@ const NavBar = ({user, setUser}) => {
                     </div>
                 )}
             </div>
+
+
+
         </nav>
     )
 }

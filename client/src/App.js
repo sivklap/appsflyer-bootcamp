@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import MenteeRegistrationPage from "./pages/MenteeRegistrationPage";
-import MentorRegistrationPage from "./pages/MentorRegistrationPage";
-import MentorsPage from "./components/MentorsPage";
+// import MenteeRegistrationPage from "./pages/MenteeRegistrationPage";
+// import MentorRegistrationPage from "./pages/MentorRegistrationPage";
+import MentorsPage from "./pages/MentorsPage";
 import NavBar from "./components/NavBar";
 import LoginForm from "./components/auth/LoginForm";
 import SignupForm from "./components/auth/SignupForm";
@@ -27,23 +27,23 @@ function App() {
     // Set up callback for auth service to update user state
     setUserStateCallback(setUser);
   }, []);
+  const availableLanguages = ['JavaScript', 'React', 'Python', 'Node.js', 'Java', 'C#', 'C++', 'HTML'];
 
   return (
     <Router>
       <div className="app">
-        <NavBar user={user} setUser={setUser} />
+        <NavBar user={user} />
         <div className="app-container">
           <Routes>
             {/* Default route goes to login */}
             <Route path="/" element={<WelcomePage user={user} />} />
             <Route path="/login" element={<LoginForm />} />
-            <Route path="/signup" element={<SignupForm />} />
+            <Route path="/signup" element={<SignupForm availableLanguages={availableLanguages} />} />
 
-            {/* Your existing routes */}
-            <Route path="/mentors-page" element={<MentorsPage user={user}/>} />
-            <Route path="/register/mentor" element={<MentorRegistrationPage />} />
-            <Route path="/register/mentee" element={<MenteeRegistrationPage />} />
-            <Route path="/profile/mentor" element={<ProfileMentor user={user}/>} />
+            <Route path="/mentors" element={<MentorsPage user={user} availableLanguages={availableLanguages} />} />
+            {/*<Route path="/register/mentor" element={<MentorRegistrationPage />} />*/}
+            {/*<Route path="/register/mentee" element={<MenteeRegistrationPage />} />*/}
+            <Route path="/profile/mentor" element={<ProfileMentor user={user} setUser={setUser} />} />
             <Route path="/profile/mentee" element={<ProfileMentee user={user}/>} />
             <Route path="/mentor-home" element={<MentorHomePage user={user}/>} />
 

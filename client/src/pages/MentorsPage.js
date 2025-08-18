@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
-// import UserManagement from "./UserManagement";
-import MentorCards from "./MentorCards";
-import SearchBar from "./SearchBar";
-import api from "../api/authService";
+import MentorCards from "../components/MentorCards";
+import SearchBar from "../components/SearchBar";
+import FilterSortBar from "../components/FilterSortBar";
 import axios from "axios";
+import "./MentorsPage.css"
 
-const MentorsPage = ({user}) => {
+const MentorsPage = ({user, availableLanguages}) => {
 
     const [mentors, setMentors] = useState([]);
     const [isSearching, setIsSearching] = useState(false);
@@ -24,14 +24,16 @@ const MentorsPage = ({user}) => {
         getMentors();
     }, [])
     if (!user){
-        return <p>Please log in to view this profile.</p>;
+        return <p>Please log in to view this page.</p>;
     }
     else if(user.role !== "mentee"){
-        return <p>You have to be a mentee to see this</p>
+        return <p>You have to be a mentee to see this page.</p>
     }
   return (
-      <div>
+      <div className="mentors-page">
+          <h1>Find your mentor</h1>
           <SearchBar mentors={mentors} onResults={setFilteredMentors} setIsSearching={setIsSearching} />
+          {/*<FilterSortBar mentors={mentors} availableLanguages={availableLanguages} setIsSearching={setIsSearching} onResults={setFilteredMentors} />*/}
           <MentorCards mentors={isSearching ? filteredMentors : mentors} />
       </div>
   );

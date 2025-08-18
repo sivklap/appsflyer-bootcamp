@@ -21,9 +21,15 @@ const WelcomePage = ({user}) => {
                 <Button
                     className="welcome-log-in"
                     variant="contained"
-                    href={`/profile/${user.role}`}
+                    href={
+                        user.role === 'mentee'
+                            ? '/mentors'
+                            : `/profile/${user.role}`
+                    }
                 >
-                    Go to Profile
+                    {user.role === 'mentee'
+                        ? 'Search mentors'
+                        : 'Go to Profile'}
                 </Button>
             )}
 
