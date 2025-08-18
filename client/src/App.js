@@ -27,6 +27,7 @@ function App() {
     // Set up callback for auth service to update user state
     setUserStateCallback(setUser);
   }, []);
+  const availableLanguages = ['JavaScript', 'React', 'Python', 'Node.js', 'Java', 'C#', 'C++', 'HTML'];
 
   return (
     <Router>
@@ -37,9 +38,9 @@ function App() {
             {/* Default route goes to login */}
             <Route path="/" element={<WelcomePage user={user} />} />
             <Route path="/login" element={<LoginForm />} />
-            <Route path="/signup" element={<SignupForm />} />
+            <Route path="/signup" element={<SignupForm availableLanguages={availableLanguages} />} />
 
-            <Route path="/mentors" element={<MentorsPage user={user}/>} />
+            <Route path="/mentors" element={<MentorsPage user={user} availableLanguages={availableLanguages} />} />
             {/*<Route path="/register/mentor" element={<MentorRegistrationPage />} />*/}
             {/*<Route path="/register/mentee" element={<MenteeRegistrationPage />} />*/}
             <Route path="/profile/mentor" element={<ProfileMentor user={user} setUser={setUser} />} />

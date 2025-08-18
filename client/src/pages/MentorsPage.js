@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react";
 import MentorCards from "../components/MentorCards";
 import SearchBar from "../components/SearchBar";
+import FilterSortBar from "../components/FilterSortBar";
 import axios from "axios";
 import "./MentorsPage.css"
 
-const MentorsPage = ({user}) => {
+const MentorsPage = ({user, availableLanguages}) => {
 
     const [mentors, setMentors] = useState([]);
     const [isSearching, setIsSearching] = useState(false);
@@ -32,6 +33,7 @@ const MentorsPage = ({user}) => {
       <div className="mentors-page">
           <h1>Find your mentor</h1>
           <SearchBar mentors={mentors} onResults={setFilteredMentors} setIsSearching={setIsSearching} />
+          {/*<FilterSortBar mentors={mentors} availableLanguages={availableLanguages} setIsSearching={setIsSearching} onResults={setFilteredMentors} />*/}
           <MentorCards mentors={isSearching ? filteredMentors : mentors} />
       </div>
   );

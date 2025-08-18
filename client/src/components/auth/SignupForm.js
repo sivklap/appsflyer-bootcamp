@@ -5,7 +5,7 @@ import './AuthForms.css';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
-const SignupForm = () => {
+const SignupForm = ({availableLanguages}) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     first_name: '',
@@ -74,7 +74,6 @@ const SignupForm = () => {
     setShowPassword(!showPassword);
   };
 
-  const availableLanguages = ['JavaScript', 'React', 'Python', 'Node.js', 'Java', 'C#'];
   const avatarOptions = [
     { label: 'Avatar 1', value: '1' },
     { label: 'Avatar 2', value: '2' },
