@@ -1,7 +1,7 @@
 import React from "react"
 import "./MentorHomePage.css"
 
-const MentorHomePage = ({user}) => {
+const MentorHomePage = ({user}) => { 
     if (!user){
         return <p>Please log in to view this page.</p>;
     }
