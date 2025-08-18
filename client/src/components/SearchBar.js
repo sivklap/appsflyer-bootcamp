@@ -5,7 +5,7 @@ const SearchBar = ({mentors, onResults, setIsSearching}) => {
     const [query, setQuery] = useState("");
 
     const handleChange = (e) => {
-        const value = e.target.value.toLowerCase();
+        const value = e.target.value;
         setQuery(value);
 
         if (value.trim() === ""){
@@ -14,8 +14,8 @@ const SearchBar = ({mentors, onResults, setIsSearching}) => {
         } else {
             const filtered = mentors.filter((mentor) => {
                 const fullName = (mentor.first_name + " " + mentor.last_name).toLowerCase();
-                const languages = (mentor.languages || []).map((l) => l.toLowerCase());
-                return fullName.includes(value) || languages.some((l) => l.includes(value));
+                // const languages = (mentor.languages || []).map((l) => l.toLowerCase());
+                return fullName.includes(value.toLowerCase());
 
             })
             onResults(filtered);
@@ -31,7 +31,7 @@ const SearchBar = ({mentors, onResults, setIsSearching}) => {
                 type="search"
                 value={query}
                 onChange={handleChange}
-                placeholder="Search by name or language"
+                placeholder="Search by name"
             />
         </div>
 
