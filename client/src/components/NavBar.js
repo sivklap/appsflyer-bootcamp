@@ -45,6 +45,8 @@ const NavBar = ({user}) => {
         navigate('/mentor-home');
     }
 
+    // Debug: print user.img to console
+    console.log('NavBar user.img:', user && user.img);
     return (
         <nav className="navbar">
             <Tooltip title="Home" placement="right">
@@ -59,7 +61,13 @@ const NavBar = ({user}) => {
                             <Tooltip title="Profile" placement="left">
                                 <Avatar
                                     alt={user.first_name}
-                                    src={`/images/avatars/avatar-${user.img}.png`}
+                                    src={
+                                        user.img && typeof user.img === 'string' && (user.img.startsWith('data:') || user.img.startsWith('iVBOR'))
+                                            ? (user.img.startsWith('data:') ? user.img : `data:image/png;base64,${user.img}`)
+                                            : (user.img && (typeof user.img === 'string' || typeof user.img === 'number'))
+                                                ? `/images/avatars/avatar-${user.img}.png`
+                                                : '/images/avatars/avatar-1.png'
+                                    }
                                     onClick={handleClick}
                                     className="user-avatar"
                                 />

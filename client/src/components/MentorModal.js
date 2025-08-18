@@ -18,7 +18,15 @@ const MentorModal = ({show, mentor, onClose}) => {
                     <CloseIcon/>
                 </button>
                 <div className="mentor-modal-content">
-                    <img src={`/images/avatars/avatar-${mentor.img}.png`} alt="Mentor" className="mentor-avatar" />
+                    <img
+                        src={
+                            mentor.img && typeof mentor.img === 'string' && (mentor.img.startsWith('data:') || mentor.img.startsWith('iVBOR'))
+                                ? (mentor.img.startsWith('data:') ? mentor.img : `data:image/png;base64,${mentor.img}`)
+                                : '/images/avatars/avatar-1.png'
+                        }
+                        alt="Mentor"
+                        className="mentor-avatar"
+                    />
                     <div className="mentor-modal-body">
                         <a href={mentor.linkedin_url} target="_blank" rel="noreferrer" className="linkedin-icon">
                             <LinkedInIcon fontSize="large" />
