@@ -31,30 +31,37 @@ const WelcomePage = ({user}) => {
             ></canvas>
             <img src="/images/crown-logo.png" alt="Home Logo" className="crown-logo" />
             <h3>Connecting women to learn and grow together</h3>
-            <p>Join a community, find mentors and grow your skills.</p>
 
             {!user ? (
-                <Button
-                    className="welcome-log-in"
-                    variant="contained"
-                    href="/login"
-                >
-                    Get started
-                </Button>
+                <>
+                    <p>Join a community, find mentors and grow your skills.</p>
+                    <Button
+                        className="welcome-log-in"
+                        variant="contained"
+                        href="/login"
+                    >
+                        Get started
+                    </Button>
+                </>
+
             ) : (
-                <Button
-                    className="welcome-log-in"
-                    variant="contained"
-                    href={
-                        user.role === 'mentee'
-                            ? '/mentors'
-                            : `/profile/${user.role}`
-                    }
-                >
-                    {user.role === 'mentee'
-                        ? 'Search mentors'
-                        : 'Go to Profile'}
-                </Button>
+                <>
+                    <p>Welcome, {user.first_name}!</p>
+                    <Button
+                        className="welcome-log-in"
+                        variant="contained"
+                        href={
+                            user.role === 'mentee'
+                                ? '/mentors'
+                                : `/profile/${user.role}`
+                        }
+                    >
+                        {user.role === 'mentee'
+                            ? 'Search mentors'
+                            : 'Go to Profile'}
+                    </Button>
+                </>
+
             )}
 
 
