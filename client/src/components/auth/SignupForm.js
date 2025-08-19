@@ -221,7 +221,7 @@ const SignupForm = ({availableLanguages}) => {
                     className="form-input"
                     value={formData.phone_number}
                     onChange={handleChange}
-                    placeholder="+1234567890"
+                    placeholder="0501234567"
                   />
                 </div>
                 
@@ -291,7 +291,7 @@ const SignupForm = ({availableLanguages}) => {
                 </div>
                 
                 <div className="form-group">
-                  <label className="form-label">Select Avatar</label>
+                  <label className="form-label">Select an avatar or upload a photo</label>
                   <div className="avatar-grid">
                     {avatarOptions.map(avatar => (
                       <label key={avatar.value} className="avatar-option">
@@ -311,16 +311,9 @@ const SignupForm = ({availableLanguages}) => {
                       </label>
                     ))}
                   </div>
-                  <div style={{marginTop: 12}}>
-                    <span style={{fontWeight: 500}}>או העלה תמונה מהמחשב:</span>
+                  <div>
                     <AvatarUpload onFileSelect={handleAvatarFile} />
                   </div>
-                  {formData.img && typeof formData.img !== 'string' && (
-                    <div style={{marginTop: 8}}>
-                      <span style={{fontSize: '0.9em'}}>תצוגה מקדימה של התמונה שהעלית:</span>
-                      <img src={URL.createObjectURL(formData.img)} alt="Avatar Preview" style={{ width: 80, height: 80, borderRadius: '50%' }} />
-                    </div>
-                  )}
                 </div>
               </div>
             </>
