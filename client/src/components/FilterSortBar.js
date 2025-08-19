@@ -56,6 +56,7 @@ const FilterSortBar = ({mentors, availableLanguages, setIsSearching, onResults})
                     variant="text"
                     onClick={clearAll}
                     disabled={selectedLanguages.length === 0 && minYears === 0}
+                    sx={{ color: "#BB8588" }}
                 >
                     Clear
                 </Button>
