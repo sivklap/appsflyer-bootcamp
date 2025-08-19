@@ -221,7 +221,7 @@ const SignupForm = ({availableLanguages}) => {
                     className="form-input"
                     value={formData.phone_number}
                     onChange={handleChange}
-                    placeholder="+1234567890"
+                    placeholder="0501234567"
                   />
                 </div>
                 
@@ -291,7 +291,7 @@ const SignupForm = ({availableLanguages}) => {
                 </div>
                 
                 <div className="form-group">
-                  <label className="form-label">Select Avatar</label>
+                  <label className="form-label">Select an avatar or upload a photo</label>
                   <div className="avatar-grid">
                     {avatarOptions.map(avatar => (
                       <label key={avatar.value} className="avatar-option">

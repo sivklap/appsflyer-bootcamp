@@ -1,16 +1,13 @@
 import React, {useState, useEffect} from "react";
+import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import MenteeRegistrationPage from "./pages/MenteeRegistrationPage";
-// import MentorRegistrationPage from "./pages/MentorRegistrationPage";
 import MentorsPage from "./pages/MentorsPage";
 import NavBar from "./components/NavBar";
 import LoginForm from "./components/auth/LoginForm";
 import SignupForm from "./components/auth/SignupForm";
-
 import WelcomePage from "./pages/WelcomePage";
-import "./App.css";
-import ProfileMentor from "./pages/ProfileMentor";
-import ProfileMentee from "./pages/ProfileMentee";
+import Profile from "./pages/Profile";
+
 import MentorHomePage from "./pages/MentorHomePage";
 import { authService, setUserStateCallback } from "./api/authService";
 import Footer from "./components/Footer";
@@ -41,10 +38,9 @@ function App() {
             <Route path="/signup" element={<SignupForm availableLanguages={availableLanguages} />} />
 
             <Route path="/mentors" element={<MentorsPage user={user} availableLanguages={availableLanguages} />} />
-            {/*<Route path="/register/mentor" element={<MentorRegistrationPage />} />*/}
-            {/*<Route path="/register/mentee" element={<MenteeRegistrationPage />} />*/}
-            <Route path="/profile/mentor" element={<ProfileMentor user={user} setUser={setUser} />} />
-            <Route path="/profile/mentee" element={<ProfileMentee user={user}/>} />
+            <Route path="/profile" element={<Profile user={user} setUser={setUser} availableLanguages={availableLanguages} />} />
+            <Route path="/profile/:role" element={<Profile user={user} setUser={setUser} availableLanguages={availableLanguages} />} />
+
             <Route path="/mentor-home" element={<MentorHomePage user={user}/>} />
           </Routes>
         </div>
