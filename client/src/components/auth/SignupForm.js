@@ -277,6 +277,33 @@ const SignupForm = ({availableLanguages}) => {
                   required
                 />
               </div>
+
+              <div className="form-group">
+                <label className="form-label">Select Avatar</label>
+                <div className="avatar-grid">
+                  {avatarOptions.map(avatar => (
+                    <label key={avatar.value} className="avatar-option">
+                      <input
+                        type="radio"
+                        name="img"
+                        value={avatar.value}
+                        checked={formData.img === avatar.value}
+                        onChange={() => handleAvatarSelect(avatar.value)}
+                        required
+                      />
+                      <img
+                        src={`/images/avatars/avatar-${avatar.value}.png`}
+                        alt={avatar.label}
+                        className="avatar-preview"
+                      />
+                      <span className="avatar-label">{avatar.label}</span>
+                    </label>
+                  ))}
+                </div>
+                {!formData.img && (
+                  <p className="error-message">Please select an avatar</p>
+                )}
+              </div>
             </div>
           )}
 
