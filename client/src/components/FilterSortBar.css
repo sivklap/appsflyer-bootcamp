@@ -36,6 +36,11 @@
     color: white !important;
 }
 
+.language-btn.MuiButton-contained:hover {
+    background-color: #bb8588 !important; /* same as contained */
+    color: white !important; /* keep text white */
+}
+
 .slider-root {
     color: #bb8588 !important;
     height: 8px;
