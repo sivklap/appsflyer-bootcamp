@@ -3,8 +3,8 @@ import AvatarUpload from "../components/auth/AvatarUpload";
 import "./Profile.css";
 import { authService } from '../api/authService';
 import Button from '@mui/material/Button';
+import { Switch, FormControlLabel } from '@mui/material';
 import { Navigate, useLocation } from "react-router-dom";
-
 
 const Profile = ({ user, setUser, availableLanguages = [] }) => {
     const [isEditing, setIsEditing] = useState(false);
@@ -41,6 +41,10 @@ const Profile = ({ user, setUser, availableLanguages = [] }) => {
         } else {
             setFormData({ ...formData, [name]: value });
         }
+    };
+
+    const handleToggleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.checked });
     };
 
     const handleAvatarSelect = (avatarValue) => {
@@ -82,6 +86,7 @@ const Profile = ({ user, setUser, availableLanguages = [] }) => {
                 ...(formData.bio !== undefined && { bio: formData.bio.trim() || "" }),
                 ...(formData.years_of_experience !== undefined && { years_of_experience: formData.years_of_experience !== "" ? Math.max(Number(formData.years_of_experience), 0) : 0 }),
                 ...(formData.languages !== undefined && { languages: formData.languages.length > 0 ? formData.languages : [] }),
+                ...(formData.is_available !== undefined && { is_available: formData.is_available }),
                 ...(isChangingAvatar && { img: formData.img })
             };
 
@@ -105,33 +110,61 @@ const Profile = ({ user, setUser, availableLanguages = [] }) => {
                 bio: user.bio || "",
                 years_of_experience: user.years_of_experience || 0,
                 languages: user.languages || [],
-                img: user.img || ""
+                img: user.img || "",
+                is_available: user.is_available !== undefined ? user.is_available : true
             });
             setIsEditing(true);
             setIsChangingAvatar(false);
         }
     };
 
-    let imgValue = isEditing && isChangingAvatar ? formData.img || user.img : user.img;
-    let imgSrc = user.img;
-
-    if (imgValue) {
-        if (imgValue instanceof File) {
-            imgSrc = URL.createObjectURL(imgValue);
-        } else if (typeof imgValue === "string") {
-            imgSrc = imgValue.startsWith('data:') || imgValue.startsWith('iVBOR')
-                ? imgValue.startsWith('data:') ? imgValue : `data:image/png;base64,${imgValue}`
-                : `/images/avatars/avatar-${imgValue}.png`;
-        } else if (typeof imgValue === "number") {
-            imgSrc = `/images/avatars/avatar-${imgValue}.png`;
+    // Improved avatar source logic
+    const getAvatarSrc = () => {
+        let imgValue = isEditing && isChangingAvatar ? formData.img || user.img : user.img;
+        
+        if (!imgValue) {
+            return '/images/avatars/avatar-1.png'; // Default avatar
         }
-    }
+        
+        if (imgValue instanceof File) {
+            return URL.createObjectURL(imgValue);
+        }
+        
+        if (typeof imgValue === "string") {
+            if (imgValue.startsWith('data:') || imgValue.startsWith('iVBOR')) {
+                return imgValue.startsWith('data:') ? imgValue : `data:image/png;base64,${imgValue}`;
+            }
+            // If it's a number as string (like "1", "2", etc.)
+            if (/^\d+$/.test(imgValue)) {
+                return `/images/avatars/avatar-${imgValue}.png`;
+            }
+            // If it's already a full path
+            if (imgValue.startsWith('/images/avatars/')) {
+                return imgValue;
+            }
+            // Default to avatar-1 if we can't determine the format
+            return `/images/avatars/avatar-1.png`;
+        }
+        
+        if (typeof imgValue === "number") {
+            return `/images/avatars/avatar-${imgValue}.png`;
+        }
+        
+        return '/images/avatars/avatar-1.png'; // Fallback
+    };
 
     return (
         <div className="profile-page">
             <div className="profile-header">
                 <div className="avatar-change-wrapper">
-                    <img src={imgSrc} alt={user.first_name} className="profile-avatar" />
+                    <img 
+                        src={getAvatarSrc()} 
+                        alt={`${user.first_name} ${user.last_name}`} 
+                        className="profile-avatar" 
+                        onError={(e) => {
+                            e.target.src = '/images/avatars/avatar-1.png';
+                        }}
+                    />
 
                     {isEditing && (
                         <Button
@@ -244,6 +277,23 @@ const Profile = ({ user, setUser, availableLanguages = [] }) => {
                             </div>
                         </div>
 
+                        {/* Availability toggle - only for mentors */}
+                        {user.role === 'mentor' && (
+                            <div className="form-group">
+                                <FormControlLabel
+                                    control={
+                                        <Switch
+                                            checked={formData.is_available !== undefined ? formData.is_available : user.is_available}
+                                            onChange={handleToggleChange}
+                                            name="is_available"
+                                            color="primary"
+                                        />
+                                    }
+                                    label="Available for Mentoring"
+                                />
+                            </div>
+                        )}
+
                         <div className="form-actions">
                             <button className="save-btn" onClick={handleSave}><span>Save</span></button>
                             <button className="cancel-btn" onClick={() => { setIsEditing(false); setIsChangingAvatar(false); }}><span>Cancel</span></button>
@@ -255,6 +305,18 @@ const Profile = ({ user, setUser, availableLanguages = [] }) => {
                         {user.bio && <p><b>Bio:</b> {user.bio}</p>}
                         {user.years_of_experience !== undefined && <p><b>Years of experience:</b> {user.years_of_experience}</p>}
                         {user.languages && user.languages.length > 0 && <p><b>Languages:</b> {user.languages.join(", ")}</p>}
+                        {user.role === 'mentor' && (
+                            <p>
+                                <b>Available for Mentoring:</b> 
+                                <span style={{ 
+                                    color: user.is_available ? '#4caf50' : '#f44336',
+                                    fontWeight: 'bold',
+                                    marginLeft: '5px'
+                                }}>
+                                    {user.is_available ? 'Yes' : 'No'}
+                                </span>
+                            </p>
+                        )}
                         {!isEditing && <button className="edit-btn" onClick={handleEditClick}>Edit</button>}
                     </>
                 )}

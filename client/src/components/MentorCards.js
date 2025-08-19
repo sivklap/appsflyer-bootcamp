@@ -24,7 +24,6 @@ const MentorCards = ({mentors}) => {
                                 {mentor.is_available ? 'Available' : 'Not Available'}
                             </span>
                         </div>
-                        <img src={`/images/avatars/avatar-${mentor.img}.png`} alt="mentor-image" />
                         <img
                             src={
                                 mentor.img && typeof mentor.img === 'string' && (mentor.img.startsWith('data:') || mentor.img.startsWith('iVBOR'))
