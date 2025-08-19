@@ -354,3 +354,12 @@ select.form-input:focus {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+.thin-input .MuiOutlinedInput-root {
+  height: 44px;
+  font-size: 16px;
+}
+
+.thin-input .MuiOutlinedInput-input {
+  padding: 12px; 
+}
