@@ -267,13 +267,13 @@ select.form-input:focus {
 }
 
 .language-btn.selected {
-  background: #4f46e5;
+  background: #bb8588;
   color: #fff;
 }
 
 .selected-languages {
   font-size: 14px;
-  color: #4f46e5;
+  color: #bb8588;
   margin-top: 10px;
   font-style: italic;
 }
