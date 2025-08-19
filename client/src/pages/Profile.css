@@ -1,4 +1,4 @@
-.profile-mentor-page{
+.profile-page{
     max-width: 800px;
     margin: 100px auto 50px;
     padding: 20px;
@@ -8,21 +8,21 @@
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-.profile-mentor-header{
+.profile-header{
     display: flex;
     align-items: flex-start;
     gap: 20px;
     margin-bottom: 30px;
 }
 
-.profile-mentor-avatar{
+.profile-avatar{
     width: 120px;
     height: 120px;
     border-radius: 50%;
     object-fit: cover;
 }
 
-.profile-mentor-header h1{
+.profile-header h1{
     margin: 0;
     font-size: 50px;
     font-family: "DM Serif Text", serif;
@@ -31,28 +31,28 @@
     color: #bb8588;
 }
 
-.profile-mentor-role{
+.profile-role{
     color: #666;
     font-style: italic;
     font-size: 16px;
 }
 
-.profile-mentor-info h2{
+.profile-info h2{
     margin-top: 20px;
     font-size: 25px;
 }
 
-.profile-mentor-info p{
+.profile-info p{
     margin: 5px 0;
     font-size: 18px;
 }
 
-.profile-mentor-info a{
+.profile-info a{
     color: inherit;
     text-decoration: none;
 }
 
-.profile-mentor-info a:hover {
+.profile-info a:hover {
     text-decoration: underline;
 }
 
@@ -196,7 +196,7 @@
 }
 
 /* Wrapper for button and avatar selection */
-.avatar-change-wrapper {
+.profile-avatar {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -256,9 +256,9 @@
 }
 
 /* keep the name and role aligned nicely */
-.profile-mentor-header > h1,
-.profile-mentor-header > .edit-names,
-.profile-mentor-role {
+.profile-header > h1,
+.profile-header > .edit-names,
+.profile-role {
     align-self: center; /* vertical alignment */
 }
 
