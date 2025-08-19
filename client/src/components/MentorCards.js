@@ -8,6 +8,9 @@ const MentorCards = ({mentors}) => {
     
     return (
         <>
+            {mentors.length === 0 &&
+                <p className="no-mentors-message">Sorry, there are no mentors available.</p>
+            }
             <div className="all-mentor-cards">
                 {mentors.map((mentor) => (
                     <div

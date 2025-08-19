@@ -60,7 +60,7 @@
 
 .availability-indicator {
     position: absolute;
-    bottom: 0px;
+    bottom: 0;
     left: 15px;
     display: flex;
     align-items: center;
@@ -95,4 +95,9 @@
     font-weight: 600;
     color: #333;
     white-space: nowrap;
+}
+
+.no-mentors-message{
+    font-size: 20px;
+    width: 100%;
 }
