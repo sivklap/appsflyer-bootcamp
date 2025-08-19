@@ -120,7 +120,6 @@ const SignupForm = ({availableLanguages}) => {
       <div className="auth-card signup-card">
         <div className="auth-header">
           <h2>Create Account</h2>
-          <p>Join our mentoring community</p>
         </div>
 
         {error && (
@@ -151,7 +150,7 @@ const SignupForm = ({availableLanguages}) => {
 
           {/* Basic Information - Same for both roles */}
           <div className="form-section">
-            <h3 className="section-title">Basic Information</h3>
+            {/*<h3 className="section-title">Basic Information</h3>*/}
             <div className="form-row">
               <div className="form-group">
                 <label htmlFor="first_name" className="form-label">First Name</label>
@@ -240,7 +239,7 @@ const SignupForm = ({availableLanguages}) => {
             <>
               {/* Professional Information */}
               <div className="form-section">
-                <h3 className="section-title">Professional Information</h3>
+                {/*<h3 className="section-title">Professional Information</h3>*/}
                 <div className="form-group">
                   <label htmlFor="bio" className="form-label">Bio</label>
                   <textarea
@@ -302,37 +301,7 @@ const SignupForm = ({availableLanguages}) => {
                   />
                 </div>
                 
-                <div className="form-group">
-                  <label className="form-label">Select an avatar or upload a photo</label>
-                  <div className="avatar-grid">
-                    {avatarOptions.map(avatar => (
-                      <label key={avatar.value} className="avatar-option">
-                        <input
-                          type="radio"
-                          name="img"
-                          value={avatar.value}
-                          checked={typeof formData.img === 'string' && formData.img === avatar.value}
-                          onChange={() => handleAvatarSelect(avatar.value)}
-                        />
-                        <img
-                          src={`/images/avatars/avatar-${avatar.value}.png`}
-                          alt={avatar.label}
-                          className="avatar-preview"
-                        />
-                        <span className="avatar-label">{avatar.label}</span>
-                      </label>
-                    ))}
-                  </div>
-                  <div style={{marginTop: 12}}>
-                    <span style={{fontWeight: 500}}>Or upload an image from your computer:</span>
-                    <AvatarUpload onFileSelect={handleAvatarFile} />
-                  </div>
-                  {formData.img && typeof formData.img !== 'string' && (
-                    <div style={{marginTop: 8}}>
-                      <img src={URL.createObjectURL(formData.img)} alt="Avatar Preview" style={{ width: 80, height: 80, borderRadius: '50%' }} />
-                    </div>
-                  )}
-                </div>
+
               </div>
             </>
           )}
@@ -340,7 +309,7 @@ const SignupForm = ({availableLanguages}) => {
           {/* Mentee-specific fields */}
           {formData.role === 'mentee' && (
             <div className="form-section">
-              <h3 className="section-title">Mentee Information</h3>
+              {/*<h3 className="section-title">Mentee Information</h3>*/}
               
               <div className="form-group">
                 <label htmlFor="bio" className="form-label">General Description (Optional)</label>
@@ -356,6 +325,38 @@ const SignupForm = ({availableLanguages}) => {
               </div>
             </div>
           )}
+
+          <div className="form-group">
+            <label className="form-label">Select an avatar or upload a photo</label>
+            <div className="avatar-grid">
+              {avatarOptions.map(avatar => (
+                  <label key={avatar.value} className="avatar-option">
+                    <input
+                        type="radio"
+                        name="img"
+                        value={avatar.value}
+                        checked={typeof formData.img === 'string' && formData.img === avatar.value}
+                        onChange={() => handleAvatarSelect(avatar.value)}
+                    />
+                    <img
+                        src={`/images/avatars/avatar-${avatar.value}.png`}
+                        alt={avatar.label}
+                        className="avatar-preview"
+                    />
+                    <span className="avatar-label">{avatar.label}</span>
+                  </label>
+              ))}
+            </div>
+            <div style={{marginTop: 12}}>
+              <span style={{fontWeight: 500}}>Or upload an image from your computer:</span>
+              <AvatarUpload onFileSelect={handleAvatarFile} />
+            </div>
+            {formData.img && typeof formData.img !== 'string' && (
+                <div style={{marginTop: 8}}>
+                  <img src={URL.createObjectURL(formData.img)} alt="Avatar Preview" style={{ width: 80, height: 80, borderRadius: '50%' }} />
+                </div>
+            )}
+          </div>
           
           <button
             type="submit"
