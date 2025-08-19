@@ -1,5 +1,5 @@
 .filter-sort-bar {
-    width: 230px;
+    width: 268px;
     flex-shrink: 0;
     height: 100%;
     box-sizing: border-box;
@@ -63,4 +63,22 @@
     background-color: #bb8588 !important;
     height: 8px;
     border-radius: 4px;
+}
+
+.availability-checkbox .MuiCheckbox-root {
+    color: #BB8588;
+}
+
+.availability-checkbox .MuiCheckbox-root.Mui-checked {
+    color: #BB8588;
+}
+
+.availability-checkbox .MuiCheckbox-root {
+    padding: 0;
+}
+
+.availability-checkbox span {
+    font-size: 15px;
+    color: #333;
+    margin-left: 6px;
 }
