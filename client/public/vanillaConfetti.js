@@ -95,6 +95,5 @@ function generateConfetti(confettiConfigObj, canvasId = "vanillaConfettiCanvas")
     createConfetti();
     animateConfetti();
 }
-
 // Expose to window for use in React.
 window.generateConfetti = generateConfetti;
