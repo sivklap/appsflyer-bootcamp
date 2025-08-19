@@ -1,9 +1,13 @@
 .filter-sort-bar {
-    width: 300px;
-    padding: 15px;
-    border-right: 1px solid #ddd;
+    width: 200px;
+    flex-shrink: 0;
     height: 100%;
+    box-sizing: border-box;
+    border-right: 1px solid #ddd;
+    padding: 15px;
+    overflow-y: auto;
 }
+
 
 .filter-header {
     display: flex;
@@ -37,8 +41,8 @@
 }
 
 .language-btn.MuiButton-contained:hover {
-    background-color: #bb8588 !important; /* same as contained */
-    color: white !important; /* keep text white */
+    background-color: #bb8588 !important;
+    color: white !important;
 }
 
 .slider-root {
