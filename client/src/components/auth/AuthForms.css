@@ -44,7 +44,7 @@
 .auth-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 8px;
 }
 
 .auth-form .form-group {
@@ -59,7 +59,10 @@
   font-weight: 400;
 }
 
-.auth-form .form-input {
+/* Keep this for native inputs only */
+.auth-form input.form-input,
+.auth-form textarea.form-input,
+.auth-form select.form-input {
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -67,6 +70,15 @@
   transition: border-color 0.3s ease;
   width: 100%;
   box-sizing: border-box;
+}
+
+.auth-form .MuiOutlinedInput-root {
+  height: 40px;  /* smaller than default (~56px) */
+  font-size: 16px;
+}
+
+.auth-form .MuiOutlinedInput-input {
+  padding: 8px 12px; /* reduce internal padding */
 }
 
 .auth-form .form-input:focus {
@@ -353,14 +365,4 @@ select.form-input:focus {
   .avatar-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-}
-
-.thin-input .MuiOutlinedInput-root {
-  height: 44px;
-  font-size: 16px;
-}
-
-.thin-input .MuiOutlinedInput-input {
-  padding: 12px; 
-  font-weight: 400;
 }

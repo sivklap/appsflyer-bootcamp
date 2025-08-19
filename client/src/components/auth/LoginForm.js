@@ -83,8 +83,8 @@ const LoginForm = () => {
             <TextField
               id="password"
               name="password"
-              className="thin-input"
-              fullWidth
+              className="form-input"
+              size="small"
               type={showPassword ? 'text' : 'password'}
               value={formData.password}
               onChange={handleChange}
