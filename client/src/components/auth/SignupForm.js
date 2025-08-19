@@ -230,7 +230,7 @@ const SignupForm = ({availableLanguages}) => {
                 value={formData.phone_number}
                 onChange={handleChange}
                 required
-                placeholder="+1234567890"
+                placeholder="0501234567"
               />
             </div>
           </div>
