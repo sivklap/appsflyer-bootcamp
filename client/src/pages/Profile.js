@@ -22,7 +22,6 @@ const Profile = ({ user, setUser, availableLanguages = [] }) => {
         if (user.role === "mentee") return <Navigate to="/profile/mentee" replace />;
     }
 
-    // Optional: check if user role matches the path
     const pathRole = location.pathname.split("/")[2]; // "mentor" or "mentee"
     if (pathRole && pathRole !== user.role) {
         return <p>Access denied. You are not a {pathRole}.</p>;
