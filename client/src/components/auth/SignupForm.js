@@ -13,7 +13,6 @@ import {
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
-
 const SignupForm = ({availableLanguages}) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -49,7 +48,6 @@ const SignupForm = ({availableLanguages}) => {
         : [...prev.languages, language]
     }));
   };
-
 
   const handleAvatarSelect = (avatarValue) => {
     setFormData(prev => ({
@@ -240,36 +238,6 @@ const SignupForm = ({availableLanguages}) => {
           {/* Mentor-specific fields */}
           {formData.role === 'mentor' && (
             <>
-              {/* Contact Information */}
-              <div className="form-section">
-                <h3 className="section-title">Contact Information</h3>
-                <div className="form-group">
-                  <label htmlFor="phone_number" className="form-label">Phone</label>
-                  <input
-                    type="tel"
-                    id="phone_number"
-                    name="phone_number"
-                    className="form-input"
-                    value={formData.phone_number}
-                    onChange={handleChange}
-                    placeholder="0501234567"
-                  />
-                </div>
-                
-                <div className="form-group">
-                  <label htmlFor="linkedin_url" className="form-label">LinkedIn</label>
-                  <input
-                    type="url"
-                    id="linkedin_url"
-                    name="linkedin_url"
-                    className="form-input"
-                    value={formData.linkedin_url}
-                    onChange={handleChange}
-                    placeholder="https://linkedin.com/in/yourprofile"
-                  />
-                </div>
-              </div>
-
               {/* Professional Information */}
               <div className="form-section">
                 <h3 className="section-title">Professional Information</h3>
@@ -322,6 +290,19 @@ const SignupForm = ({availableLanguages}) => {
                 </div>
                 
                 <div className="form-group">
+                  <label htmlFor="linkedin_url" className="form-label">LinkedIn</label>
+                  <input
+                    type="url"
+                    id="linkedin_url"
+                    name="linkedin_url"
+                    className="form-input"
+                    value={formData.linkedin_url}
+                    onChange={handleChange}
+                    placeholder="https://linkedin.com/in/yourprofile"
+                  />
+                </div>
+                
+                <div className="form-group">
                   <label className="form-label">Select an avatar or upload a photo</label>
                   <div className="avatar-grid">
                     {avatarOptions.map(avatar => (
@@ -348,11 +329,30 @@ const SignupForm = ({availableLanguages}) => {
                   </div>
                   {formData.img && typeof formData.img !== 'string' && (
                     <div style={{marginTop: 8}}>
-                      {/* Removed preview label as requested */}
                       <img src={URL.createObjectURL(formData.img)} alt="Avatar Preview" style={{ width: 80, height: 80, borderRadius: '50%' }} />
                     </div>
                   )}
                 </div>
+              </div>
+            </>
+          )}
+
+          {/* Mentee-specific fields */}
+          {formData.role === 'mentee' && (
+            <div className="form-section">
+              <h3 className="section-title">Mentee Information</h3>
+              
+              <div className="form-group">
+                <label htmlFor="bio" className="form-label">General Description (Optional)</label>
+                <textarea
+                  id="bio"
+                  name="bio"
+                  className="form-textarea"
+                  value={formData.bio}
+                  onChange={handleChange}
+                  placeholder="Tell us about yourself and what you're looking to learn..."
+                  rows="4"
+                />
               </div>
             </div>
           )}
