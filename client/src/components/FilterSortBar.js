@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from "react"
 import "./FilterSortBar.css"
-import { Slider, Button } from "@mui/material";
+import { Slider, Button, Checkbox, FormControlLabel} from "@mui/material";
 
 
 const FilterSortBar = ({mentors, availableLanguages, setIsSearching, onResults}) => {
     const [selectedLanguages, setSelectedLanguages] = useState([]);
     const [minYears, setMinYears] = useState(0);
-
+    const [onlyAvailable, setOnlyAvailable] = useState(false);
 
     useEffect(() => {
         let filteredMentors = [...mentors];
@@ -25,9 +25,13 @@ const FilterSortBar = ({mentors, availableLanguages, setIsSearching, onResults})
             );
         }
 
+        if (onlyAvailable) {
+            filteredMentors = filteredMentors.filter((m) => m.is_available)
+        }
+
         onResults(filteredMentors);
-        setIsSearching(selectedLanguages.length > 0 || minYears > 0);
-    }, [selectedLanguages, minYears, mentors, onResults, setIsSearching]);
+        setIsSearching(selectedLanguages.length > 0 || minYears > 0 || onlyAvailable);
+    }, [selectedLanguages, minYears, onlyAvailable, mentors, onResults, setIsSearching]);
 
     const toggleLanguage = (lang) => {
         setSelectedLanguages((prev) =>
@@ -39,9 +43,14 @@ const FilterSortBar = ({mentors, availableLanguages, setIsSearching, onResults})
         setMinYears(newValue);
     }
 
+    const handleAvailabilityChange = (event) => {
+        setOnlyAvailable(event.target.checked);
+    }
+
     const clearAll = () => {
         setSelectedLanguages([]);
         setMinYears(0);
+        setOnlyAvailable(false);
         onResults(mentors);
         setIsSearching(false);
     };
@@ -55,11 +64,26 @@ const FilterSortBar = ({mentors, availableLanguages, setIsSearching, onResults})
                     size="small"
                     variant="text"
                     onClick={clearAll}
-                    disabled={selectedLanguages.length === 0 && minYears === 0}
+                    disabled={selectedLanguages.length === 0 && minYears === 0 && !onlyAvailable}
                     sx={{ color: "#BB8588" }}
                 >
                     Clear
                 </Button>
+            </div>
+
+
+            <div className="filter-section">
+                <FormControlLabel
+                    className="availability-checkbox"
+                    control={
+                        <Checkbox
+                            checked={onlyAvailable}
+                            onChange={handleAvailabilityChange}
+                            sx={{ color: "#BB8588" }}
+                        />
+                    }
+                    label="Show only available mentors"
+                />
             </div>
 
             <div className="filter-section">
