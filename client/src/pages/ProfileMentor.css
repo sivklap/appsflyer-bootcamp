@@ -133,3 +133,14 @@
 .edit-btn:hover {
     background-color: rgba(187, 133, 136, 0.72);
 }
+
+.linkedin-link {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  margin-top: 2px;
+}
+
+.linkedin-link svg {
+  margin-bottom: 2px;
+}

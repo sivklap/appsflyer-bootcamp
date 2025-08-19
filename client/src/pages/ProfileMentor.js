@@ -2,6 +2,7 @@ import React, {useState} from "react"
 import "./ProfileMentor.css"
 import { authService } from '../api/authService';
 import { Switch, FormControlLabel } from '@mui/material';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 const ProfileMentor = ({user, setUser}) => {
     const [isEditing, setIsEditing] = useState(false);
@@ -141,8 +142,19 @@ const ProfileMentor = ({user, setUser}) => {
                         <p><b>Email:</b> {user.email}</p>
                         <p><b>Phone: </b>{user.phone_number}</p>
                         <p>
-                            <b>LinkedIn: {" "}</b>
-                            <a href={user.linkedin_url} target="_blank" rel="noopener noreferrer">{user.linkedin_url}</a>
+                            <b>LinkedIn: </b>
+                            {user.linkedin_url ? (
+                                <a 
+                                    href={user.linkedin_url} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="linkedin-link"
+                                >
+                                    <LinkedInIcon style={{ fontSize: 20, color: '#0077b5' }} />
+                                </a>
+                            ) : (
+                                <span style={{ color: '#999' }}>Not provided</span>
+                            )}
                         </p>
                     </>
                 )}
