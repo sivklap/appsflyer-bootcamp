@@ -98,6 +98,17 @@
     cursor: pointer;
     font-weight: bold;
     transition: background-color 0.2s;
+    font-family: "Nunito", sans-serif;
+    font-size: 14px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.save-btn span {
+    transform: scale(1.2);
+    display: inline-block;
 }
 
 .save-btn:hover {
@@ -112,6 +123,18 @@
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.2s;
+    font-family: "Nunito", sans-serif;
+    font-size: 14px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.cancel-btn span {
+    transform: scale(1.2);
+    display: inline-block;
 }
 
 .cancel-btn:hover {
@@ -132,4 +155,42 @@
 
 .edit-btn:hover {
     background-color: rgba(187, 133, 136, 0.72);
+}
+
+.languages-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.language-btn {
+    padding: 8px 16px;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 24px;
+    background: #f9f9f9;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-color: #bb8588 !important;
+    color: #bb8588 !important;
+
+}
+
+.language-btn.selected {
+    background-color: #bb8588 !important;
+    color: white !important;
+}
+
+.language-btn:hover {
+    background-color: #f9f9f9 !important;
+    color: #bb8588 !important;
+    border-color: #bb8588 !important;
+    transform: scale(1.08);
+}
+
+.language-btn.selected:hover {
+    background-color: #bb8588 !important;
+    color: white !important;
+    border-color: #bb8588 !important;
 }

@@ -3,7 +3,7 @@ import AvatarUpload from "../components/auth/AvatarUpload"
 import "./ProfileMentor.css"
 import { authService } from '../api/authService';
 
-const ProfileMentor = ({user, setUser}) => {
+const ProfileMentor = ({user, setUser, availableLanguages}) => {
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({});
 
@@ -45,6 +45,19 @@ const ProfileMentor = ({user, setUser}) => {
             img: file // File object
         }));
     };
+
+    const handleLanguageToggle = (language) => {
+        setFormData((prev) => {
+            const isSelected = prev.languages.includes(language);
+            return {
+                ...prev,
+                languages: isSelected
+                    ? prev.languages.filter((l) => l !== language)
+                    : [...prev.languages, language]
+            };
+        });
+    };
+
 
     const handleSave = async () => {
         try {
@@ -117,7 +130,7 @@ const ProfileMentor = ({user, setUser}) => {
                         />
                     </div>
                     <div style={{marginTop: 12}}>
-                        <span style={{fontWeight: 500}}>בחרי אווטאר או העלי תמונה:</span>
+                        <span style={{fontWeight: 500}}>Choose your avatar or upload photo:</span>
                         <div style={{display: 'flex', gap: 12, margin: '8px 0'}}>
                             {[1,2,3,4].map(num => (
                                 <label key={num} style={{display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer'}}>
@@ -217,19 +230,23 @@ const ProfileMentor = ({user, setUser}) => {
                         </div>
                         <div className="form-group">
                             <label>Languages:</label>
-                            <input
-                                type="text"
-                                name="languages"
-                                value={formData.languages.join(", ")}
-                                onChange={(e) => {
-                                    setFormData({...formData, languages: e.target.value.split(",").map(l => l.trim())});
-                                }}
-                            />
+                            <div className="languages-grid">
+                                {availableLanguages.map((language) => (
+                                    <button
+                                        key={language}
+                                        type="button"
+                                        className={`language-btn ${formData.languages.includes(language) ? 'selected' : ''}`}
+                                        onClick={() => handleLanguageToggle(language)}
+                                    >
+                                        {language}
+                                    </button>
+                                ))}
+                            </div>
                         </div>
 
                         <div className="form-actions">
-                            <button className="save-btn" onClick={handleSave}>Save</button>
-                            <button className="cancel-btn" onClick={() => setIsEditing(false)}>Cancel</button>
+                            <button className="save-btn" onClick={handleSave}><span>Save</span></button>
+                            <button className="cancel-btn" onClick={() => setIsEditing(false)}><span>Cancel</span></button>
                         </div>
                     </div>
                 ) : (
