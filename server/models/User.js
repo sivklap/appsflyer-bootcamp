@@ -52,6 +52,10 @@ const userSchema = new mongoose.Schema({
   years_of_experience: {
     type: Number,
     default: 0
+  },
+  is_available: {
+    type: Boolean,
+    default: true
   }
 }, {
   timestamps: true,

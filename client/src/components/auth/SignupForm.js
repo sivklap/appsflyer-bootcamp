@@ -3,8 +3,15 @@ import AvatarUpload from './AvatarUpload';
 import { useNavigate, Link } from 'react-router-dom';
 import { authService } from '../../api/authService';
 import './AuthForms.css';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import {
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  InputAdornment,
+  IconButton
+} from "@mui/material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const SignupForm = ({availableLanguages}) => {
   const navigate = useNavigate();
@@ -41,7 +48,6 @@ const SignupForm = ({availableLanguages}) => {
         : [...prev.languages, language]
     }));
   };
-
 
   const handleAvatarSelect = (avatarValue) => {
     setFormData(prev => ({
@@ -124,7 +130,26 @@ const SignupForm = ({availableLanguages}) => {
         )}
 
         <form className="auth-form" onSubmit={handleSubmit}>
-          {/* Basic Information */}
+          {/* Role Selection */}
+          <div className="form-section">
+            <h3 className="section-title">Choose Your Role</h3>
+            <div className="form-group">
+              <label htmlFor="role" className="form-label">I want to be a</label>
+              <select
+                id="role"
+                name="role"
+                className="form-input"
+                value={formData.role}
+                onChange={handleChange}
+                required
+              >
+                <option value="mentee">Mentee (Looking for guidance)</option>
+                <option value="mentor">Mentor (Want to help others)</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Basic Information - Same for both roles */}
           <div className="form-section">
             <h3 className="section-title">Basic Information</h3>
             <div className="form-row">
@@ -167,78 +192,52 @@ const SignupForm = ({availableLanguages}) => {
                 required
               />
             </div>
-            
+
             <div className="form-group">
-              <label htmlFor="password" className="form-label">Password</label>
-              <div className="password-input-container">
-                <input
-                  type={showPassword ? 'text' : 'password'}
+              <InputLabel htmlFor="password" className="form-label">Password</InputLabel>
+              <FormControl fullWidth variant="outlined">
+                <OutlinedInput
                   id="password"
                   name="password"
                   className="form-input"
+                  size="small"
+                  type={showPassword ? "text" : "password"}
                   value={formData.password}
                   onChange={handleChange}
-                  required
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={togglePasswordVisibility}
+                        onMouseDown={(e) => e.preventDefault()}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
                 />
-                <button
-                  type="button"
-                  className="password-toggle"
-                  onClick={togglePasswordVisibility}
-                >
-                  {showPassword ? <VisibilityOffIcon/> : <VisibilityIcon/>}
-                </button>
-              </div>
+              </FormControl>
             </div>
-            
+
             <div className="form-group">
-              <label htmlFor="role" className="form-label">I want to be a</label>
-              <select
-                id="role"
-                name="role"
+              <label htmlFor="phone_number" className="form-label">Phone Number</label>
+              <input
+                type="tel"
+                id="phone_number"
+                name="phone_number"
                 className="form-input"
-                value={formData.role}
+                value={formData.phone_number}
                 onChange={handleChange}
                 required
-              >
-                <option value="mentee">Mentee (Looking for guidance)</option>
-                <option value="mentor">Mentor (Want to help others)</option>
-              </select>
+                placeholder="+1234567890"
+              />
             </div>
           </div>
 
           {/* Mentor-specific fields */}
           {formData.role === 'mentor' && (
             <>
-              {/* Contact Information */}
-              <div className="form-section">
-                <h3 className="section-title">Contact Information</h3>
-                <div className="form-group">
-                  <label htmlFor="phone_number" className="form-label">Phone</label>
-                  <input
-                    type="tel"
-                    id="phone_number"
-                    name="phone_number"
-                    className="form-input"
-                    value={formData.phone_number}
-                    onChange={handleChange}
-                    placeholder="0501234567"
-                  />
-                </div>
-                
-                <div className="form-group">
-                  <label htmlFor="linkedin_url" className="form-label">LinkedIn</label>
-                  <input
-                    type="url"
-                    id="linkedin_url"
-                    name="linkedin_url"
-                    className="form-input"
-                    value={formData.linkedin_url}
-                    onChange={handleChange}
-                    placeholder="https://linkedin.com/in/yourprofile"
-                  />
-                </div>
-              </div>
-
               {/* Professional Information */}
               <div className="form-section">
                 <h3 className="section-title">Professional Information</h3>
@@ -291,6 +290,19 @@ const SignupForm = ({availableLanguages}) => {
                 </div>
                 
                 <div className="form-group">
+                  <label htmlFor="linkedin_url" className="form-label">LinkedIn</label>
+                  <input
+                    type="url"
+                    id="linkedin_url"
+                    name="linkedin_url"
+                    className="form-input"
+                    value={formData.linkedin_url}
+                    onChange={handleChange}
+                    placeholder="https://linkedin.com/in/yourprofile"
+                  />
+                </div>
+                
+                <div className="form-group">
                   <label className="form-label">Select an avatar or upload a photo</label>
                   <div className="avatar-grid">
                     {avatarOptions.map(avatar => (
@@ -317,13 +329,32 @@ const SignupForm = ({availableLanguages}) => {
                   </div>
                   {formData.img && typeof formData.img !== 'string' && (
                     <div style={{marginTop: 8}}>
-                      {/* Removed preview label as requested */}
                       <img src={URL.createObjectURL(formData.img)} alt="Avatar Preview" style={{ width: 80, height: 80, borderRadius: '50%' }} />
                     </div>
                   )}
                 </div>
               </div>
             </>
+          )}
+
+          {/* Mentee-specific fields */}
+          {formData.role === 'mentee' && (
+            <div className="form-section">
+              <h3 className="section-title">Mentee Information</h3>
+              
+              <div className="form-group">
+                <label htmlFor="bio" className="form-label">General Description (Optional)</label>
+                <textarea
+                  id="bio"
+                  name="bio"
+                  className="form-textarea"
+                  value={formData.bio}
+                  onChange={handleChange}
+                  placeholder="Tell us about yourself and what you're looking to learn..."
+                  rows="4"
+                />
+              </div>
+            </div>
           )}
           
           <button

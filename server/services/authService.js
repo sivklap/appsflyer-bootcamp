@@ -9,7 +9,7 @@ class AuthService {
     const {
       first_name, last_name, email, password, role = "mentee",
       phone_number = "", bio = "", linkedin_url = "", img = "",
-      languages = [], years_of_experience = 0
+      languages = [], years_of_experience = 0, is_available = true
     } = userData;
 
     const userRegistrationData = {
@@ -23,11 +23,12 @@ class AuthService {
       linkedin_url,
       img,
       languages,
-      years_of_experience
+      years_of_experience,
+      is_available
     };
 
     const user = await createUser(userRegistrationData);
-    console.log('User created successfully:', user.first_name, user.last_name);
+    console.log('User created successfully:', user.first_name, user.last_name, 'Available:', user.is_available);
     
     const token = this.generateToken(user);
 
@@ -67,10 +68,14 @@ class AuthService {
     return user;
   }
 
-
   async updateProfile(userId, updateData) {
     console.log('PATCH /auth/update-profile - Request received for user ID:', userId);
     console.log('Update data:', updateData);
+    
+    // Ensure is_available is included in the update if provided
+    if (updateData.is_available !== undefined) {
+      console.log('Updating availability status to:', updateData.is_available);
+    }
     
     const user = await updateUser(userId, updateData);
     if (!user) {

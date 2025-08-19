@@ -102,3 +102,48 @@
     color: #0a66c2;
 }
 
+/* Update the availability indicator styles for the modal */
+
+.availability-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 16px 0;
+    padding: 6px 10px;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-radius: 15px;
+    width: fit-content;
+}
+
+.availability-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    flex-shrink: 0;
+}
+
+.availability-dot.available {
+    background-color: #4caf50;
+}
+
+.availability-dot.unavailable {
+    background-color: #f44336;
+}
+
+.availability-text {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Remove the old availability status styles */
+.availability-status {
+    display: none;
+}
+
+.status-indicator {
+    display: none;
+}
+

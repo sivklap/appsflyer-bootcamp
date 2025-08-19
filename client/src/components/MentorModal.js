@@ -5,7 +5,6 @@ import MailIcon from '@mui/icons-material/Mail';
 import PhoneIcon from '@mui/icons-material/Phone';
 import "./MentorModal.css"
 
-
 const MentorModal = ({show, mentor, onClose}) => {
     if (!show){
         return null;
@@ -36,6 +35,14 @@ const MentorModal = ({show, mentor, onClose}) => {
                             </p>
                         )}
                         <p className="mentor-bio">{mentor.bio}</p>
+                        <p>{mentor.bio}</p>
+                        
+                        <div className="availability-indicator">
+                            <div className={`availability-dot ${mentor.is_available ? 'available' : 'unavailable'}`}></div>
+                            <span className="availability-text">
+                                {mentor.is_available ? 'Available' : 'Not Available'}
+                            </span>
+                        </div>
                     </div>
                 </div>
 
@@ -49,11 +56,7 @@ const MentorModal = ({show, mentor, onClose}) => {
                         </a>
                     </div>
                 </div>
-
-
-
             </div>
-
         </div>
     )
 }

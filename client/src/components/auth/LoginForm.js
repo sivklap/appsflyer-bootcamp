@@ -4,6 +4,7 @@ import { authService } from '../../api/authService';
 import './AuthForms.css';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { TextField, IconButton, InputAdornment } from '@mui/material';
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const LoginForm = () => {
       ...formData,
       [e.target.name]: e.target.value,
     });
-    setError(''); // Clear error when user types
+    setError('');
   };
 
   const handleSubmit = async (e) => {
@@ -30,13 +31,13 @@ const LoginForm = () => {
 
     try {
       const response = await authService.login(formData.email, formData.password);
-      
+
       if (response.user.role === 'mentee') {
         navigate('/mentors');
       } else if (response.user.role === 'mentor') {
         navigate('/mentor-home');
       } else {
-        navigate('/'); 
+        navigate('/');
       }
     } catch (err) {
       setError(err.response?.data?.error || 'Login failed. Please try again.');
@@ -45,9 +46,7 @@ const LoginForm = () => {
     }
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+  const togglePasswordVisibility = () => setShowPassword((s) => !s);
 
   return (
     <div className="auth-container">
@@ -75,31 +74,38 @@ const LoginForm = () => {
               onChange={handleChange}
               required
               autoFocus
+              autoComplete="email"
             />
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="password" className="form-label">Password</label>
-            <div className="password-input-container">
-              <input
-                type={showPassword ? 'text' : 'password'}
-                id="password"
-                name="password"
-                className="form-input"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
-              <button
-                type="button"
-                className="password-toggle"
-                onClick={togglePasswordVisibility}
-              >
-                {showPassword ? <VisibilityOffIcon/> : <VisibilityIcon/>}
-              </button>
-            </div>
+            <TextField
+              id="password"
+              name="password"
+              className="form-input"
+              size="small"
+              type={showPassword ? 'text' : 'password'}
+              value={formData.password}
+              onChange={handleChange}
+              autoComplete="current-password"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={togglePasswordVisibility}
+                      onMouseDown={(e) => e.preventDefault()}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
           </div>
-          
+
           <button
             type="submit"
             className="btn btn-primary auth-submit"
@@ -107,7 +113,7 @@ const LoginForm = () => {
           >
             {loading ? 'Signing In...' : 'Sign In'}
           </button>
-          
+
           <div className="auth-footer">
             <p>
               Don't have an account?{' '}
