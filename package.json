@@ -36,6 +36,7 @@
     "mongoose": "^8.17.1",
     "multer": "^2.0.2",
     "react-confetti": "^6.4.0",
-    "swagger-ui-express": "^5.0.1"
+    "swagger-ui-express": "^5.0.1",
+    "validator": "^13.15.15"
   }
 }
