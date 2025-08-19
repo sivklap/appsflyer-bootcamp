@@ -6,8 +6,8 @@ import NavBar from "./components/NavBar";
 import LoginForm from "./components/auth/LoginForm";
 import SignupForm from "./components/auth/SignupForm";
 import WelcomePage from "./pages/WelcomePage";
-import ProfileMentor from "./pages/ProfileMentor";
-import ProfileMentee from "./pages/ProfileMentee";
+import Profile from "./pages/Profile";
+
 import MentorHomePage from "./pages/MentorHomePage";
 import { authService, setUserStateCallback } from "./api/authService";
 import Footer from "./components/Footer";
@@ -38,8 +38,9 @@ function App() {
             <Route path="/signup" element={<SignupForm availableLanguages={availableLanguages} />} />
 
             <Route path="/mentors" element={<MentorsPage user={user} availableLanguages={availableLanguages} />} />
-            <Route path="/profile/mentor" element={<ProfileMentor user={user} setUser={setUser} />} />
-            <Route path="/profile/mentee" element={<ProfileMentee user={user}/>} />
+            <Route path="/profile" element={<Profile user={user} setUser={setUser} availableLanguages={availableLanguages} />} />
+            <Route path="/profile/:role" element={<Profile user={user} setUser={setUser} availableLanguages={availableLanguages} />} />
+
             <Route path="/mentor-home" element={<MentorHomePage user={user}/>} />
           </Routes>
         </div>
