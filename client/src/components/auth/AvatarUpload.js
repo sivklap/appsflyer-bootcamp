@@ -27,12 +27,14 @@ const AvatarUpload = ({ onFileSelect }) => {
         type="button"
         onClick={() => inputRef.current && inputRef.current.click()}
         style={{
+
           padding: "8px 16px",
-          background: "#2E55C1",
+          background: "#BB8588",
           color: "#fff",
           border: "none",
           borderRadius: 4,
-          cursor: "pointer"
+          cursor: "pointer",
+
         }}
       >
         Choose File
