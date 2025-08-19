@@ -1,32 +1,36 @@
 import React, {useState} from "react"
 import AvatarUpload from "../components/auth/AvatarUpload"
 import "./ProfileMentor.css"
-import { authService } from '../api/authService';
+import {authService} from '../api/authService';
+import Button from '@mui/material/Button';
 
 const ProfileMentor = ({user, setUser, availableLanguages}) => {
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({});
+    const [isChangingAvatar, setIsChangingAvatar] = useState(false);
+    const [avatarWarning, setAvatarWarning] = useState("");
 
-    if (!user){
+
+    if (!user) {
         return <p>Please log in to view this page.</p>;
     }
-    if(user.role === 'mentee'){
+    if (user.role === 'mentee') {
         return <p>You have to be a mentor to view this page.</p>
     }
 
     const handleChange = (e) => {
         const {name, value} = e.target;
-        if (name === "role" || name === "email"){
+        if (name === "role" || name === "email") {
             return;
         }
         if (name === "years_of_experience") {
             if (value === "" || /^[0-9]+$/.test(value)) {
-                setFormData({ ...formData, [name]: value });
+                setFormData({...formData, [name]: value});
             }
         } else if (name === "languages") {
-            setFormData({ ...formData, languages: value.split(",").map(l => l.trim()) });
+            setFormData({...formData, languages: value.split(",").map(l => l.trim())});
         } else {
-            setFormData({ ...formData, [name]: value });
+            setFormData({...formData, [name]: value});
         }
         setFormData({...formData, [name]: value});
     }
@@ -57,6 +61,13 @@ const ProfileMentor = ({user, setUser, availableLanguages}) => {
 
 
     const handleSave = async () => {
+        if (isChangingAvatar && formData.img === user.img) {
+            setAvatarWarning("You opened avatar editor but didn't change your avatar. " +
+                "Cancel the avatar change.");
+            return;
+        }
+
+        setAvatarWarning("");
         try {
             const updatedData = {
                 first_name: formData.first_name.trim() || user.first_name,
@@ -69,11 +80,13 @@ const ProfileMentor = ({user, setUser, availableLanguages}) => {
                     ? Math.max(Number(formData.years_of_experience), 0)
                     : user.years_of_experience,
                 languages: formData.languages.length > 0 ? formData.languages : user.languages,
-                img: formData.img !== undefined ? formData.img : user.img
+                ...(isChangingAvatar && {img: formData.img})
+
             };
             const updatedUser = await authService.updateProfile(updatedData);
             setUser(updatedUser);
             setIsEditing(false);
+            setIsChangingAvatar(false);
         } catch (error) {
             console.log("Error updating profile: ", error);
         }
@@ -81,7 +94,7 @@ const ProfileMentor = ({user, setUser, availableLanguages}) => {
 
 
     const handleEditClick = () => {
-        if (user){
+        if (user) {
             setFormData({
                 first_name: user.first_name || "",
                 last_name: user.last_name || "",
@@ -90,28 +103,90 @@ const ProfileMentor = ({user, setUser, availableLanguages}) => {
                 linkedin_url: user.linkedin_url || "",
                 bio: user.bio || "",
                 years_of_experience: user.years_of_experience || 0,
-                languages: user.languages || []
+                languages: user.languages || [],
+                img: user.img || ""
             });
             setIsEditing(true);
+            setIsChangingAvatar(false);
+        }
+    }
+
+    let imgValue;
+    if (isEditing && isChangingAvatar) {
+        // If editing and trying to change avatar, use formData.img if exists, else fallback to user.img
+        imgValue = formData.img || user.img;
+    } else {
+        // Otherwise, always show the saved user.img
+        imgValue = user.img;
+    }
+
+    let imgSrc = user.img;
+
+    if (imgValue) {
+        if (imgValue instanceof File) {
+            imgSrc = URL.createObjectURL(imgValue);
+        } else if (typeof imgValue === 'string') {
+            if (imgValue.startsWith('data:') || imgValue.startsWith('iVBOR')) {
+                imgSrc = imgValue.startsWith('data:') ? imgValue : `data:image/png;base64,${imgValue}`;
+            } else {
+                imgSrc = `/images/avatars/avatar-${imgValue}.png`;
+            }
+        } else if (typeof imgValue === 'number') {
+            imgSrc = `/images/avatars/avatar-${imgValue}.png`;
         }
     }
 
     return (
         <div className="profile-mentor-page">
+
             <div className="profile-mentor-header">
-                <img
-                    src={
-                        (isEditing ? formData.img : user.img) && typeof (isEditing ? formData.img : user.img) === 'string' && ((isEditing ? formData.img : user.img).startsWith('data:') || (isEditing ? formData.img : user.img).startsWith('iVBOR'))
-                            ? ((isEditing ? formData.img : user.img).startsWith('data:') ? (isEditing ? formData.img : user.img) : `data:image/png;base64,${isEditing ? formData.img : user.img}`)
-                            : (isEditing ? formData.img : user.img) && (typeof (isEditing ? formData.img : user.img) === 'string' || typeof (isEditing ? formData.img : user.img) === 'number')
-                                ? `/images/avatars/avatar-${isEditing ? formData.img : user.img}.png`
-                                : '/images/avatars/avatar-1.png'
-                    }
-                    alt={user.first_name}
-                    className="profile-mentor-avatar"
-                />
-                { isEditing ? (
-                    <>
+                <div className="avatar-change-wrapper">
+                    <img
+                        src={imgSrc}
+                        alt={user.first_name}
+                        className="profile-mentor-avatar"
+                    />
+
+                    {isEditing && (
+                        <Button
+                            variant="text"
+                            sx={{color: "#BB8588"}}
+                            onClick={() => setIsChangingAvatar((prev) => !prev)}
+                        >
+                            {isChangingAvatar ? "Cancel Avatar Change" : "Change Avatar"}
+                        </Button>
+
+                    )}
+
+                    {isChangingAvatar && (
+                        <div className="avatar-selection">
+                            <span className="avatar-selection-label">
+                              Select an avatar or upload a photo
+                            </span>
+                            <div className="avatar-grid">
+                                {[1, 2, 3, 4].map((num) => (
+                                    <label key={num} className="avatar-option">
+                                        <input
+                                            type="radio"
+                                            name="img"
+                                            value={num}
+                                            checked={typeof formData.img === "string" && formData.img === String(num)}
+                                            onChange={() => handleAvatarSelect(String(num))}
+                                        />
+                                        <img
+                                            src={`/images/avatars/avatar-${num}.png`}
+                                            alt={`avatar-${num}`}
+                                            className="avatar-img"
+                                        />
+                                    </label>
+                                ))}
+                            </div>
+                            <AvatarUpload onFileSelect={handleAvatarFile}/>
+                        </div>
+                    )}
+                </div>
+
+                {isEditing ? (
                     <div className="edit-names">
                         <input
                             type="text"
@@ -126,36 +201,14 @@ const ProfileMentor = ({user, setUser, availableLanguages}) => {
                             onChange={handleChange}
                         />
                     </div>
-                    <div style={{marginTop: 12}}>
-                        <span style={{fontWeight: 500}}>Choose your avatar or upload photo:</span>
-                        <div style={{display: 'flex', gap: 12, margin: '8px 0'}}>
-                            {[1,2,3,4].map(num => (
-                                <label key={num} style={{display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer'}}>
-                                    <input
-                                        type="radio"
-                                        name="img"
-                                        value={num}
-                                        checked={typeof formData.img === 'string' && formData.img === String(num)}
-                                        onChange={() => handleAvatarSelect(String(num))}
-                                    />
-                                    <img src={`/images/avatars/avatar-${num}.png`} alt={`avatar-${num}`} style={{width: 48, height: 48, borderRadius: '50%'}} />
-                                </label>
-                            ))}
-                        </div>
-                        <AvatarUpload onFileSelect={handleAvatarFile} />
-                        {formData.img && typeof formData.img !== 'string' && (
-                            <div style={{marginTop: 8}}>
-                                <span style={{fontSize: '0.9em'}}>תצוגה מקדימה של התמונה שהעלית:</span>
-                                <img src={URL.createObjectURL(formData.img)} alt="Avatar Preview" style={{ width: 80, height: 80, borderRadius: '50%' }} />
-                            </div>
-                        )}
-                    </div>
-                    </>
                 ) : (
-                    <h1>{user.first_name}  {user.last_name}</h1>
+                    <h1>{user.first_name} {user.last_name}</h1>
                 )}
+
                 <p className="profile-mentor-role">{user.role}</p>
             </div>
+
+
             <div className="profile-mentor-info">
                 <h2>Contact Information</h2>
                 {isEditing ? (
@@ -195,7 +248,8 @@ const ProfileMentor = ({user, setUser, availableLanguages}) => {
                         <p><b>Phone: </b>{user.phone_number}</p>
                         <p>
                             <b>LinkedIn: {" "}</b>
-                            <a href={user.linkedin_url} target="_blank" rel="noopener noreferrer">{user.linkedin_url}</a>
+                            <a href={user.linkedin_url} target="_blank"
+                               rel="noopener noreferrer">{user.linkedin_url}</a>
                         </p>
                     </>
 
@@ -243,8 +297,15 @@ const ProfileMentor = ({user, setUser, availableLanguages}) => {
 
                         <div className="form-actions">
                             <button className="save-btn" onClick={handleSave}><span>Save</span></button>
-                            <button className="cancel-btn" onClick={() => setIsEditing(false)}><span>Cancel</span></button>
+                            <button className="cancel-btn" onClick={() => {
+                                setIsEditing(false)
+                                setIsChangingAvatar(false)
+                            }}><span>Cancel</span>
+                            </button>
                         </div>
+                        {avatarWarning && (
+                            <p style={{ color: "red", marginTop: "6px" }}>{avatarWarning}</p>
+                        )}
                     </div>
                 ) : (
                     <>
