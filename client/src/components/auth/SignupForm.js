@@ -131,7 +131,7 @@ const SignupForm = ({availableLanguages}) => {
         <form className="auth-form" onSubmit={handleSubmit}>
           {/* Role Selection */}
           <div className="form-section">
-            <h3 className="section-title">Choose Your Role</h3>
+            {/*<h3 className="section-title">Choose Your Role</h3>*/}
             <div className="form-group">
               <label htmlFor="role" className="form-label">I want to be a</label>
               <select
