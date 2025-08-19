@@ -312,12 +312,12 @@ const SignupForm = ({availableLanguages}) => {
                     ))}
                   </div>
                   <div style={{marginTop: 12}}>
-                    <span style={{fontWeight: 500}}>או העלה תמונה מהמחשב:</span>
+                    <span style={{fontWeight: 500}}>Or upload an image from your computer:</span>
                     <AvatarUpload onFileSelect={handleAvatarFile} />
                   </div>
                   {formData.img && typeof formData.img !== 'string' && (
                     <div style={{marginTop: 8}}>
-                      <span style={{fontSize: '0.9em'}}>תצוגה מקדימה של התמונה שהעלית:</span>
+                      {/* Removed preview label as requested */}
                       <img src={URL.createObjectURL(formData.img)} alt="Avatar Preview" style={{ width: 80, height: 80, borderRadius: '50%' }} />
                     </div>
                   )}
