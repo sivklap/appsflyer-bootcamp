@@ -1,6 +1,7 @@
 import React, {useState} from "react"
 import "./ProfileMentor.css"
 import { authService } from '../api/authService';
+import { Switch, FormControlLabel } from '@mui/material';
 
 const ProfileMentor = ({user, setUser}) => {
     const [isEditing, setIsEditing] = useState(false);
@@ -30,6 +31,10 @@ const ProfileMentor = ({user, setUser}) => {
         setFormData({...formData, [name]: value});
     }
 
+    const handleToggleChange = (event) => {
+        setFormData({ ...formData, is_available: event.target.checked });
+    };
+
     const handleSave = async () => {
         try {
             const updatedData = {
@@ -43,6 +48,7 @@ const ProfileMentor = ({user, setUser}) => {
                     ? Math.max(Number(formData.years_of_experience), 0)
                     : user.years_of_experience,
                 languages: formData.languages.length > 0 ? formData.languages : user.languages,
+                is_available: formData.is_available !== undefined ? formData.is_available : user.is_available,
             };
 
             const updatedUser = await authService.updateProfile(updatedData);
@@ -52,7 +58,6 @@ const ProfileMentor = ({user, setUser}) => {
             console.log("Error updating profile: ", error);
         }
     };
-
 
     const handleEditClick = () => {
         if (user){
@@ -64,7 +69,8 @@ const ProfileMentor = ({user, setUser}) => {
                 linkedin_url: user.linkedin_url || "",
                 bio: user.bio || "",
                 years_of_experience: user.years_of_experience || 0,
-                languages: user.languages || []
+                languages: user.languages || [],
+                is_available: user.is_available !== undefined ? user.is_available : true
             });
             setIsEditing(true);
         }
@@ -129,7 +135,6 @@ const ProfileMentor = ({user, setUser}) => {
                                 onChange={handleChange}
                             />
                         </div>
-
                     </div>
                 ) : (
                     <>
@@ -140,8 +145,8 @@ const ProfileMentor = ({user, setUser}) => {
                             <a href={user.linkedin_url} target="_blank" rel="noopener noreferrer">{user.linkedin_url}</a>
                         </p>
                     </>
-
                 )}
+                
                 <h2>Professional Info</h2>
                 {isEditing ? (
                     <div className="edit-form">
@@ -178,6 +183,19 @@ const ProfileMentor = ({user, setUser}) => {
                                 }}
                             />
                         </div>
+                        
+                        <div className="form-group">
+                            <FormControlLabel
+                                control={
+                                    <Switch
+                                        checked={formData.is_available}
+                                        onChange={handleToggleChange}
+                                        color="primary"
+                                    />
+                                }
+                                label="Available for Mentoring"
+                            />
+                        </div>
 
                         <div className="form-actions">
                             <button className="save-btn" onClick={handleSave}>Save</button>
@@ -191,11 +209,17 @@ const ProfileMentor = ({user, setUser}) => {
                         <p><b>Languages: </b>
                             {user.languages.join(", ")}
                         </p>
+                        <p><b>Available for Mentoring: </b>
+                            <span style={{ 
+                                color: user.is_available ? '#4caf50' : '#f44336',
+                                fontWeight: 'bold'
+                            }}>
+                                {user.is_available ? 'Yes' : 'No'}
+                            </span>
+                        </p>
                         <button className="edit-btn" onClick={handleEditClick}>Edit</button>
                     </>
                 )}
-
-
             </div>
         </div>
     )
