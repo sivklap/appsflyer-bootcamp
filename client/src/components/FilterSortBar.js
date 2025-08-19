@@ -63,7 +63,7 @@ const FilterSortBar = ({mentors, availableLanguages, setIsSearching, onResults})
             </div>
 
             <div className="filter-section">
-                <h4>Languages</h4>
+                <h4>Languages & Technologies</h4>
                 <ul className="language-list">
                     {availableLanguages.map((lang) => (
                         <li key={lang}>
