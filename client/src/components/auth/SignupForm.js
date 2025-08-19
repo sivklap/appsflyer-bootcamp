@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import AvatarUpload from './AvatarUpload';
 import { useNavigate, Link } from 'react-router-dom';
 import { authService } from '../../api/authService';
 import './AuthForms.css';
@@ -49,10 +50,19 @@ const SignupForm = ({availableLanguages}) => {
     }));
   };
 
+
   const handleAvatarSelect = (avatarValue) => {
     setFormData(prev => ({
       ...prev,
       img: avatarValue
+    }));
+  };
+
+  const handleAvatarFile = (file) => {
+    if (!file) return;
+    setFormData(prev => ({
+      ...prev,
+      img: file // File object
     }));
   };
 
@@ -62,8 +72,26 @@ const SignupForm = ({availableLanguages}) => {
     setError('');
 
     try {
-      const response = await authService.signup(formData);
-      
+      // Prepare FormData for multipart/form-data
+      const data = new FormData();
+      Object.entries(formData).forEach(([key, value]) => {
+        if (key === 'img') {
+          if (value && typeof value !== 'string') {
+            data.append('img', value); // File object
+          } else if (typeof value === 'string') {
+            data.append('img', value);
+          }
+        } else if (key === 'languages') {
+          value.forEach(lang => data.append('languages', lang));
+        } else {
+          data.append(key, value);
+        }
+      });
+      // Debug: print all FormData values
+      for (let pair of data.entries()) {
+        console.log(pair[0]+ ':', pair[1]);
+      }
+      const response = await authService.signupFormData(data);
       if (response.user.role === 'mentee') {
         navigate('/mentors');
       } else if (response.user.role === 'mentor') {
@@ -211,118 +239,120 @@ const SignupForm = ({availableLanguages}) => {
 
           {/* Mentor-specific fields */}
           {formData.role === 'mentor' && (
-            <div className="form-section">
-              <h3 className="section-title">Mentor Information</h3>
-              
-              <div className="form-group">
-                <label htmlFor="years_of_experience" className="form-label">Years of Experience</label>
-                <input
-                  type="number"
-                  id="years_of_experience"
-                  name="years_of_experience"
-                  className="form-input"
-                  value={formData.years_of_experience}
-                  onChange={handleChange}
-                  min="0"
-                  max="50"
-                  required
-                />
-              </div>
-              
-              <div className="form-group">
-                <label className="form-label">Programming Languages / Technologies / Fields</label>
-                <div className="languages-grid">
-                  {availableLanguages.map(language => (
-                    <button
-                      key={language}
-                      type="button"
-                      className={`language-btn ${formData.languages.includes(language) ? 'selected' : ''}`}
-                      onClick={() => handleLanguageToggle(language)}
-                    >
-                      {language}
-                    </button>
-                  ))}
+            <>
+              {/* Contact Information */}
+              <div className="form-section">
+                <h3 className="section-title">Contact Information</h3>
+                <div className="form-group">
+                  <label htmlFor="phone_number" className="form-label">Phone</label>
+                  <input
+                    type="tel"
+                    id="phone_number"
+                    name="phone_number"
+                    className="form-input"
+                    value={formData.phone_number}
+                    onChange={handleChange}
+                    placeholder="0501234567"
+                  />
                 </div>
-                {formData.languages.length > 0 && (
-                  <p className="selected-languages">
-                    Selected: {formData.languages.join(', ')}
-                  </p>
-                )}
-              </div>
-              
-              <div className="form-group">
-                <label htmlFor="bio" className="form-label">General Description</label>
-                <textarea
-                  id="bio"
-                  name="bio"
-                  className="form-textarea"
-                  value={formData.bio}
-                  onChange={handleChange}
-                  placeholder="Tell us about your experience and what you can offer as a mentor..."
-                  rows="4"
-                  required
-                />
-              </div>
-              
-              <div className="form-group">
-                <label htmlFor="linkedin_url" className="form-label">LinkedIn Link</label>
-                <input
-                  type="url"
-                  id="linkedin_url"
-                  name="linkedin_url"
-                  className="form-input"
-                  value={formData.linkedin_url}
-                  onChange={handleChange}
-                  placeholder="https://linkedin.com/in/yourprofile"
-                  required
-                />
+                
+                <div className="form-group">
+                  <label htmlFor="linkedin_url" className="form-label">LinkedIn</label>
+                  <input
+                    type="url"
+                    id="linkedin_url"
+                    name="linkedin_url"
+                    className="form-input"
+                    value={formData.linkedin_url}
+                    onChange={handleChange}
+                    placeholder="https://linkedin.com/in/yourprofile"
+                  />
+                </div>
               </div>
 
-              <div className="form-group">
-                <label className="form-label">Select Avatar</label>
-                <div className="avatar-grid">
-                  {avatarOptions.map(avatar => (
-                    <label key={avatar.value} className="avatar-option">
-                      <input
-                        type="radio"
-                        name="img"
-                        value={avatar.value}
-                        checked={formData.img === avatar.value}
-                        onChange={() => handleAvatarSelect(avatar.value)}
-                        required
-                      />
-                      <img
-                        src={`/images/avatars/avatar-${avatar.value}.png`}
-                        alt={avatar.label}
-                        className="avatar-preview"
-                      />
-                      <span className="avatar-label">{avatar.label}</span>
-                    </label>
-                  ))}
+              {/* Professional Information */}
+              <div className="form-section">
+                <h3 className="section-title">Professional Information</h3>
+                <div className="form-group">
+                  <label htmlFor="bio" className="form-label">Bio</label>
+                  <textarea
+                    id="bio"
+                    name="bio"
+                    className="form-textarea"
+                    value={formData.bio}
+                    onChange={handleChange}
+                    placeholder="Tell us about your experience and what you can offer as a mentor..."
+                    rows="4"
+                  />
                 </div>
-                {!formData.img && (
-                  <p className="error-message">Please select an avatar</p>
-                )}
-              </div>
-            </div>
-          )}
-
-          {/* Mentee-specific fields */}
-          {formData.role === 'mentee' && (
-            <div className="form-section">
-              <h3 className="section-title">Mentee Information</h3>
-              
-              <div className="form-group">
-                <label htmlFor="bio" className="form-label">General Description (Optional)</label>
-                <textarea
-                  id="bio"
-                  name="bio"
-                  className="form-textarea"
-                  value={formData.bio}
-                  onChange={handleChange}
-                  placeholder="Tell us about yourself and what you're looking to learn..."
-                  rows="4"
-                />
+                
+                <div className="form-group">
+                  <label htmlFor="years_of_experience" className="form-label">Years of Experience</label>
+                  <input
+                    type="number"
+                    id="years_of_experience"
+                    name="years_of_experience"
+                    className="form-input"
+                    value={formData.years_of_experience}
+                    onChange={handleChange}
+                    min="0"
+                    max="50"
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label className="form-label">Languages & Technologies</label>
+                  <div className="languages-grid">
+                    {availableLanguages.map(language => (
+                      <button
+                        key={language}
+                        type="button"
+                        className={`language-btn ${formData.languages.includes(language) ? 'selected' : ''}`}
+                        onClick={() => handleLanguageToggle(language)}
+                      >
+                        {language}
+                      </button>
+                    ))}
+                  </div>
+                  {formData.languages.length > 0 && (
+                    <p className="selected-languages">
+                      Selected: {formData.languages.join(', ')}
+                    </p>
+                  )}
+                </div>
+                
+                <div className="form-group">
+                  <label className="form-label">Select an avatar or upload a photo</label>
+                  <div className="avatar-grid">
+                    {avatarOptions.map(avatar => (
+                      <label key={avatar.value} className="avatar-option">
+                        <input
+                          type="radio"
+                          name="img"
+                          value={avatar.value}
+                          checked={typeof formData.img === 'string' && formData.img === avatar.value}
+                          onChange={() => handleAvatarSelect(avatar.value)}
+                        />
+                        <img
+                          src={`/images/avatars/avatar-${avatar.value}.png`}
+                          alt={avatar.label}
+                          className="avatar-preview"
+                        />
+                        <span className="avatar-label">{avatar.label}</span>
+                      </label>
+                    ))}
+                  </div>
+                  <div style={{marginTop: 12}}>
+                    <span style={{fontWeight: 500}}>Or upload an image from your computer:</span>
+                    <AvatarUpload onFileSelect={handleAvatarFile} />
+                  </div>
+                  {formData.img && typeof formData.img !== 'string' && (
+                    <div style={{marginTop: 8}}>
+                      {/* Removed preview label as requested */}
+                      <img src={URL.createObjectURL(formData.img)} alt="Avatar Preview" style={{ width: 80, height: 80, borderRadius: '50%' }} />
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           )}

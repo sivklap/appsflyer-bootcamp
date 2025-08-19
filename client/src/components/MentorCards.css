@@ -8,6 +8,8 @@
 }
 
 .mentor-card {
+    width: 180px; /* fixed width */
+    height: 220px;
     background: #fff;
     border: 2px solid #eee;
     border-radius: 15px;
@@ -32,8 +34,9 @@
 .mentor-card img {
     width: 100px;
     height: 100px;
-    object-fit: contain;
-    margin-bottom: 7px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 10px;
 }
 
 .mentor-card h2 {

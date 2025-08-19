@@ -1,0 +1,66 @@
+.filter-sort-bar {
+    width: 200px;
+    flex-shrink: 0;
+    height: 100%;
+    box-sizing: border-box;
+    border-right: 1px solid #ddd;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.filter-section {
+    margin-bottom: 20px;
+}
+
+.language-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.language-list li {
+    margin-bottom: 6px;
+}
+
+.language-btn {
+    border-color: #bb8588 !important;
+    color: #bb8588 !important;
+}
+
+.language-btn.MuiButton-contained {
+    background-color: #bb8588 !important;
+    color: white !important;
+}
+
+.language-btn.MuiButton-contained:hover {
+    background-color: #bb8588 !important;
+    color: white !important;
+}
+
+.slider-root {
+    color: #bb8588 !important;
+    height: 8px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.slider-track {
+    border: none;
+    height: 8px;
+    border-radius: 4px;
+}
+
+.slider-rail {
+    opacity: 0.3;
+    background-color: #bb8588 !important;
+    height: 8px;
+    border-radius: 4px;
+}
