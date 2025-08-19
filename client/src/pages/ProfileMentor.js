@@ -32,17 +32,14 @@ const ProfileMentor = ({user, setUser, availableLanguages}) => {
     }
 
     const handleAvatarSelect = (avatarValue) => {
-        setFormData(prev => ({
-            ...prev,
-            img: avatarValue
-        }));
+        setFormData(prev => ({...prev, img: String(avatarValue)}));
     };
 
     const handleAvatarFile = (file) => {
         if (!file) return;
         setFormData(prev => ({
             ...prev,
-            img: file // File object
+            img: file // store the File object
         }));
     };
 
