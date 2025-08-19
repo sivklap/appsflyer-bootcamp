@@ -16,11 +16,11 @@
     border: 2px solid #ddd;
     border-radius: 12px;
     padding: 20px;
-    width: 500px;
+    width: 600px;
     position: relative;
     text-align: center;
     box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    font-family: Arial, sans-serif;
+    font-family: "Nunito", sans-serif;
 }
 
 .close-button {
@@ -42,12 +42,10 @@
 
 .mentor-modal-body {
     flex: 1;
-}
-
-.linkedin-icon {
-    display: block;
-    margin-bottom: 10px;
-    color: #0a66c2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
 }
 
 .mentor-avatar {
@@ -61,8 +59,12 @@
 
 .mentor-name {
     font-size: 24px;
-    margin: 10px 0 5px;
     font-weight: bold;
+
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .mentor-language {
@@ -73,20 +75,30 @@
 
 }
 
-
-.mentor-contact h3 {
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-.contact-icons {
+.mentor-contact {
     display: flex;
+    align-items: center;
     justify-content: center;
     gap: 15px;
 }
 
+.mentor-contact h3 {
+    font-size: 16px;
+    margin: 0;
+    display: inline;
+}
+
+.contact-icons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .contact-icons a {
     color: black;
-    font-size: 20px;
+}
+
+.linkedin-icon:hover {
+    color: #0a66c2;
 }
 
