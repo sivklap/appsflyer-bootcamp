@@ -277,6 +277,8 @@ const ProfileMentor = ({user, setUser, availableLanguages}) => {
                                         e.preventDefault();
                                     }
                                 }}
+                                min="0"
+                                max="50"
                             />
                         </div>
                         <div className="form-group">
